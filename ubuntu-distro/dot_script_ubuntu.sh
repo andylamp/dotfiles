@@ -4,18 +4,20 @@
 
 ## Initialization
 
-# my id pub/priv
-myid=""
-myrsa=""
-# git username
-mygituser=""
+# my local home
+myuser=$1
+myhome=$2
 # my email
-myemail=""
-# get my local home
-myhome="$(pwd ~)"
-myuser="$(whoami)"
+myemail=$3
+# my git username
+mygituser=$4
+# my ssh id pub/priv
+myid=$5
+myrsa=$6
 
 ## Register repos
+
+return
 
 # add sublime gpg key
 wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | \
@@ -27,9 +29,6 @@ sudo tee /etc/apt/sources.list.d/sublime-text.list
 sudo add-apt-repository ppa:webupd8team/java
 # add universe for fira-code
 sudo add-apt-repository universe
-
-# source common scripts
-source ../shared/common.sh
 
 ## Install basic/essential packages
 
