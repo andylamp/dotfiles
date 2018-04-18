@@ -78,6 +78,7 @@ find_linux_distro() {
   # launch the appropriate dotfile
   if [[ $OS -eq "Ubuntu" ]]; then
     echo " ** Configuring Ubuntu"
+    source $DOT_DIR/ubuntu-distro/dot_script_ubuntu.sh
   elif [[ $OS -eq "Debian" ]]; then
     echo " ** Configuring Debian"
   else
@@ -104,5 +105,21 @@ detect_os() {
     echo "Detected FreeBSD"
   else
     echo "Unknown OS type"
+  fi
+}
+
+check_params() {
+  echo -e "\n ** Initialisation details **"
+  echo -e " !! SSH Details:\n\tmy_id: $myid\n\tmy_rsa: $myrsa"
+  echo -e " !! User details:\n\tuser: $myhome\n\thome: $myhome\n\temail: $myemail"
+  echo -e " !! Git details:\n\tusername: $mygituser\n"
+
+  # check for details
+  read -p " !! Do the details shown above appear OK to you? [y/n]: " -n 1 -r; #echo ""
+  if [[ $REPLY =~ ^[yY]$ ]] || [[ -z $REPLY ]]; then
+    echo -e " -- Details seem to be OK, continuing\n"
+  else
+    echo -e " ** Details are not OK, aborting\n"
+    exit 1
   fi
 }

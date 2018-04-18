@@ -4,20 +4,11 @@
 
 ## Initialization
 
-# my local home
-myuser=$1
-myhome=$2
-# my email
-myemail=$3
-# my git username
-mygituser=$4
-# my ssh id pub/priv
-myid=$5
-myrsa=$6
+echo -e "\n !! Executing Ubuntu distro dotfile"
+# rudimentary sanity check
+check_params
 
 ## Register repos
-
-return
 
 # add sublime gpg key
 wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | \
@@ -51,3 +42,6 @@ vim_config $myhome
 
 # Configure ssh
 ssh_config $myid $myrsa
+
+# finally auto-remote unused packages
+sudo apt autoremove

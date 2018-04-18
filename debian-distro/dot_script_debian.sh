@@ -4,16 +4,9 @@
 
 ## Initialization
 
-# my id pub/priv
-myid=""
-myrsa=""
-# git username
-mygituser=""
-# my email
-myemail=""
-# get my local home
-myhome="$(pwd ~)"
-myuser="$(whoami)"
+echo -e "\n !! Executing Debian distro dotfile"
+# rudimentary sanity check
+check_params
 
 ## Register repos
 
@@ -36,8 +29,9 @@ apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
 sudo deb http://deb.debian.org/debian stretch main contrib non-free
 sudo deb-src http://deb.debian.org/debian stretch main contrib non-free
 
-
 # install java
-echo oracle-java8-installer shared/accepted-oracle-licence-v1-1 boolean true | sudo /usr/bin/debconf-set-selections
+echo oracle-java8-installer shared/accepted-oracle-licence-v1-1 boolean true | \
+sudo /usr/bin/debconf-set-selections
+
 # install set-default
 sudo apt-get install oracle-java8-set-default

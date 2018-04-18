@@ -3,8 +3,8 @@
 ## Configuration for the script
 
 # ssh id pub/priv
-myid=""
-myrsa=""
+myid="fill_me"
+myrsa="fill_me"
 
 # email
 myemail="andreas.grammenos@gmail.com"

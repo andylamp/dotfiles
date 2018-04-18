@@ -1,14 +1,18 @@
 #!/usr/bin/env bash
 
 vim_config() {
+  echo " -- Configuring vim"
   # rudimentary sanity check
-  if [[ $# -ne 1 ]] || [[ -z $1 ]]; then
-    echo "Expected only one argument got none/more or empty string -- skipping vim config"
+  if [[ -z $myhome ]]; then
+    echo " ** Error: expected non empty string -- skipping vim config"
     return 1
   fi
-  # got the path
-  myhome=$1
-  ## Configure vim
-  git clone --depth=1 https://github.com/andylamp/vimrc.git $myhome/.vim_runtime
-  sh $myhome/.vim_runtime/install_awesome_vimrc.sh
+  if [[ -d $myhome.vim_runtime ]]; then
+    echo " -- vim_runtime dir already exists, probably already configured"
+  else
+    echo " -- Installing awesome_vimrc to $myhome"
+    ## Configure vim
+    git clone --depth=1 https://github.com/andylamp/vimrc.git $myhome.vim_runtime
+    sh $myhome.vim_runtime/install_awesome_vimrc.sh
+  fi
 }
