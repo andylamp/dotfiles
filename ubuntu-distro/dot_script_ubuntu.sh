@@ -46,5 +46,8 @@ ssh_config
 # rvm and ruby install
 rvm_install
 
+# fetch my projects
+fetch_my_projects
+
 # finally, auto-remove unused packages
 sudo apt autoremove

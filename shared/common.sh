@@ -15,6 +15,8 @@ source $DOT_DIR/shared/rust_install.sh
 source $DOT_DIR/shared/rvm_install.sh
 # jetbrains install
 source $DOT_DIR/shared/jetbrains_install.sh
+# fetch my projects
+source $DOT_DIR/shared/fetch_my_projects.sh
 
 # beautiful and tidy way to expand tilde (~) by C. Duffy.
 expand_path() {
