@@ -29,19 +29,22 @@ sudo apt-get update
 sudo apt-get --assume-yes install valgrind graphviz vim doxygen \
 curl git apt-transport-https sublime-text oracle-java8-set-default \
 build-essential python3 python3-dev checkinstall \
-fonts-firacode
+fonts-firacode gnupg2
 
 # Configure rust
 rust_install
 
 # Configure git
-git_config $mygituser $myemail
+git_config
 
 # Configure vim
-vim_config $myhome
+vim_config
 
 # Configure ssh
-ssh_config $myid $myrsa
+ssh_config
 
-# finally auto-remote unused packages
+# rvm and ruby install
+rvm_install
+
+# finally, auto-remove unused packages
 sudo apt autoremove

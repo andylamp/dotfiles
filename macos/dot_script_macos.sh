@@ -6,4 +6,4 @@
 xcode-select --install
 
 # source common scripts
-source ../shared/common.sh
+source $DOT_DIR/shared/common.sh

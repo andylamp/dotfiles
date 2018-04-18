@@ -22,9 +22,3 @@ bootstrap() {
 
 # fire up the script
 bootstrap
-
-
-
-
-
-
