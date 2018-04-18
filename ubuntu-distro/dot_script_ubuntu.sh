@@ -47,7 +47,7 @@ rust_install
 git_config $mygituser $myemail
 
 # Configure vim
-vim_config
+vim_config $myhome
 
 # Configure ssh
 ssh_config $myid $myrsa
