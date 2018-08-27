@@ -15,8 +15,18 @@ source $DOT_DIR/config.sh
 myuser="$(whoami)"
 myhome="$(expand_path "~/")"
 
+detect_root() {
+  if [[ $(id -u) -eq 0 ]]; then
+    echo "\n Error: You cannot run this as root, exiting\n\n"; exit 1;
+  else
+    printf "\n ** Running as user $myuser\n\n"
+  fi
+}
+
+
 bootstrap() {
   printf "\nWelcome to dotfile script!\n\n"
+  detect_root
   detect_os
 }
 
