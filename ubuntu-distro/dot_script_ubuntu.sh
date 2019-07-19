@@ -16,8 +16,6 @@ sudo apt-key add -
 # sublime repo
 echo "deb https://download.sublimetext.com/ apt/dev/" | \
 sudo tee /etc/apt/sources.list.d/sublime-text.list
-# java repo
-sudo add-apt-repository ppa:webupd8team/java
 # add universe for fira-code
 sudo add-apt-repository universe
 
@@ -27,8 +25,8 @@ sudo add-apt-repository universe
 sudo apt-get update
 # install the packages
 sudo apt-get --assume-yes install valgrind graphviz vim doxygen \
-curl git apt-transport-https sublime-text oracle-java8-set-default \
-build-essential python3 python3-dev checkinstall \
+curl git apt-transport-https sublime-text openjdk-11-jdk \
+openjdk-11-doc build-essential python3 python3-dev checkinstall \
 fonts-firacode gnupg2
 
 # Configure rust
@@ -36,6 +34,8 @@ rust_install
 
 # Configure git
 git_config
+
+read -p "Press [Enter] key to continue"
 
 # Configure vim
 vim_config

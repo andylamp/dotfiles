@@ -3,11 +3,12 @@
 ## Configuration for the script
 
 # ssh id pub/priv
-myid="fill_me"
-myrsa="fill_me"
+myid=""
+myrsa=""
 
 # email
 myemail="andreas.grammenos@gmail.com"
 
 # git username
 mygituser="andylamp"
+mygitemail="$myemail"

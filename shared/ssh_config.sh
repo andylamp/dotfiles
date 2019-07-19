@@ -31,6 +31,13 @@ ssh_config() {
     # fetch id rsa
     echo " -- Fetching candidate id_rsa"
     wget -q $myrsa -O "$myhome/.ssh/id_rsa"
+    # keep alive
+    if [[ ! -f "$myhome/.ssh/config" ]]; then
+      echo " -- ssh config does not exist, pushing keep alive" 
+      echo -en "Host *\n\tServerAliveInterval 240" > "$myhome/.ssh/config"
+    else
+      echo " -- ssh config exists, skipping keep alive"
+    fi
     # fix permissions
     echo " -- Configuring permissions (.ssh folder 700, key files id_* 600)"
     chown -R $myuser $myhome/.ssh

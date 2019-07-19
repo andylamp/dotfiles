@@ -114,7 +114,7 @@ check_params() {
   echo -e "\n ** Initialisation details **"
   echo -e " !! SSH Details:\n\tmy_id: $myid\n\tmy_rsa: $myrsa"
   echo -e " !! User details:\n\tuser: $myhome\n\thome: $myhome\n\temail: $myemail"
-  echo -e " !! Git details:\n\tusername: $mygituser\n"
+  echo -e " !! Git details:\n\tusername: $mygituser\n\temail: $mygitemail"
 
   # check for details
   read -p " !! Do the details shown above appear OK to you? [y/n]: " -n 1 -r; #echo ""
