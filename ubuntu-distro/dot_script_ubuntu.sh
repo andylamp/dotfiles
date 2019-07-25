@@ -39,7 +39,8 @@ sudo apt-get --assume-yes install \
   checkinstall \
   fonts-firacode \
   gnupg2 \
-  tmux
+  tmux \
+  kitty
 
 # Configure rust
 rust_install
@@ -57,6 +58,9 @@ ssh_config
 
 # rvm and ruby install
 rvm_install
+
+# kitty terminal install
+kitty_install
 
 # fetch my projects
 fetch_my_projects

@@ -29,7 +29,7 @@ kitty_install() {
 		echo -e " ** Kitty folder exists but has no config - creating..."
 		echo -en "# my kitty config\ninclude ./my_kitty.conf" > ${kitty_conf_dir}/kitty.conf
 		echo -e " -- Copying personal kitty configuration"
-		cp $DOT_DIR/shared/my_kitty.conf ${kitty_conf_dir}/my_kitty.conf
+		cp ${DOT_DIR}/shared/my_kitty.conf ${kitty_conf_dir}/my_kitty.conf
 		# set the permissions & ownership
 		chown -R ${myuser} ${kitty_conf_dir}
 		chmod 664 ${kitty_conf_dir}/kitty.conf ${kitty_conf_dir}/my_kitty.conf
