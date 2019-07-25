@@ -24,10 +24,22 @@ sudo add-apt-repository universe
 # perform an update before install
 sudo apt-get update
 # install the packages
-sudo apt-get --assume-yes install valgrind graphviz vim doxygen \
-curl git apt-transport-https sublime-text openjdk-11-jdk \
-openjdk-11-doc build-essential python3 python3-dev checkinstall \
-fonts-firacode gnupg2
+sudo apt-get --assume-yes install \
+  valgrind \
+  graphviz \
+  vim \
+  doxygen \
+  curl \
+  git \
+  apt-transport-https \
+  sublime-text \
+  openjdk-11-jdk openjdk-11-doc \
+  build-essential \
+  python3 python3-dev \
+  checkinstall \
+  fonts-firacode \
+  gnupg2 \
+  tmux
 
 # Configure rust
 rust_install
