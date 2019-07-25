@@ -12,3 +12,6 @@ myemail="andreas.grammenos@gmail.com"
 # git username
 mygituser="andylamp"
 mygitemail="$myemail"
+
+# kitty (case sensitive!)
+kitty_theme="Afterglow"
