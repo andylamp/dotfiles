@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 validate_url() {
-  if [ $# -ne 1 ]; then
+  if [[ $# -ne 1 ]]; then
     echo "Error: validate_url expected 1 argument, $# were supplied"
     return 0
   fi

@@ -2,9 +2,12 @@
 
 ## Configuration for the script
 
+# link with blobs
+blob_link=""
+
 # ssh id pub/priv
-myid=""
-myrsa=""
+myid="${SHARED}/id_pub"
+myrsa="${SHARED}/id_rsa"
 
 # email
 myemail="andreas.grammenos@gmail.com"
@@ -15,3 +18,7 @@ mygitemail="$myemail"
 
 # kitty (case sensitive!)
 kitty_theme="Afterglow"
+my_kitty_conf="${SHARED}/my_kitty.conf"
+
+# my bash configuration
+my_bash_conf="${SHARED}/my_bash.sh"

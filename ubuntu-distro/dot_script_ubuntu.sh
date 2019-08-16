@@ -40,6 +40,7 @@ sudo apt-get --assume-yes install \
   fonts-firacode \
   gnupg2 \
   tmux \
+  maven \
   kitty
 
 # Configure rust
