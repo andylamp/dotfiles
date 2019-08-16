@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 vim_config() {
-  echo " -- Configuring vim"
+  echo -e "\n -- Configuring vim"
   # rudimentary sanity check
   if [[ -z ${myhome} ]]; then
     echo " ** Error: expected non empty string -- skipping vim config"

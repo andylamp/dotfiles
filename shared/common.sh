@@ -9,6 +9,8 @@ source ${DOT_DIR}/shared/git_config.sh
 source ${DOT_DIR}/shared/ssh_config.sh
 # vim config
 source ${DOT_DIR}/shared/vim_config.sh
+# kitty terminal config
+source ${DOT_DIR}/shared/kitty_config.sh
 # rust install
 source ${DOT_DIR}/shared/rust_install.sh
 # rvm install
@@ -78,10 +80,10 @@ find_linux_distro() {
   echo " !! Found $OS, version: $VER"
 
   # launch the appropriate dotfile
-  if [[ $OS -eq "Ubuntu" ]]; then
+  if [[ ${OS} -eq "Ubuntu" ]]; then
     echo " ** Configuring Ubuntu"
     source ${DOT_DIR}/ubuntu-distro/dot_script_ubuntu.sh
-  elif [[ $OS -eq "Debian" ]]; then
+  elif [[ ${OS} -eq "Debian" ]]; then
     echo " ** Configuring Debian"
   else
     echo " ** No dotfile present for $OS"
@@ -121,9 +123,9 @@ check_params() {
   # check for details
   read -p " !! Do the details shown above appear OK to you? [y/n]: " -n 1 -r; #echo ""
   if [[ $REPLY =~ ^[yY]$ ]] || [[ -z $REPLY ]]; then
-    echo -e " -- Details seem to be OK, continuing\n"
+    echo -e "\n -- Details seem to be OK, continuing\n"
   else
-    echo -e " ** Details are not OK, aborting\n"
+    echo -e "\n ** Details are not OK, aborting\n"
     exit 1
   fi
 }

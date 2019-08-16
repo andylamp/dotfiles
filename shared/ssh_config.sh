@@ -2,7 +2,7 @@
 
 # configure the ssh
 ssh_config() {
-  echo " !! Configuring SSH"
+  echo -e "\n !! Configuring SSH"
   # my id pub/priv
   cmyssh="${myhome}.ssh"
   # check if we have empty parameters

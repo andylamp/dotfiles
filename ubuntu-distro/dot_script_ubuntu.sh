@@ -5,6 +5,7 @@
 ## Initialization
 
 echo -e "\n !! Executing Ubuntu distro dotfile"
+
 # rudimentary sanity check
 check_params
 
@@ -49,22 +50,19 @@ rust_install
 # Configure git
 git_config
 
-read -p "Press [Enter] key to continue"
-
 # Configure vim
 vim_config
 
 # Configure ssh
 ssh_config
 
+# kitty terminal config
+kitty_config
+
 # rvm and ruby install
 rvm_install
 
-# kitty terminal install
-kitty_install
-
-# fetch my projects
-fetch_my_projects
+echo -e "\n ** Execution of Ubuntu dotfile installation has been completed\n"
 
 # finally, auto-remove unused packages
 sudo apt autoremove

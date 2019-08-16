@@ -2,15 +2,7 @@
 
 
 git_config() {
-  echo -e " !! Configuring git"
-  # if [ ! $# -eq 2 ]; then
-  #   echo " ** Error: missing arguments, expected two -- skipping git config"
-  #   return 1
-  # fi
-  # # git username
-  # mygitusername="$1"
-  # # my email
-  # myemail="$2"
+  echo -e "\n !! Configuring git"
   # check if they are empty
   if [[ -z ${myemail} ]] || [[ -z ${mygituser} ]] ; then
     echo " ** Error: empty variables for git user/email -- skipping git config"
