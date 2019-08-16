@@ -41,6 +41,7 @@ expand_path() {
   esac
 }
 
+# find which linux distribution we have
 find_linux_distro() {
   echo "Detected Linux-based OS, trying to find flavor"
   if [[ -f /etc/os-release ]]; then
@@ -90,7 +91,7 @@ find_linux_distro() {
   fi
 }
 
-# This file selects which one of the scripts we will use
+# This function selects which one of the scripts we will use
 detect_os() {
   echo "Trying to detect OS-type"
   if [[ "$OSTYPE" == "linux-gnu" ]]; then
@@ -112,6 +113,7 @@ detect_os() {
   fi
 }
 
+# rudimentary sanity check before proceeding
 check_params() {
   echo -e "\n ** Initialisation details **"
   echo -e " !! SSH Details:\n\tmy_id: ${myid}\n\tmy_rsa: ${myrsa}"
