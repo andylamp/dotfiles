@@ -9,6 +9,8 @@ source ${DOT_DIR}/shared/git_config.sh
 source ${DOT_DIR}/shared/ssh_config.sh
 # vim config
 source ${DOT_DIR}/shared/vim_config.sh
+# bash config
+source ${DOT_DIR}/shared/bash_config.sh
 # kitty terminal config
 source ${DOT_DIR}/shared/kitty_config.sh
 # rust install

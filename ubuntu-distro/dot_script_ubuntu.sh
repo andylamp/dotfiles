@@ -53,6 +53,9 @@ git_config
 # Configure vim
 vim_config
 
+# Configure bash shell
+bash_config
+
 # Configure ssh
 ssh_config
 
