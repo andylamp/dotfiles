@@ -47,7 +47,7 @@ kitty_config() {
 	fi
 
 	# set the permissions
-    cp ${DOT_DIR}/shared/my_kitty.conf ${kitty_conf_dir}/my_kitty.conf
+    cp ${my_kitty_conf} ${kitty_conf_dir}/my_kitty.conf
     # set the permissions & ownership
     chown -R ${myuser} ${kitty_conf_dir}
     chmod 664 ${kitty_conf_dir}/kitty.conf ${kitty_conf_dir}/my_kitty.conf

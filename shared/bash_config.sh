@@ -34,9 +34,9 @@ bash_config() {
     fi
 
     # trying to copy my configuration
-    if [[ -f ${DOT_DIR}/shared/my_bash.sh ]]; then
+    if [[ -f ${my_bash_conf} ]]; then
         echo -e " -- Copying configuration (only if newer)\n"
-        rsync -u ${DOT_DIR}/shared/my_bash.sh ${HOME}/.my_shell_conf
+        rsync -u ${my_bash_conf} ${HOME}/.my_shell_conf
     else
         echo -e " !! Bash config not found, not copying\n"
     fi
