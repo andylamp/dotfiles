@@ -24,6 +24,7 @@ sudo add-apt-repository universe
 
 # perform an update before install
 sudo apt-get update
+
 # install the packages
 sudo apt-get --assume-yes install \
   valgrind \
