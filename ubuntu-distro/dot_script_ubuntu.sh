@@ -43,7 +43,9 @@ sudo apt-get --assume-yes install \
   gnupg2 \
   tmux \
   maven \
-  kitty
+  kitty \
+  python3-pip
+
 
 # Configure rust
 rust_install
@@ -62,6 +64,9 @@ ssh_config
 
 # kitty terminal config
 kitty_config
+
+# pipenv3 config
+pipenv3_config
 
 # rvm and ruby install
 rvm_install

@@ -17,6 +17,8 @@ source ${DOT_DIR}/shared/kitty_config.sh
 source ${DOT_DIR}/shared/rust_install.sh
 # rvm install
 source ${DOT_DIR}/shared/rvm_install.sh
+# pipenv3 config
+source ${DOT_DIR}/shared/pipenv3_config.sh
 # jetbrains install
 source ${DOT_DIR}/shared/jetbrains_install.sh
 # fetch my projects
