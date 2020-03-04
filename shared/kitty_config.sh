@@ -40,9 +40,7 @@ kitty_config() {
 	# now, check if kitty config file exists
 	if [[ ! -f ${kitty_conf_dir}/kitty.conf ]]; then
 		echo -e " ** Kitty folder exists but has no config - creating..."
-		echo -en    "# my kitty config start\n\
-                    \include ./my_kitty.conf\n\
-                    # my kitty config end" > ${kitty_conf_dir}/kitty.conf
+		echo -en    "# my kitty config start\ninclude ./my_kitty.conf\n# my kitty config end\n" > ${kitty_conf_dir}/kitty.conf
 		echo -e " -- Copying personal kitty configuration"
 	fi
 
