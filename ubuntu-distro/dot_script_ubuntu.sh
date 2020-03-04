@@ -44,6 +44,7 @@ sudo apt-get --assume-yes install \
   tmux \
   maven \
   kitty \
+  openssl-server \
   python3-pip
 
 
