@@ -9,6 +9,11 @@ blob_link=""
 myid="${DOT_DIR}/shared/id_pub"
 myrsa="${DOT_DIR}/shared/id_rsa"
 
+# if we want a minimal setup (git cred, ssh, aliases, terminal, etc)
+minimal=true
+
+# if non minimal we will add ufw rules, fetch projects, pipenv, rust, rvm, and others...
+
 # email
 myemail="andreas.grammenos@gmail.com"
 

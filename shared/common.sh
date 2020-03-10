@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# pretty functions for log output
+function cli_info { echo -e "\033[1;32m$1\033[0m" ; }
+function cli_warning { echo -e "\033[1;33m$1\033[0m" ; }
+function cli_error { echo -e "\033[1;31m$1\033[0m" ; }
+
 # source necessary files
 # utility functions
 source ${DOT_DIR}/shared/url_validator.sh
@@ -139,7 +144,7 @@ check_params() {
 # check if the path contains a variable
 path_merge () {
   if ! echo "$PATH" | /bin/grep -Eq "(^|:)$1($|:)"; then
-    if [ "$2" = "after" ]; then
+    if [[ "$2" = "after" ]]; then
       PATH="$PATH:$1"
     else
       PATH="$1:$PATH"
