@@ -45,6 +45,10 @@ sudo apt-get --assume-yes install \
   maven \
   kitty \
   openssl-server \
+  lm-sensors \
+  glances \
+  python-bottle \
+  htop \
   python3-pip
 
 

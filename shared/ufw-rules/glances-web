@@ -1,0 +1,4 @@
+[glances-web]
+title=glances web
+description=Glances Web
+ports=61208/tcp

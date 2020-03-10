@@ -1,0 +1,4 @@
+[unifi-l3]
+title=Unifi controller (L3 Management)
+description=Unifi controller for L3 Management over internet, for example when running on a VPS.
+ports=8080,8443,8880,8843,6789/tcp|3478/udp

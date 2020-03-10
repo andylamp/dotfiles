@@ -1,0 +1,4 @@
+[unifi-controller]
+title=Unifi controller (Local)
+description=Unifi Controller Ports in ufw (Local that includes discovery and AP-EDU ports)
+ports=8080,8443,8880,8843,6789/tcp|3478,5656:5699,10001,1900/udp
