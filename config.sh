@@ -5,15 +5,10 @@
 # link with blobs
 blob_link=""
 
-# ssh id pub/priv
-myid="${DOT_DIR}/shared/id_pub"
-myrsa="${DOT_DIR}/shared/id_rsa"
-
 # if we want a minimal setup (git cred, ssh, aliases, terminal, etc)
+#
+# in case of non-minimal we will add ufw rules, fetch projects, pipenv, rust, rvm, and others...
 MINIMAL=true
-
-# if non minimal we will add ufw rules, fetch projects, pipenv, rust, rvm, and others...
-
 # email
 myemail="andreas.grammenos@gmail.com"
 
@@ -25,5 +20,11 @@ mygitemail="$myemail"
 kitty_theme="Afterglow"
 my_kitty_conf="${DOT_DIR}/shared/my_kitty.conf"
 
+# important files
+
 # my bash configuration
-my_bash_conf="${DOT_DIR}/shared/my_bash.sh"
+my_bash_conf="${DOT_DIR}/shared/important/my_bash.sh"
+
+# ssh id pub/priv
+myid="${DOT_DIR}/shared/important/id_pub"
+myrsa="${DOT_DIR}/shared/important/id_rsa"

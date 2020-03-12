@@ -3,7 +3,7 @@
 MY_TAG_START="### MY BASH CONF START ###"
 TAG_CONTENT="# include my personal touches\n\
 if [[ -f ${HOME}/.my_shell_conf  ]]; then\n
-    . "$HOME/.my_shell_conf"\n\
+    . "${HOME}/.my_shell_conf"\n\
 fi\n"
 MY_TAG_END="### MY BASH CONF END ###"
 TAG_HELPER="my_bash_tag.sh"
@@ -11,14 +11,15 @@ TAG_HELPER="my_bash_tag.sh"
 # function for injecting my bash config to the profile
 bash_config() {
     # check if we have a bash config file
-    #if [[ -z ${my_bash_conf} ]] || [[ ! -f ${my_bash_conf} ]]; then
-    #    echo -e " !! Cannot proceed empty bash config or not found... skipping\n"
-    #fi
+    if [[ -z ${my_bash_conf} ]] || [[ ! -f ${my_bash_conf} ]]; then
+        cli_error "Cannot proceed empty bash config or not found... skipping."
+        return 1
+    fi
     cli_info "Configuring Bash shell..."
 
     # check if my personalisation bits are there
     echo -en ${TAG_CONTENT} > ./${TAG_HELPER}
-    if grep -xq "${MY_TAG_START}" ${HOME}/.profile; then #${HOME}/.profile
+    if grep -xq "${MY_TAG_START}" ${HOME}/.profile; then
         cli_warning "My TAG has been detected in profile - not injecting but updating."
         # use sed and a helper tag buffer to do this
         sed -i "/${MY_TAG_START}/,/${MY_TAG_END}/{ /${MY_TAG_START}/{p; r ./${TAG_HELPER}
