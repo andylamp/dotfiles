@@ -2,7 +2,7 @@
 
 validate_url() {
   if [[ $# -ne 1 ]]; then
-    echo "Error: validate_url expected 1 argument, $# were supplied"
+    cli_error "Error: validate_url expected 1 argument, $# were supplied"
     return 0
   fi
   # check for a valid url

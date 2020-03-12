@@ -3,10 +3,10 @@
 
 # Rust install or update if exists
 rust_install() {
-  echo -e "\n -- Installing rust (nightly) along with rustup\n"
+  cli_info "Installing rust (nightly) along with rustup."
   # check if rust is already installed
   if [[ -x "$(command -v rustup)" ]]; then
-    echo " ** rustup appears to be already installed, using that instead"
+    cli_warning "rustup appears to be already installed, using that instead."
     rustup update
   else
     # uses nightly channel and `-y` skips prompts for a silent install.
@@ -15,5 +15,5 @@ rust_install() {
     # path_merge $HOME/.cargo/bin after
 
   fi
-  echo -e " -- Finished installing rust\n"
+  cli_info "Finished installing (nightly) rust."
 }

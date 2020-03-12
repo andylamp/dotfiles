@@ -4,7 +4,7 @@
 
 ## Initialization
 
-echo -e "\n !! Executing Ubuntu distro dotfile"
+cli_info "Executing Ubuntu distro dotfile."
 
 # rudimentary sanity check
 check_params
@@ -51,10 +51,6 @@ sudo apt-get --assume-yes install \
   htop \
   python3-pip
 
-
-# Configure rust
-rust_install
-
 # Configure git
 git_config
 
@@ -70,13 +66,21 @@ ssh_config
 # kitty terminal config
 kitty_config
 
-# pipenv3 config
-pipenv3_config
+if [[ ${MINIMAL} = false ]]; then
+    cli_info "Minimal flag is false - installing rust, rvm, and pipenv."
+    # Configure rust
+    rust_install
 
-# rvm and ruby install
-rvm_install
+    # pipenv3 config
+    pipenv3_config
 
-echo -e "\n ** Execution of Ubuntu dotfile installation has been completed\n"
+    # rvm and ruby install
+    rvm_install
+else
+    cli_info "Minimal flag is true - skipping rust, rvm, and pipenv installation."
+fi
+
+cli_info "Execution of Ubuntu dotfile installation has been completed."
 
 # finally, auto-remove unused packages
 sudo apt autoremove

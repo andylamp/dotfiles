@@ -14,12 +14,12 @@ bash_config() {
     #if [[ -z ${my_bash_conf} ]] || [[ ! -f ${my_bash_conf} ]]; then
     #    echo -e " !! Cannot proceed empty bash config or not found... skipping\n"
     #fi
-    echo -e " !! Configuring Bash shell"
+    cli_info "Configuring Bash shell..."
 
     # check if my personalisation bits are there
     echo -en ${TAG_CONTENT} > ./${TAG_HELPER}
     if grep -xq "${MY_TAG_START}" ${HOME}/.profile; then #${HOME}/.profile
-        echo -e " ** My TAG has been detected in profile - not injecting but updating\n"
+        cli_warning "My TAG has been detected in profile - not injecting but updating."
         # use sed and a helper tag buffer to do this
         sed -i "/${MY_TAG_START}/,/${MY_TAG_END}/{ /${MY_TAG_START}/{p; r ./${TAG_HELPER}
         }; /${MY_TAG_END}/p; d }" ${HOME}/.profile
@@ -27,7 +27,7 @@ bash_config() {
         rm ./${TAG_HELPER}
     else
         # part for injecting the configuration source bits
-        echo -e " ** My TAG has not been detected in profile - injecting\n"
+        cli_info "My TAG has not been detected in profile - injecting."
         echo ${MY_TAG_START} >> ${HOME}/.profile
         echo -e "${TAG_CONTENT}" >> ${HOME}/.profile
         echo ${MY_TAG_END} >> ${HOME}/.profile
@@ -35,11 +35,11 @@ bash_config() {
 
     # trying to copy my configuration
     if [[ -f ${my_bash_conf} ]]; then
-        echo -e " -- Copying configuration (only if newer)\n"
+        cli_info "Copying configuration (only if newer)."
         rsync -u ${my_bash_conf} ${HOME}/.my_shell_conf
     else
-        echo -e " !! Bash config not found, not copying\n"
+        cli_error "Bash config not found, not copying."
     fi
     # final send-off
-    echo -e " -- Finished configuring Bash shell\n"
+    cli_info "Finished configuring Bash shell."
 }

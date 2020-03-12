@@ -10,7 +10,7 @@ myid="${DOT_DIR}/shared/id_pub"
 myrsa="${DOT_DIR}/shared/id_rsa"
 
 # if we want a minimal setup (git cred, ssh, aliases, terminal, etc)
-minimal=true
+MINIMAL=true
 
 # if non minimal we will add ufw rules, fetch projects, pipenv, rust, rvm, and others...
 

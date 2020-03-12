@@ -2,10 +2,10 @@
 
 # setup rvm
 rvm_install() {
-  echo -e "\n -- Installing rvm along with stable ruby"
+  cli_info "Installing rvm along with stable ruby."
 
   if [[ -d ${myhome}.rvm ]]; then
-    echo " -- rvm appears to be already installed, skipping"
+    cli_info "rvm appears to be already installed, skipping."
     return 0
   fi
   # we need to install it
@@ -17,10 +17,10 @@ rvm_install() {
   if [[ -d ${myhome}.rvm ]]; then
     # source the rvm for the current window
     source ${myhome}.rvm/scripts/rvm
-    echo " -- rvm installed successfully"
+    cli_info "rvm has been installed successfully."
     echo "source ${myhome}.rvm/scripts/rvm" >> ${myhome}.bashrc
     ruby -v
   else
-    echo " ** Error: could not install rvm for some reason"
+    cli_error "Error: could not install rvm for some reason."
   fi
 }

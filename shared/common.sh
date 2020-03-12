@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 # pretty functions for log output
-function cli_info { echo -e "\033[1;32m$1\033[0m" ; }
-function cli_warning { echo -e "\033[1;33m$1\033[0m" ; }
-function cli_error { echo -e "\033[1;31m$1\033[0m" ; }
+function cli_info { echo -e " -- \033[1;32m$1\033[0m" ; }
+function cli_warning { echo -e " ** \033[1;33m$1\033[0m" ; }
+function cli_error { echo -e " !! \033[1;31m$1\033[0m" ; }
 
 # source necessary files
 # utility functions
