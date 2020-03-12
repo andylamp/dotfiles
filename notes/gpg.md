@@ -4,6 +4,8 @@ Handy notes if anyone has to deal with encryption/decryption using [`gnupg`][1].
 
 # Encrypting files
 
+There are two separate cases when trying to encrypt - a single file or multiple files/folders.
+
 ## Encrypting a single file
 
 If we want to encrypt a single file this is straightforward
