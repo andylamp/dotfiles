@@ -11,6 +11,8 @@ function cli_error { echo -e " !! \033[1;31m$1\033[0m" ; }
 SCRIPT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # get the important directory path
 IMP_DIR="${SCRIPT_DIR}/../shared/important/"
+# outfile name
+OUT_NAME="important"
 
 # check if we have access to GPG
 if [[ ! -x "$(command -v gpg)" ]]; then
@@ -38,4 +40,6 @@ fi
 cli_info "Compressing and encrypting"
 
 # pack them up with a given password
-tar -cjv -C ${IMP_DIR} . | gpg -co important.gpg
+tar -cjv -C ${IMP_DIR} . | gpg -co ${OUT_NAME}.gpg
+
+cli_info "Finished packing - output resides at ${OUT_NAME}"
