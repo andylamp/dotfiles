@@ -66,7 +66,10 @@ ports=8080,8443,8880,8843,6789/tcp|3478,5656:5699,10001,1900/udp
 Then we need to enable this from `ufw` by using:
 
 ```bash
+# this allows all ports from any ip and network
 sudo ufw allow unifi-local
+# this allows all ports from any ip in my local network range (192.168.178.xxx)
+sudo ufw allow from 192.168.178.0/24 to any app unifi-local
 ```
 
 That's it! You should be good to go! Enjoy your Ubiquiti AP's!
