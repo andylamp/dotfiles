@@ -178,6 +178,11 @@ smbclient -L //remote-system
 testparm -s
 ```
 
+```bash
+# retrieve the status, version, and source of installed samba packages.
+dpkg-query -W -f='${Package} ${Version} ${Source} ${Status}\n' | grep samba
+```
+
 ## Final touches
 
 Please after every change in either configuration or users perform a `Samba` service restart using the below command:
