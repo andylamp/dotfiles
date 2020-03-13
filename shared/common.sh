@@ -6,6 +6,7 @@ function cli_warning { echo -e " ** \033[1;33m$1\033[0m" ; }
 function cli_error { echo -e " !! \033[1;31m$1\033[0m" ; }
 
 # source necessary files
+
 # utility functions
 source ${DOT_DIR}/shared/url_validator.sh
 # git
@@ -45,7 +46,7 @@ expand_path() {
       printf '%s\n' "$content"
       ;;
     *)
-      printf '%s\n' "$1"
+      printf '%s\n' "${1}"
       ;;
   esac
 }
@@ -67,7 +68,7 @@ find_linux_distro() {
       . /etc/lsb-release
       OS=${DISTRIB_ID}
       VER=${DISTRIB_RELEASE}
-      echo "This"
+      cli_info "Detected Debian based without lsb_release."
   elif [[ -f /etc/debian_version ]]; then
       # Older Debian/Ubuntu/etc.
       OS=Debian
@@ -87,67 +88,67 @@ find_linux_distro() {
       OS=$(uname -s)
       VER=$(uname -r)
   fi
-  echo " !! Found $OS, version: $VER"
+  cli_info "Found $OS, version: $VER."
 
   # launch the appropriate dotfile
   if [[ ${OS} -eq "Ubuntu" ]]; then
-    echo " ** Configuring Ubuntu"
+    cli_info "Configuring Ubuntu."
     source ${DOT_DIR}/ubuntu-distro/dot_script_ubuntu.sh
   elif [[ ${OS} -eq "Debian" ]]; then
-    echo " ** Configuring Debian"
+    cli_info "Configuring Debian."
   else
-    echo " ** No dotfile present for $OS"
+    cli_info "No dotfile present for $OS."
   fi
 }
 
 # This function selects which one of the scripts we will use
 detect_os() {
-  echo "Trying to detect OS-type"
-  if [[ "$OSTYPE" == "linux-gnu" ]]; then
+  cli_info "Trying to detect OS-type."
+  if [[ "${OSTYPE}" == "linux-gnu" ]]; then
     find_linux_distro
-  elif [[ "$OSTYPE" == "dawrin" ]]; then
-    echo "Detected MacOS"
-  elif [[ "$OSTYPE" == "cygwin" ]]; then
+  elif [[ "${OSTYPE}" == "dawrin" ]]; then
+    cli_info "Detected MacOS."
+  elif [[ "${OSTYPE}" == "cygwin" ]]; then
     # POSIX compatibility layer and Linux environment emulation for Windows
-    echo "Detected win32/cygwin"
-  elif [[ "$OSTYPE" == "msys" ]]; then
-    echo "Detected win32/MinGW"
-  elif [[ "$OSTYPE" == "win32" ]]; then
+    cli_info "Detected win32/cygwin."
+  elif [[ "${OSTYPE}" == "msys" ]]; then
+    cli_info "Detected win32/MinGW."
+  elif [[ "${OSTYPE}" == "win32" ]]; then
     # I'm not sure this can happen.
-    echo "Detected win32"
-  elif [[ "$OSTYPE" == "freebsd"* ]]; then
-    echo "Detected FreeBSD"
+    cli_info "Detected win32."
+  elif [[ "${OSTYPE}" == "freebsd"* ]]; then
+    cli_info "Detected FreeBSD."
   else
-    echo "Unknown OS type"
+    cli_info "Unknown OS type."
   fi
 }
 
 # rudimentary sanity check before proceeding
 check_params() {
-  echo -e "\n ** Initialisation details **"
-  echo -e " !! SSH Details:\n\tmy_id: ${myid}\n\tmy_rsa: ${myrsa}"
-  echo -e " !! User details:\n\tuser: ${myhome}\n\thome: ${myhome}\n\temail: ${myemail}"
-  echo -e " !! Git details:\n\tusername: ${mygituser}\n\temail: ${mygitemail}"
-  echo -e " !! Kitty terminal parameters:\n\tConf file: ${my_kitty_conf}\n\tTheme: ${kitty_theme}"
-  echo -e " !! Bash config:\n\t${kitty_theme}"
+  cli_info "Initialisation details:"
+  cli_info "  SSH Details:\n\tmy_id: ${CFG_MY_SSH_PUB}\n\tmy_rsa: ${CFG_MY_SSH_PRI}"
+  cli_info "  User details:\n\tuser: ${MY_HOME}\n\thome: ${MY_HOME}\n\temail: ${CFG_EMAIL}"
+  cli_info "  Git details:\n\tusername: ${CFG_GIT_USER}\n\temail: ${CFG_GIT_EMAIL}"
+  cli_info "  Kitty terminal parameters:\n\tConf file: ${CFG_KITTY_CONF}\n\tTheme: ${CFG_KITTY_THEME}"
+  cli_info "  Bash config:\n\t${CFG_BASH_CONF}"
 
   # check for details
-  read -p " !! Do the details shown above appear OK to you? [y/n]: " -n 1 -r; #echo ""
-  if [[ $REPLY =~ ^[yY]$ ]] || [[ -z $REPLY ]]; then
-    echo -e "\n -- Details seem to be OK, continuing\n"
+  read -p $(cli_info "Do the details shown above appear OK to you? [y/n]: ") -n 1 -r; #echo ""
+  if [[ ${REPLY} =~ ^[yY]$ ]] || [[ -z ${REPLY} ]]; then
+    cli_info "Details seem to be OK, continuing..."
   else
-    echo -e "\n ** Details are not OK, aborting\n"
+    cli_info "Details are not OK, aborting..."
     exit 1
   fi
 }
 
 # check if the path contains a variable
 path_merge () {
-  if ! echo "$PATH" | /bin/grep -Eq "(^|:)$1($|:)"; then
-    if [[ "$2" = "after" ]]; then
-      PATH="$PATH:$1"
+  if ! echo "${PATH}" | /bin/grep -Eq "(^|:)$1($|:)"; then
+    if [[ "${2}" = "after" ]]; then
+      PATH="${PATH}:${1}"
     else
-      PATH="$1:$PATH"
+      PATH="${1}:${PATH}"
     fi
   fi
 }

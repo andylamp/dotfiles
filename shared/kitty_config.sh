@@ -4,10 +4,10 @@
 kitty_config() {
 	cli_info "Configuring Kitty Terminal..."
 
-	kitty_conf_dir="${myhome}.config/kitty"
+	KITTY_CONF_DIR="${MY_HOME}.config/kitty"
 
 	# check if kitty was installed correctly
-	if [[ ! -d ${kitty_conf_dir} ]]; then
+	if [[ ! -d ${KITTY_CONF_DIR} ]]; then
 		cli_error "Error: Kitty configuration folder not found, maybe not installed?"
 		return 1
 	else
@@ -15,39 +15,39 @@ kitty_config() {
 	fi
 
 	# now download the terminal themes
-	if [[ ! -d ${kitty_conf_dir}/kitty-themes ]]; then
-	    cli_info "Downloading Kitty Themes to ${kitty_conf_dir}."
-	    git clone --depth 1 https://github.com/dexpota/kitty-themes.git ${kitty_conf_dir}/kitty-themes
+	if [[ ! -d ${KITTY_CONF_DIR}/kitty-themes ]]; then
+	    cli_info "Downloading Kitty Themes to ${KITTY_CONF_DIR}."
+	    git clone --depth 1 https://github.com/dexpota/kitty-themes.git ${KITTY_CONF_DIR}/kitty-themes
 	else
 	    cli_warning "Themes already exist not downloading again."
 	fi
 
 	# try to find if the theme is available in our fetched list
-	kitty_theme_checked=$(ls ${kitty_conf_dir}/kitty-themes/themes | grep -w ${kitty_theme}.conf)
+	KITTY_THEME_CHECKED=$(ls ${KITTY_CONF_DIR}/kitty-themes/themes | grep -w ${CFG_KITTY_THEME}.conf)
 	# now check if the exact filename has been located
-	if [[ -z ${kitty_theme_checked} ]]; then
+	if [[ -z ${KITTY_THEME_CHECKED} ]]; then
 	    # it hasn't, skip it
-	    cli_error " Error: Theme not found -- skipping; please symlink your valid theme to 'theme.conf' in ${kitty_conf_dir}."
-	elif [[ -f ${kitty_conf_dir}/theme.conf ]]; then
+	    cli_error "Error: Theme not found -- skipping; please symlink your valid theme to 'theme.conf' in ${KITTY_CONF_DIR}."
+	elif [[ -f ${KITTY_CONF_DIR}/theme.conf ]]; then
 	    cli_info "Theme config file already exists -- skipping."
 	else
 	    # it has, symlink it!
- 	    cli_info "Theme valid: Enabling ${kitty_theme} via symlink"
-	    ln -s ${kitty_conf_dir}/kitty-themes/themes/${kitty_theme}.conf \
-	        ${kitty_conf_dir}/theme.conf
+ 	    cli_info "Theme valid: Enabling ${CFG_KITTY_THEME} via symlink"
+	    ln -s ${KITTY_CONF_DIR}/kitty-themes/themes/${CFG_KITTY_THEME}.conf \
+	        ${KITTY_CONF_DIR}/theme.conf
 	fi
 
 	# now, check if kitty config file exists
-	if [[ ! -f ${kitty_conf_dir}/kitty.conf ]]; then
+	if [[ ! -f ${KITTY_CONF_DIR}/kitty.conf ]]; then
 		cli_info "Kitty folder exists but has no config - creating..."
-		echo -en    "# my kitty config start\ninclude ./my_kitty.conf\n# my kitty config end\n" > ${kitty_conf_dir}/kitty.conf
+		echo -en    "# my kitty config start\ninclude ./my_kitty.conf\n# my kitty config end\n" > ${KITTY_CONF_DIR}/kitty.conf
 		cli_info "Copying (my) personal kitty configuration."
 	fi
 
 	# set the permissions
-    cp ${my_kitty_conf} ${kitty_conf_dir}/my_kitty.conf
+    cp ${CFG_KITTY_CONF} ${KITTY_CONF_DIR}/my_kitty.conf
     # set the permissions & ownership
-    chown -R ${myuser} ${kitty_conf_dir}
-    chmod 664 ${kitty_conf_dir}/kitty.conf ${kitty_conf_dir}/my_kitty.conf
+    chown -R ${MY_USER} ${KITTY_CONF_DIR}
+    chmod 664 ${KITTY_CONF_DIR}/kitty.conf ${KITTY_CONF_DIR}/my_kitty.conf
 
 }

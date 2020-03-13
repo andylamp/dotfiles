@@ -20,12 +20,12 @@ sudo tee /etc/apt/sources.list.d/sublime-text.list
 # add universe for fira-code
 sudo add-apt-repository universe
 
-## Install basic/essential packages
+## Install (my) packages
 
-# perform an update before install
-sudo apt-get update
+# perform an update, upgrade, auto-remove before install
+sudo apt update && sudo apt -y upgrade && sudo apt autoremove
 
-# install the packages
+# install (my) essential packages
 sudo apt-get --assume-yes install \
   valgrind \
   graphviz \
@@ -47,9 +47,15 @@ sudo apt-get --assume-yes install \
   openssl-server \
   lm-sensors \
   glances \
-  python-bottle \
   htop \
   python3-pip
+
+# install optional packages
+if [[ ${CFG_MINIMAL} = false ]]; then
+    sudo apt install --assume-yes install \
+        qbittorrent \
+        python-bottle
+fi
 
 # Configure git
 git_config

@@ -11,14 +11,14 @@ TAG_HELPER="my_bash_tag.sh"
 # function for injecting my bash config to the profile
 bash_config() {
     # check if we have a bash config file
-    if [[ -z ${my_bash_conf} ]] || [[ ! -f ${my_bash_conf} ]]; then
+    if [[ -z ${CFG_BASH_CONF} ]] || [[ ! -f ${CFG_BASH_CONF} ]]; then
         cli_error "Cannot proceed empty bash config or not found... skipping."
         return 1
     fi
     cli_info "Configuring Bash shell..."
 
     # check if my personalisation bits are there
-    echo -en ${TAG_CONTENT} > ./${TAG_HELPER}
+    echo -en ${TAG_CONTENT}  > ./${TAG_HELPER}
     if grep -xq "${MY_TAG_START}" ${HOME}/.profile; then
         cli_warning "My TAG has been detected in profile - not injecting but updating."
         # use sed and a helper tag buffer to do this
@@ -35,9 +35,9 @@ bash_config() {
     fi
 
     # trying to copy my configuration
-    if [[ -f ${my_bash_conf} ]]; then
+    if [[ -f ${CFG_BASH_CONF} ]]; then
         cli_info "Copying configuration (only if newer)."
-        rsync -u ${my_bash_conf} ${HOME}/.my_shell_conf
+        rsync -u ${CFG_BASH_CONF} ${HOME}/.my_shell_conf
     else
         cli_error "Bash config not found, not copying."
     fi

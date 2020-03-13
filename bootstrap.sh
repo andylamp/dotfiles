@@ -3,6 +3,7 @@
 ## Boostrap.sh
 
 ## Common variables
+
 # find current directory and put it in a global variable
 DOT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # now source everything else
@@ -12,14 +13,14 @@ source ${DOT_DIR}/shared/common.sh
 source ${DOT_DIR}/config.sh
 
 # user directory
-myuser="$(whoami)"
-myhome="$(expand_path "~/")"
+MY_USER="$(whoami)"
+MY_HOME="$(expand_path "~/")"
 
 detect_root() {
   if [[ $(id -u) -eq 0 ]]; then
-    cli_error "Error: You cannot run this as root, exiting"; exit 1;
+    cli_error "Error: You cannot run this as root, exiting."; exit 1;
   else
-    cli_info "Running as user ${myuser}"
+    cli_info "Running as user ${MY_USER}."
   fi
 }
 
@@ -27,12 +28,12 @@ detect_root() {
 fetch_projects() {
   # check for details
   read -p $(cli_info "Do you want to fetch/update git projects as well? [y/n]: ") -n 1 -r;
-  if [[ $REPLY =~ ^[yY]$ ]] || [[ -z $REPLY ]]; then
-    cli_info "    OK, fetching"
+  if [[ ${REPLY} =~ ^[yY]$ ]] || [[ -z ${REPLY} ]]; then
+    cli_info "\tOK, fetching!"
     # fetch my projects
     fetch_my_projects
   else
-    cli_info "    OK, skipping fetching\n"
+    cli_info "\tOK, skipping fetching!"
   fi
 }
 

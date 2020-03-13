@@ -2,29 +2,36 @@
 
 ## Configuration for the script
 
-# link with blobs
-blob_link=""
+# link for the non-public parts of the dotfiles
+IMPORTANT_URL=""
+
+# my email
+CFG_EMAIL="andreas.grammenos@gmail.com"
+
+# git user/email
+CFG_GIT_USER="andylamp"
+CFG_GIT_EMAIL="${CFG_EMAIL}"
 
 # if we want a minimal setup (git cred, ssh, aliases, terminal, etc)
 #
-# in case of non-minimal we will add ufw rules, fetch projects, pipenv, rust, rvm, and others...
-MINIMAL=true
-# email
-myemail="andreas.grammenos@gmail.com"
+# in case of non-minimal we will add fetch projects, pipenv, rust, rvm, and others...
+CFG_MINIMAL=true
 
-# git username
-mygituser="andylamp"
-mygitemail="$myemail"
+# enabled if we expect this to be run in a headless server
+CFG_HEADLESS=true
 
-# kitty (case sensitive!)
-kitty_theme="Afterglow"
-my_kitty_conf="${DOT_DIR}/shared/my_kitty.conf"
+# kitty terminal configuration
+CFG_KITTY_THEME="Afterglow"
+CFG_KITTY_CONF="${DOT_DIR}/shared/my_kitty.conf"
 
-# important files
+# my bash configuration location
+CFG_BASH_CONF="${DOT_DIR}/shared/important/my_bash.sh"
 
-# my bash configuration
-my_bash_conf="${DOT_DIR}/shared/important/my_bash.sh"
+# my ssh pub and private key location
+CFG_SSH_PUB="${DOT_DIR}/shared/important/id_pub"
+CFG_SSH_RSA="${DOT_DIR}/shared/important/id_rsa"
 
 # ssh id pub/priv
-myid="${DOT_DIR}/shared/important/id_pub"
-myrsa="${DOT_DIR}/shared/important/id_rsa"
+CFG_MY_SSH_PUB="${DOT_DIR}/shared/important/id_pub"
+CFG_MY_SSH_PRI="${DOT_DIR}/shared/important/id_rsa"
+
