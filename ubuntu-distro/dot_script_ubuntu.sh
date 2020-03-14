@@ -6,6 +6,15 @@
 
 cli_info "Executing Ubuntu distro dotfile."
 
+# perform an update, upgrade, auto-remove before install
+sudo apt update && sudo apt -y upgrade && sudo apt autoremove
+
+# add gpg since we are going to need it.
+sudo apt install -y gnupg2
+
+# source our particular config
+source ${DOT_DIR}/config.sh
+
 # rudimentary sanity check
 check_params
 
@@ -22,15 +31,14 @@ sudo add-apt-repository universe
 
 ## Install (my) packages
 
-# perform an update, upgrade, auto-remove before install
-sudo apt update && sudo apt -y upgrade && sudo apt autoremove
+# perform an update of the repositories
+sudo apt update
 
 # install (my) essential packages
-sudo apt-get --assume-yes install \
+sudo apt install -y \
   valgrind \
   graphviz \
   vim \
-  doxygen \
   curl \
   git \
   apt-transport-https \
@@ -40,21 +48,21 @@ sudo apt-get --assume-yes install \
   python3 python3-dev \
   checkinstall \
   fonts-firacode \
-  gnupg2 \
   tmux \
   maven \
   kitty \
   openssl-server \
-  lm-sensors \
   glances \
   htop \
   python3-pip
 
 # install optional packages
 if [[ ${CFG_MINIMAL} = false ]]; then
-    sudo apt install --assume-yes install \
-        qbittorrent \
-        python-bottle
+  sudo apt install -y \
+    lm-sensors \
+    doxygen \
+    qbittorrent \
+    python-bottle
 fi
 
 # Configure git
@@ -73,17 +81,17 @@ ssh_config
 kitty_config
 
 if [[ ${MINIMAL} = false ]]; then
-    cli_info "Minimal flag is false - installing rust, rvm, and pipenv."
-    # Configure rust
-    rust_install
+  cli_info "Minimal flag is false - installing rust, rvm, and pipenv."
+  # Configure rust
+  rust_install
 
-    # pipenv3 config
-    pipenv3_config
+  # pipenv3 config
+  pipenv3_config
 
-    # rvm and ruby install
-    rvm_install
+  # rvm and ruby install
+  rvm_install
 else
-    cli_info "Minimal flag is true - skipping rust, rvm, and pipenv installation."
+  cli_info "Minimal flag is true - skipping rust, rvm, and pipenv installation."
 fi
 
 cli_info "Execution of Ubuntu dotfile installation has been completed."

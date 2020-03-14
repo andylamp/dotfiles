@@ -96,6 +96,7 @@ find_linux_distro() {
     source ${DOT_DIR}/ubuntu-distro/dot_script_ubuntu.sh
   elif [[ ${OS} -eq "Debian" ]]; then
     cli_info "Configuring Debian."
+    source ${DOT_DIR}/debian-distro/dot_script_debian.sh
   else
     cli_info "No dotfile present for $OS."
   fi
@@ -105,9 +106,12 @@ find_linux_distro() {
 detect_os() {
   cli_info "Trying to detect OS-type."
   if [[ "${OSTYPE}" == "linux-gnu" ]]; then
+    # find what type of linux distribution we got.
     find_linux_distro
   elif [[ "${OSTYPE}" == "dawrin" ]]; then
     cli_info "Detected MacOS."
+    # run the macos dotfiles.
+    source ${DOT_DIR}/macos/dot_script_macos.sh
   elif [[ "${OSTYPE}" == "cygwin" ]]; then
     # POSIX compatibility layer and Linux environment emulation for Windows
     cli_info "Detected win32/cygwin."

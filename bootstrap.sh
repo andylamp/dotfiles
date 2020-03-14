@@ -9,9 +9,6 @@ DOT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # now source everything else
 source ${DOT_DIR}/shared/common.sh
 
-# source config
-source ${DOT_DIR}/config.sh
-
 # user directory
 MY_USER="$(whoami)"
 MY_HOME="$(expand_path "~/")"
