@@ -13,7 +13,6 @@ rust_install() {
     curl https://sh.rustup.rs -sSf | sh -s -- --default-toolchain nightly -y
     # now merge to the path
     # path_merge $HOME/.cargo/bin after
-
   fi
   cli_info "Finished installing (nightly) rust."
 }
