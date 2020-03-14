@@ -38,6 +38,8 @@ If we have encrypted a single file we can do the following:
 ```bash
 # decrypt a file that was encrypted with (-c)
 gpg -d file.gpg
+# decrypt a file that was encrypted with (-c) but using a specific outfile
+gpg --output <outfile> -d file.gpg
 ```
 
 ## Decrypting multiple files

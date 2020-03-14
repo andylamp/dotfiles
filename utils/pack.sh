@@ -39,9 +39,15 @@ elif [[ ! -f ${IMP_DIR}/id_pub ]]; then
     exit 1
 fi
 
+if [[ ! -f ${IMP_DIR}/imp_config.sh ]]; then
+    cli_warning "No optional configuration present - not packing it."
+else
+    cli_info "Optional configuration found - packing it."
+fi
+
 cli_info "Compressing and encrypting..."
 
 # pack them up with a given password
-tar -cjv -C ${IMP_DIR} . | gpg -co ${OUT_NAME}.gpg
+tar --exclude='./README.md' --exclude='*.gpg' -cjv -C ${IMP_DIR} . | gpg -co ${OUT_NAME}.gpg
 
 cli_info "Finished packing - output resides at ${OUT_NAME}.gpg."
