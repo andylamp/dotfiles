@@ -14,6 +14,8 @@ IMP_DIR="${SCRIPT_DIR}/../shared/important/"
 # outfile name
 OUT_NAME="important"
 
+cli_info "Starting to pack important files at ${IMP_DIR}..."
+
 # check if we have access to GPG
 if [[ ! -x "$(command -v gpg)" ]]; then
     cli_error "gpg needs to be installed and accessible - cannot continue."
@@ -37,9 +39,9 @@ elif [[ ! -f ${IMP_DIR}/id_pub ]]; then
     exit 1
 fi
 
-cli_info "Compressing and encrypting"
+cli_info "Compressing and encrypting..."
 
 # pack them up with a given password
 tar -cjv -C ${IMP_DIR} . | gpg -co ${OUT_NAME}.gpg
 
-cli_info "Finished packing - output resides at ${OUT_NAME}"
+cli_info "Finished packing - output resides at ${OUT_NAME}.gpg."
