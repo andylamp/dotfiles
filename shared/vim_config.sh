@@ -7,12 +7,16 @@ vim_config() {
     cli_error "Error: expected non empty string -- skipping vim config."
     return 1
   fi
+  # check if we need to clone for the first time or update.
   if [[ -d ${MY_HOME}.vim_runtime ]]; then
-    cli_warning "vim_runtime dir already exists, probably already configured."
+    cli_warning "vim_runtime dir already exists, probably already configured - trying to update it!"
+    # updating from master
+    git -C ${MY_HOME}.vim_runtime git pull
   else
     cli_info "Installing awesome_vimrc to ${MY_HOME}."
-    ## Configure vim
+    # clone the repository
     git clone --depth=1 https://github.com/andylamp/vimrc.git ${MY_HOME}.vim_runtime
-    sh ${MY_HOME}.vim_runtime/install_awesome_vimrc.sh
   fi
+  # (re)-install it.
+  sh ${MY_HOME}.vim_runtime/install_awesome_vimrc.sh
 }
