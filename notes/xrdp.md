@@ -11,7 +11,8 @@ This is fairly straightforward - we install this package of any recent Ubuntu di
 sudo apt install -y xrdp
 ```
 
-Of particular note are distributions of the 18.xx branch as they require another package to work correct as is shown below
+Of particular note, are distributions of the `18.xx` branch since they require the installation of another package to work correctly.
+This package can be installed as is shown below.
 
 ```bash
 sudo apt install -y xorgxrdp-hwe-18.04
