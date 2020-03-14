@@ -50,4 +50,4 @@ cli_info "Compressing and encrypting..."
 # pack them up with a given password
 tar --exclude='./README.md' --exclude='*.gpg' -cjv -C ${IMP_DIR} . | gpg -co ${OUT_NAME}.gpg
 
-cli_info "Finished packing - output resides at ${OUT_NAME}.gpg."
+cli_info "Finished packing - output resides at ${SCRIPT_DIR}/${OUT_NAME}.gpg."
