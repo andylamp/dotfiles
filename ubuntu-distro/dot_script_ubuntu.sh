@@ -12,8 +12,8 @@ sudo apt update && sudo apt -y upgrade && sudo apt autoremove
 # add gpg since we are going to need it.
 sudo apt install -y gnupg2
 
-# source our particular config
-source ${DOT_DIR}/shared/prep_config.sh
+# prepare config
+prep_config
 
 # rudimentary sanity check
 check_params

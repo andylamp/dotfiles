@@ -7,6 +7,17 @@ function cli_error { echo -e " !! \033[1;31m$1\033[0m" ; }
 
 # source necessary files
 
+# prepare configuration
+PREP_CONF_SH="prep_config.sh"
+source ${DOT_DIR}/shared/${PREP_CONF_SH}
+
+if [[ ${?} -ne 0 ]]; then
+  cli_error "Error, non-zero value encountered while parsing ${PREP_CONF_SH} - cannot continue."
+  exit 1
+else
+  cli_info "Parsed ${PREP_CONF_SH} OK"
+fi
+
 # url validators
 URL_VAL_SH="url_validator.sh"
 source ${DOT_DIR}/shared/${URL_VAL_SH}
