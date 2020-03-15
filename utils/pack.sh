@@ -9,9 +9,10 @@ function cli_error { echo -e " !! \033[1;31m$1\033[0m" ; }
 
 cli_info "Pack script started."
 
-## Detect if the script is being sourced (not supported)
+## Detect if the script is being sourced which is not supported
+# version similar to SO user answer mklement0.
 sourced=0
-if [[ -n "$ZSH_EVAL_CONTEXT" ]]; then
+if [[ -n "${ZSH_EVAL_CONTEXT}" ]]; then
   case ${ZSH_EVAL_CONTEXT} in *:file) sourced=1;; esac
 elif [[ -n "${KSH_VERSION}" ]]; then
   [[ "$(cd $(dirname -- $0) && pwd -P)/$(basename -- $0)" != "$(cd $(dirname -- ${.sh.file}) && pwd -P)/$(basename -- ${.sh.file})" ]] && sourced=1

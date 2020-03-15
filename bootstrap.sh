@@ -2,9 +2,10 @@
 
 ## Boostrap.sh
 
-## Detect if the script is being sourced (not supported)
+## Detect if the script is being sourced which is not supported
+# version similar to SO user answer mklement0.
 sourced=0
-if [[ -n "$ZSH_EVAL_CONTEXT" ]]; then
+if [[ -n "${ZSH_EVAL_CONTEXT}" ]]; then
   case ${ZSH_EVAL_CONTEXT} in *:file) sourced=1;; esac
 elif [[ -n "${KSH_VERSION}" ]]; then
   [[ "$(cd $(dirname -- $0) && pwd -P)/$(basename -- $0)" != "$(cd $(dirname -- ${.sh.file}) && pwd -P)/$(basename -- ${.sh.file})" ]] && sourced=1
@@ -35,6 +36,7 @@ source ${DOT_DIR}/shared/common.sh
 MY_USER="$(whoami)"
 MY_HOME="$(expand_path "~/")"
 
+# detect if we are running as root
 detect_root() {
   if [[ $(id -u) -eq 0 ]]; then
     cli_error "Error: You cannot run this as root, exiting."; exit 1;
