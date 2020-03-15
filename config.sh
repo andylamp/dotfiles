@@ -5,9 +5,9 @@
 # if we want a minimal setup (git cred, ssh, aliases, terminal, etc)
 #
 # in case of non-minimal we will add fetch projects, pipenv, rust, rvm, and others...
-CFG_MINIMAL=true
+CFG_MINIMAL=false
 
-# enabled if we expect this to be run in a headless server
+# enabled if we expect this to be run in a headless server (this does not do anything yet)
 CFG_HEADLESS=true
 
 # link for the non-public parts of the dotfiles - can only be empty if
