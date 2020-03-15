@@ -3,14 +3,14 @@
 add_ufw_rules() {
   RULE_DIR=${DOT_DIR}/shared/ufw-rules
   UFW_APP_DIR="/etc/ufw/applications.d/"
-
+  # check if ufw application directory exists in /etc/
   if [[ -d ${UFW_APP_DIR} ]]; then
     cli_info "ufw dotfile rule directory found at ${UFW_APP_DIR}"
   else
     cli_error "ufw app rule directory could not be found - cannot continue with rule copy."
     return 1
   fi
-
+  # check if the rule directory exists.
   if [[ -d ${RULE_DIR} ]]; then
     cli_info "ufw rule directory found at ${RULE_DIR} - enumerating..."
     # loop through the items in the ufw rules directory
