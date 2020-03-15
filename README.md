@@ -73,7 +73,7 @@ These are the following (in alphabetical order):
  - [`glances`][8]: configuration for a very good monitoring program.
  - [`gpg`][9]: notes on how to use `gpg` to encrypt/decrypt files - esp. multiple files or folders.
  - [`samba`][10]: share files to both `Unix` and `Windows`
- - [`unifi`][11]
+ - [`unifi`][11]: Ubiquiti equipment management suite (for Ubiquiti switches, access points, cameras, and more)
  - [`ufw`][12]: uncomplicated firewall configuration notes (apply rules, to/from restrictions)
  - [`xrdp`][13]: notes on how to install and use `xrdp` for remote access using the `rdp` protocol.
 
