@@ -9,8 +9,20 @@ cli_info "Executing Ubuntu distro dotfile."
 # perform an update, upgrade, auto-remove before install
 sudo apt update && sudo apt -y upgrade && sudo apt autoremove
 
+# check if something went wrong
+if [[ ${?} -ne 0 ]]; then
+  cli_error "Error, non-zero code encountered while updating - cannot continue."
+  exit 1
+fi
+
 # add gpg since we are going to need it.
 sudo apt install -y gnupg2
+
+# check if something went wrong
+if [[ ${?} -ne 0 ]]; then
+  cli_error "Error, non-zero code encountered while installing gnupg - cannot continue."
+  exit 1
+fi
 
 # prepare config
 prep_config

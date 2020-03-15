@@ -2,6 +2,14 @@
 
 ## Boostrap.sh
 
+# pretty functions for log output
+function cli_info { echo -e " -- \033[1;32m$1\033[0m" ; }
+function cli_info_read { echo -e -n " -- \e[1;32m$1\e[0m" ; }
+function cli_warning { echo -e " ** \033[1;33m$1\033[0m" ; }
+function cli_error { echo -e " !! \033[1;31m$1\033[0m" ; }
+
+cli_info "Starting dotfile script bootstraper!"
+
 ## Detect if the script is being sourced which is not supported
 # version similar to SO user answer mklement0.
 sourced=0
@@ -18,7 +26,7 @@ fi
 
 # exit as this is not supported.
 if [[ ${sourced} = 1 ]]; then
-    echo "Error: cannot run script as sourced - please run it normally."
+    cli_error "Error: cannot run script as sourced - please run it normally."
     return 1
 fi
 
@@ -51,7 +59,8 @@ detect_root() {
 # fetch my projects if needed
 fetch_projects() {
   # check for details
-  read -p $(cli_info "Do you want to fetch/update git projects as well? [y/n]: ") -n 1 -r;
+  cli_info_read "Do you want to fetch/update git projects as well? [y/n]: "
+  read -n 1 -r; echo ""
   if [[ ${REPLY} =~ ^[yY]$ ]] || [[ -z ${REPLY} ]]; then
     cli_info "\tOK, fetching!"
     # fetch my projects
@@ -61,6 +70,7 @@ fetch_projects() {
   fi
 }
 
+# run the bootstrap!
 bootstrap() {
   cli_info "Welcome to dotfile script!"
   detect_root
@@ -70,3 +80,5 @@ bootstrap() {
 
 # fire up the script
 bootstrap
+
+cli_info "Finished dotfile script bootstraper"

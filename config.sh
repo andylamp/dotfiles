@@ -12,15 +12,12 @@ CFG_HEADLESS=true
 
 # link for the non-public parts of the dotfiles - can only be empty if
 # you already have the files.
-IMP_URL=""
-
-# filename that wget will use to name the downloaded file.
-IMP_NAME="important.gpg"
+CFG_IMP_URL=""
 
 # directory that contains non-public bits
-IMP_DIR="${DOT_DIR}/shared/important"
+CFG_IMP_DIR="${DOT_DIR}/shared/important"
 
 # the extra config bits to be parsed - can be empty.
 # IMP_CONF=""
-IMP_CONF="${IMP_DIR}/imp_config.sh"
+CFG_IMP_CONF="${IMP_DIR}/imp_config.sh"
 

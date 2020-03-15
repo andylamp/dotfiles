@@ -1,11 +1,7 @@
 #!/usr/bin/env bash
 
-# pretty functions for log output
-function cli_info { echo -e " -- \033[1;32m$1\033[0m" ; }
-function cli_warning { echo -e " ** \033[1;33m$1\033[0m" ; }
-function cli_error { echo -e " !! \033[1;31m$1\033[0m" ; }
-
 # source necessary files
+cli_info "Sourcing common files..."
 
 # prepare configuration
 PREP_CONF_SH="prep_config.sh"
@@ -15,7 +11,7 @@ if [[ ${?} -ne 0 ]]; then
   cli_error "Error, non-zero value encountered while parsing ${PREP_CONF_SH} - cannot continue."
   exit 1
 else
-  cli_info "Parsed ${PREP_CONF_SH} OK"
+  cli_info "\tParsed ${PREP_CONF_SH} OK"
 fi
 
 # url validators
@@ -26,7 +22,7 @@ if [[ ${?} -ne 0 ]]; then
   cli_error "Error, non-zero value encountered while parsing ${URL_VAL_SH} - cannot continue."
   exit 1
 else
-  cli_info "Parsed ${URL_VAL_SH} OK"
+  cli_info "\tParsed ${URL_VAL_SH} OK"
 fi
 
 # git
@@ -37,29 +33,29 @@ if [[ ${?} -ne 0 ]]; then
   cli_error "Error, non-zero value encountered while parsing ${GIT_CONF_SH} - cannot continue."
   exit 1
 else
-  cli_info "Parsed ${GIT_CONF_SH} OK"
+  cli_info "\tParsed ${GIT_CONF_SH} OK"
 fi
 
 # ssh config
 SSH_CONF_SH="ssh_config.sh"
-source ${DOT_DIR}/shared/
+source ${DOT_DIR}/shared/${SSH_CONF_SH}
 
 if [[ ${?} -ne 0 ]]; then
   cli_error "Error, non-zero value encountered while parsing ${SSH_CONF_SH} - cannot continue."
   exit 1
 else
-  cli_info "Parsed ${SSH_CONF_SH} OK"
+  cli_info "\tParsed ${SSH_CONF_SH} OK"
 fi
 
 # vim config
 VIM_CONF_SH="vim_config.sh"
-source ${DOT_DIR}/shared/
+source ${DOT_DIR}/shared/${VIM_CONF_SH}
 
 if [[ ${?} -ne 0 ]]; then
   cli_error "Error, non-zero value encountered while parsing ${VIM_CONF_SH} - cannot continue."
   exit 1
 else
-  cli_info "Parsed ${VIM_CONF_SH} OK"
+  cli_info "\tParsed ${VIM_CONF_SH} OK"
 fi
 
 # bash config
@@ -70,7 +66,7 @@ if [[ ${?} -ne 0 ]]; then
   cli_error "Error, non-zero value encountered while parsing ${BASH_CONF_SH} - cannot continue."
   exit 1
 else
-  cli_info "Parsed ${BASH_CONF_SH} OK"
+  cli_info "\tParsed ${BASH_CONF_SH} OK"
 fi
 
 # kitty terminal config
@@ -81,7 +77,7 @@ if [[ ${?} -ne 0 ]]; then
   cli_error "Error, non-zero value encountered while parsing ${KITTY_CONF_SH} - cannot continue."
   exit 1
 else
-  cli_info "Parsed ${KITTY_CONF_SH} OK"
+  cli_info "\tParsed ${KITTY_CONF_SH} OK"
 fi
 
 # rust install
@@ -92,7 +88,7 @@ if [[ ${?} -ne 0 ]]; then
   cli_error "Error, non-zero value encountered while parsing ${RUST_INSTALL_SH} - cannot continue."
   exit 1
 else
-  cli_info "Parsed ${RUST_INSTALL_SH} OK"
+  cli_info "\tParsed ${RUST_INSTALL_SH} OK"
 fi
 
 # rvm install
@@ -103,7 +99,7 @@ if [[ ${?} -ne 0 ]]; then
   cli_error "Error, non-zero value encountered while parsing ${RVM_INSTALL_SH} - cannot continue."
   exit 1
 else
-  cli_info "Parsed ${RVM_INSTALL_SH} OK"
+  cli_info "\tParsed ${RVM_INSTALL_SH} OK"
 fi
 
 # pipenv3 config
@@ -114,7 +110,7 @@ if [[ ${?} -ne 0 ]]; then
   cli_error "Error, non-zero value encountered while parsing ${PIPENV3_CONF_SH} - cannot continue."
   exit 1
 else
-  cli_info "Parsed ${PIPENV3_CONF_SH} OK"
+  cli_info "\tParsed ${PIPENV3_CONF_SH} OK"
 fi
 
 # fetch my projects
@@ -125,7 +121,7 @@ if [[ ${?} -ne 0 ]]; then
   cli_error "Error, non-zero value encountered while parsing ${FETCH_PROJ_SH} - cannot continue."
   exit 1
 else
-  cli_info "Parsed ${FETCH_PROJ_SH} OK"
+  cli_info "\tParsed ${FETCH_PROJ_SH} OK"
 fi
 
 # beautiful and tidy way to expand tilde (~) by C. Duffy.
@@ -151,7 +147,7 @@ expand_path() {
 
 # find which linux distribution we have
 find_linux_distro() {
-  echo "Detected Linux-based OS, trying to find flavor"
+  cli_warning "Detected Linux-based OS, trying to find its flavor."
   if [[ -f /etc/os-release ]]; then
       # freedesktop.org and systemd
       . /etc/os-release
@@ -192,9 +188,11 @@ find_linux_distro() {
   if [[ ${OS} -eq "Ubuntu" ]]; then
     cli_info "Configuring Ubuntu."
     source ${DOT_DIR}/ubuntu-distro/dot_script_ubuntu.sh
+    # ${DOT_DIR}/ubuntu-distro/dot_script_ubuntu.sh
   elif [[ ${OS} -eq "Debian" ]]; then
     cli_info "Configuring Debian."
-    source ${DOT_DIR}/debian-distro/dot_script_debian.sh
+    # source ${DOT_DIR}/debian-distro/dot_script_debian.sh
+    ${DOT_DIR}/debian-distro/dot_script_debian.sh
   else
     cli_info "No dotfile present for ${OS}."
   fi
@@ -228,20 +226,24 @@ detect_os() {
 # rudimentary sanity check before proceeding
 check_params() {
   cli_info "Initialisation details:"
-  cli_info "  SSH Details:\n\tmy_id: ${CFG_MY_SSH_PUB}\n\tmy_rsa: ${CFG_MY_SSH_PRI}"
+  cli_info "  SSH Details:\n\tmy_id: ${CFG_SSH_PUB}\n\tmy_rsa: ${CFG_SSH_PRI}"
   cli_info "  User details:\n\tuser: ${MY_HOME}\n\thome: ${MY_HOME}\n\temail: ${CFG_EMAIL}"
   cli_info "  Git details:\n\tusername: ${CFG_GIT_USER}\n\temail: ${CFG_GIT_EMAIL}"
   cli_info "  Kitty terminal parameters:\n\tConf file: ${CFG_KITTY_CONF}\n\tTheme: ${CFG_KITTY_THEME}"
   cli_info "  Bash config:\n\t${CFG_BASH_CONF}"
 
   # check for details
-  read -p $(cli_info "Do the details shown above appear OK to you? [y/n]: ") -n 1 -r; #echo ""
+  cli_info_read "Do the details shown above appear OK to you? [y/n]: "
+  read -n 1 -r; echo ""
+  # read -p $'\e[1;32mFoobar\e[0m: ' -n 1 -r;
+  # check the reply...
   if [[ ${REPLY} =~ ^[yY]$ ]] || [[ -z ${REPLY} ]]; then
-    cli_info "Details seem to be OK, continuing..."
+    cli_warning "Details seem to be OK, continuing..."
   else
-    cli_info "Details are not OK, aborting..."
+    cli_error "Details are not OK, aborting..."
     exit 1
   fi
+  exit 1
 }
 
 # check if the path contains a variable
@@ -254,3 +256,5 @@ path_merge () {
     fi
   fi
 }
+
+cli_info "Finished sourcing common files..."
