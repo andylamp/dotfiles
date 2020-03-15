@@ -73,7 +73,7 @@ fi
 cli_info "Compressing and encrypting..."
 
 # pack them up with a given password
-tar --exclude='./README.md' --exclude='*.gpg' -cjv -C ${IMP_DIR} . | gpg -co ${OUT_NAME}.gpg
+tar --exclude='README.md' --exclude='*.gpg' -cjv -C ${IMP_DIR} . | gpg -co ${OUT_NAME}.gpg
 
 if [[ ${?} -ne 0 ]]; then
     cli_error "Error: non-zero exit code while compressing and encrypting"

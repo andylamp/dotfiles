@@ -13,7 +13,7 @@ sudo apt update && sudo apt -y upgrade && sudo apt autoremove
 sudo apt install -y gnupg2
 
 # source our particular config
-source ${DOT_DIR}/config.sh
+source ${DOT_DIR}/shared/prep_config.sh
 
 # rudimentary sanity check
 check_params
@@ -80,7 +80,7 @@ ssh_config
 # kitty terminal config
 kitty_config
 
-if [[ ${MINIMAL} = false ]]; then
+if [[ ${CFG_MINIMAL} = false ]]; then
   cli_info "Minimal flag is false - installing rust, rvm, and pipenv."
   # Configure rust
   rust_install

@@ -29,6 +29,9 @@ fi
 # this is simple and works on most shells - but is not able to be sourced.
 DOT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 
+# source the basic configuration
+source ${DOT_DIR}/config.sh
+
 # now source everything else
 source ${DOT_DIR}/shared/common.sh
 

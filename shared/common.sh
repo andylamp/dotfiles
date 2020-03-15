@@ -7,28 +7,115 @@ function cli_error { echo -e " !! \033[1;31m$1\033[0m" ; }
 
 # source necessary files
 
-# utility functions
-source ${DOT_DIR}/shared/url_validator.sh
+# url validators
+URL_VAL_SH="url_validator.sh"
+source ${DOT_DIR}/shared/${URL_VAL_SH}
+
+if [[ ${?} -ne 0 ]]; then
+  cli_error "Error, non-zero value encountered while parsing ${URL_VAL_SH} - cannot continue."
+  exit 1
+else
+  cli_info "Parsed ${URL_VAL_SH} OK"
+fi
+
 # git
-source ${DOT_DIR}/shared/git_config.sh
+GIT_CONF_SH="git_config.sh"
+source ${DOT_DIR}/shared/${GIT_CONF_SH}
+
+if [[ ${?} -ne 0 ]]; then
+  cli_error "Error, non-zero value encountered while parsing ${GIT_CONF_SH} - cannot continue."
+  exit 1
+else
+  cli_info "Parsed ${GIT_CONF_SH} OK"
+fi
+
 # ssh config
-source ${DOT_DIR}/shared/ssh_config.sh
+SSH_CONF_SH="ssh_config.sh"
+source ${DOT_DIR}/shared/
+
+if [[ ${?} -ne 0 ]]; then
+  cli_error "Error, non-zero value encountered while parsing ${SSH_CONF_SH} - cannot continue."
+  exit 1
+else
+  cli_info "Parsed ${SSH_CONF_SH} OK"
+fi
+
 # vim config
-source ${DOT_DIR}/shared/vim_config.sh
+VIM_CONF_SH="vim_config.sh"
+source ${DOT_DIR}/shared/
+
+if [[ ${?} -ne 0 ]]; then
+  cli_error "Error, non-zero value encountered while parsing ${VIM_CONF_SH} - cannot continue."
+  exit 1
+else
+  cli_info "Parsed ${VIM_CONF_SH} OK"
+fi
+
 # bash config
-source ${DOT_DIR}/shared/bash_config.sh
+BASH_CONF_SH="bash_config.sh"
+source ${DOT_DIR}/shared/${BASH_CONF_SH}
+
+if [[ ${?} -ne 0 ]]; then
+  cli_error "Error, non-zero value encountered while parsing ${BASH_CONF_SH} - cannot continue."
+  exit 1
+else
+  cli_info "Parsed ${BASH_CONF_SH} OK"
+fi
+
 # kitty terminal config
-source ${DOT_DIR}/shared/kitty_config.sh
+KITTY_CONF_SH="kitty_config.sh"
+source ${DOT_DIR}/shared/${KITTY_CONF_SH}
+
+if [[ ${?} -ne 0 ]]; then
+  cli_error "Error, non-zero value encountered while parsing ${KITTY_CONF_SH} - cannot continue."
+  exit 1
+else
+  cli_info "Parsed ${KITTY_CONF_SH} OK"
+fi
+
 # rust install
-source ${DOT_DIR}/shared/rust_install.sh
+RUST_INSTALL_SH="rust_install.sh"
+source ${DOT_DIR}/shared/${RUST_INSTALL_SH}
+
+if [[ ${?} -ne 0 ]]; then
+  cli_error "Error, non-zero value encountered while parsing ${RUST_INSTALL_SH} - cannot continue."
+  exit 1
+else
+  cli_info "Parsed ${RUST_INSTALL_SH} OK"
+fi
+
 # rvm install
-source ${DOT_DIR}/shared/rvm_install.sh
+RVM_INSTALL_SH="rvm_install.sh"
+source ${DOT_DIR}/shared/${RVM_INSTALL_SH}
+
+if [[ ${?} -ne 0 ]]; then
+  cli_error "Error, non-zero value encountered while parsing ${RVM_INSTALL_SH} - cannot continue."
+  exit 1
+else
+  cli_info "Parsed ${RVM_INSTALL_SH} OK"
+fi
+
 # pipenv3 config
-source ${DOT_DIR}/shared/pipenv3_config.sh
-# jetbrains install
-source ${DOT_DIR}/shared/jetbrains_install.sh
+PIPENV3_CONF_SH="pipenv3_config.sh"
+source ${DOT_DIR}/shared/${PIPENV3_CONF_SH}
+
+if [[ ${?} -ne 0 ]]; then
+  cli_error "Error, non-zero value encountered while parsing ${PIPENV3_CONF_SH} - cannot continue."
+  exit 1
+else
+  cli_info "Parsed ${PIPENV3_CONF_SH} OK"
+fi
+
 # fetch my projects
-source ${DOT_DIR}/shared/fetch_my_projects.sh
+FETCH_PROJ_SH="fetch_my_projects.sh"
+source ${DOT_DIR}/shared/${FETCH_PROJ_SH}
+
+if [[ ${?} -ne 0 ]]; then
+  cli_error "Error, non-zero value encountered while parsing ${FETCH_PROJ_SH} - cannot continue."
+  exit 1
+else
+  cli_info "Parsed ${FETCH_PROJ_SH} OK"
+fi
 
 # beautiful and tidy way to expand tilde (~) by C. Duffy.
 expand_path() {
@@ -98,7 +185,7 @@ find_linux_distro() {
     cli_info "Configuring Debian."
     source ${DOT_DIR}/debian-distro/dot_script_debian.sh
   else
-    cli_info "No dotfile present for $OS."
+    cli_info "No dotfile present for ${OS}."
   fi
 }
 
