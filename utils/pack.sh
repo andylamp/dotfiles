@@ -7,14 +7,38 @@ function cli_info { echo -e " -- \033[1;32m$1\033[0m" ; }
 function cli_warning { echo -e " ** \033[1;33m$1\033[0m" ; }
 function cli_error { echo -e " !! \033[1;31m$1\033[0m" ; }
 
+cli_info "Pack script started."
+
+## Detect if the script is being sourced (not supported)
+sourced=0
+if [[ -n "$ZSH_EVAL_CONTEXT" ]]; then
+  case ${ZSH_EVAL_CONTEXT} in *:file) sourced=1;; esac
+elif [[ -n "${KSH_VERSION}" ]]; then
+  [[ "$(cd $(dirname -- $0) && pwd -P)/$(basename -- $0)" != "$(cd $(dirname -- ${.sh.file}) && pwd -P)/$(basename -- ${.sh.file})" ]] && sourced=1
+elif [[ -n "${BASH_VERSION}" ]]; then
+  (return 0 2>/dev/null) && sourced=1
+else # All other shells: examine $0 for known shell binary filenames
+  # Detects `sh` and `dash`; add additional shell filenames as needed.
+  case ${0##*/} in sh|dash) sourced=1;; esac
+fi
+
+# exit as this is not supported.
+if [[ ${sourced} = 1 ]]; then
+    cli_error "Error: cannot run script as sourced - please run it normally."
+    return 1
+fi
+
 # get the dotfile directory path
-SCRIPT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+# old version
+#SCRIPT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+# newer, this is simple and works on most shells - but is not able to be sourced.
+SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 # get the important directory path
 IMP_DIR="${SCRIPT_DIR}/../shared/important/"
 # outfile name
 OUT_NAME="important"
 
-cli_info "Starting to pack important files at ${IMP_DIR}..."
+cli_info "Starting to pack important files at ${IMP_DIR}."
 
 # check if we have access to GPG
 if [[ ! -x "$(command -v gpg)" ]]; then
@@ -50,4 +74,10 @@ cli_info "Compressing and encrypting..."
 # pack them up with a given password
 tar --exclude='./README.md' --exclude='*.gpg' -cjv -C ${IMP_DIR} . | gpg -co ${OUT_NAME}.gpg
 
-cli_info "Finished packing - output resides at ${SCRIPT_DIR}/${OUT_NAME}.gpg."
+if [[ ${?} -ne 0 ]]; then
+    cli_error "Error: non-zero exit code while compressing and encrypting"
+else
+    cli_info "Finished packing - output resides at ${SCRIPT_DIR}/${OUT_NAME}.gpg."
+fi
+
+cli_info "Pack script finished."

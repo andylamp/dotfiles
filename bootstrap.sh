@@ -2,10 +2,32 @@
 
 ## Boostrap.sh
 
+## Detect if the script is being sourced (not supported)
+sourced=0
+if [[ -n "$ZSH_EVAL_CONTEXT" ]]; then
+  case ${ZSH_EVAL_CONTEXT} in *:file) sourced=1;; esac
+elif [[ -n "${KSH_VERSION}" ]]; then
+  [[ "$(cd $(dirname -- $0) && pwd -P)/$(basename -- $0)" != "$(cd $(dirname -- ${.sh.file}) && pwd -P)/$(basename -- ${.sh.file})" ]] && sourced=1
+elif [[ -n "${BASH_VERSION}" ]]; then
+  (return 0 2>/dev/null) && sourced=1
+else # All other shells: examine $0 for known shell binary filenames
+  # Detects `sh` and `dash`; add additional shell filenames as needed.
+  case ${0##*/} in sh|dash) sourced=1;; esac
+fi
+
+# exit as this is not supported.
+if [[ ${sourced} = 1 ]]; then
+    echo "Error: cannot run script as sourced - please run it normally."
+    return 1
+fi
+
 ## Common variables
 
-# find current directory and put it in a global variable
-DOT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+# find current directory and put it in a global variable for our script to use
+# DOT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+# this is simple and works on most shells - but is not able to be sourced.
+DOT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+
 # now source everything else
 source ${DOT_DIR}/shared/common.sh
 
