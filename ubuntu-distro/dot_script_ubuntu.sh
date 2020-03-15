@@ -106,7 +106,11 @@ else
   cli_info "Minimal flag is true - skipping rust, rvm, and pipenv installation."
 fi
 
-cli_info "Execution of Ubuntu dotfile installation has been completed."
+# sourcing profile to update the current window
+cli_info "Sourcing updated ${MY_HOME}.profile"
+source ${MY_HOME}.profile
 
 # finally, auto-remove unused packages
 sudo apt autoremove
+
+cli_info "Execution of Ubuntu dotfile installation has been completed."
