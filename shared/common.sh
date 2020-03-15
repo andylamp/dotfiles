@@ -14,6 +14,17 @@ else
   cli_info "\tParsed ${PREP_CONF_SH} OK"
 fi
 
+# ufw rules
+UFW_RULE_SH="add_ufw_rules.sh"
+source ${DOT_DIR}/shared/${UFW_RULE_SH}
+
+if [[ ${?} -ne 0 ]]; then
+  cli_error "Error, non-zero value encountered while parsing ${UFW_RULE_SH} - cannot continue."
+  exit 1
+else
+  cli_info "\tParsed ${UFW_RULE_SH} OK"
+fi
+
 # url validators
 URL_VAL_SH="url_validator.sh"
 source ${DOT_DIR}/shared/${URL_VAL_SH}
@@ -233,7 +244,7 @@ check_params() {
   cli_info "  Bash config:\n\t${CFG_BASH_CONF}"
 
   # check for details
-  cli_info_read "Do the details shown above appear OK to you? [y/n]: "
+  cli_warning_read "Do the details shown above appear OK to you? [y/n]: "
   read -n 1 -r; echo ""
   # read -p $'\e[1;32mFoobar\e[0m: ' -n 1 -r;
   # check the reply...

@@ -6,6 +6,7 @@
 function cli_info { echo -e " -- \033[1;32m$1\033[0m" ; }
 function cli_info_read { echo -e -n " -- \e[1;32m$1\e[0m" ; }
 function cli_warning { echo -e " ** \033[1;33m$1\033[0m" ; }
+function cli_warning_read { echo -e -n " ** \e[1;33m$1\e[0m" ; }
 function cli_error { echo -e " !! \033[1;31m$1\033[0m" ; }
 
 cli_info "Starting dotfile script bootstraper!"

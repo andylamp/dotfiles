@@ -5,3 +5,5 @@ cmake-*
 # ignore all in important folder except readme
 !shared/important/README.md
 shared/important/*
+# ignore my skunkworks directory
+shared/test-dir

@@ -20,4 +20,3 @@ CFG_IMP_DIR="${DOT_DIR}/shared/important"
 # the extra config bits to be parsed - can be empty.
 # IMP_CONF=""
 CFG_IMP_CONF="${IMP_DIR}/imp_config.sh"
-
