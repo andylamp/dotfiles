@@ -81,7 +81,7 @@ fi
 # normally under /var/www.
 
 ssh -t ${REMOTE_USER}@${REMOTE_URL} \
-REMOTE_FILE="$(printf '%q' "${FILE_TO_UPLOAD}")"
+REMOTE_FILE="$(printf '%q' "${FILE_TO_UPLOAD}")" \
 REMOTE_PATH="$(printf '%q' "${REMOTE_DEST_DIR}/${REMOTE_USER}")" \
 REMOTE_OWN="$(printf '%q' "${REMOTE_SERVE_USER}:${REMOTE_SERVE_GROUP}")" \
 "sudo mv ~/${REMOTE_FILE} ${REMOTE_PATH} && sudo chown -R ${REMOTE_OWN} ${REMOTE_PATH}"
