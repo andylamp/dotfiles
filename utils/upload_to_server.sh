@@ -20,8 +20,8 @@ fi
 
 # check if the script has two arguments
 if [[ ! ${#} -eq 3 ]]; then
-  cli_warning "Script requires three arguments - cannot continue."
-  cli_info "Script usage:\n\t./pack file.gpg url user"
+  cli_error "Script requires three arguments - cannot continue."
+  cli_error "Script usage:\n\t./upload_to_server.sh file.gpg url user"
   exit 1
 else
   cli_info "Got arguments:\n\tfile ${1}\n\tURL ${2}\n\tRemote username ${3}"
@@ -36,8 +36,15 @@ else
   fi
 fi
 
-REMOTE_DEST_DIR="/var/www"
-REMOTE_DEST_USER="${3}"
+# variables
+FILE_TO_UPLOAD=${1}
+REMOTE_URL=${2}
+REMOTE_USER=${3}
+
+# presets
+REMOTE_DEST_DIR="/var/www/html"
+REMOTE_SERVE_USER="www-data"
+REMOTE_SERVE_GROUP="www-data"
 
 cli_info "Trying to upload packed file to server..."
 
@@ -61,7 +68,7 @@ fi
 
 # now try to upload the file to the url supplied - assumes that private keys are present!
 cli_info "Uploading ${1} to ${2} using stored ssh keys"
-scp ${1} > ${3}@${2}:~
+scp ${FILE_TO_UPLOAD} > ${REMOTE_USER}@${REMOTE_URL}:~
 
 # check if everything went as planned.
 if [[ ${?} -ne 0 ]]; then
@@ -72,6 +79,19 @@ fi
 # do execute the commands to put it in the correct directory in the remove server
 # in my case this would be an web server - so I'd make it owned by www-data
 # normally under /var/www.
+
+ssh -t ${REMOTE_USER}@${REMOTE_URL} \
+REMOTE_FILE="$(printf '%q' "${FILE_TO_UPLOAD}")"
+REMOTE_PATH="$(printf '%q' "${REMOTE_DEST_DIR}/${REMOTE_USER}")" \
+REMOTE_OWN="$(printf '%q' "${REMOTE_SERVE_USER}:${REMOTE_SERVE_GROUP}")" \
+"sudo mv ~/${REMOTE_FILE} ${REMOTE_PATH} && sudo chown -R ${REMOTE_OWN} ${REMOTE_PATH}"
+
+# check if everything went OK
+if [[ ${?} -ne 0 ]]; then
+  cli_error "Error, non-zero code returned while moving remote file to correct location."
+else
+  cli_info "It appears that file moved successfully at remote location."
+fi
 
 # notify the user that we're done.
 cli_info "Finished uploading packed file to server..."

@@ -103,7 +103,16 @@ These are the following (in alphabetical order):
 
 # Utilities
 
+Here I outline some of the utilities provided with the `dotfile` scripts in order to make your life easier.
+
 ## Pack files
+
+This helper script is used to pack the private bits into a single (encrypted) archive using `gpg` - this utility can be found [here][15].
+One can execute the pack script as is seen below:
+
+```bash
+./pack.sh
+```
 
 ## Upload packed file
 
@@ -125,3 +134,5 @@ These scripts are released under the terms and conditions of the MIT license.
 [12]: notes/ufw.md
 [13]: notes/xrdp.md
 [14]: config.sh
+[15]: utils/pack.sh
+[15]: utils/upload_to_server.sh
