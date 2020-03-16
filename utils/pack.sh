@@ -44,10 +44,10 @@ cli_info "Starting to pack important files at ${IMP_DIR}."
 # check if we have access to gpg and tar
 if [[ ! -x "$(command -v gpg)" ]]; then
     cli_error "gpg needs to be installed and accessible - cannot continue."
-    exit 1
+    return 1
 elif [[ ! -x "$(command -v tar)" ]]; then
     cli_error "tar needs to be installed and accessible - cannot continue."
-    exit 1
+    return 1
 else
     cli_info "gpg and tar appear to be present."
 fi
@@ -55,13 +55,13 @@ fi
 # now check if the critical bits exist
 if [[ ! -f ${IMP_DIR}/my_bash.sh ]]; then
     cli_error "Error: could not find bash config."
-    exit 1
+    return 1
 elif [[ ! -f ${IMP_DIR}/id_rsa ]]; then
     cli_error "Error: could not find ssh private key."
-    exit 1
+    return 1
 elif [[ ! -f ${IMP_DIR}/id_pub ]]; then
     cli_error "Error: could not find ssh public key."
-    exit 1
+    return 1
 fi
 
 if [[ ! -f ${IMP_DIR}/imp_config.sh ]]; then
