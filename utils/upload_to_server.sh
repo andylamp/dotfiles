@@ -13,7 +13,7 @@ cli_info "Welcome to upload to server script."
 
 # root check
 if [[ $(id -u) -eq 0 ]]; then
-  cli_error "Error: You cannot run this as root, exiting."; return 1;
+  cli_error "Error: You cannot run this as root, exiting."; exit 1;
 else
   cli_info "Running as user $(whoami)."
 fi
@@ -22,7 +22,7 @@ fi
 if [[ ! ${#} -eq 3 ]]; then
   cli_warning "Script requires three arguments - cannot continue."
   cli_info "Script usage:\n\t./pack file.gpg url user"
-  return 1
+  exit 1
 else
   cli_info "Got arguments:\n\tfile ${1}\n\tURL ${2}\n\tRemote username ${3}"
   # do a sanity check, before proceeding...
@@ -32,7 +32,7 @@ else
     cli_warning "Details seem to be OK, continuing..."
   else
     cli_error "Details are not OK, aborting..."
-    return 1
+    exit 1
   fi
 fi
 
@@ -43,7 +43,7 @@ cli_info "Trying to upload packed file to server..."
 
 if [[ ! -f $1 ]]; then
   cli_error "Target File not found - cannot continue."
-  return 1
+  exit 1
 else
   cli_info "Target file found at ${1} - are you sure you want to upload this file?"
 fi
@@ -51,10 +51,10 @@ fi
 # check if we have access to ssh and scp
 if [[ ! -x "$(command -v scp)" ]]; then
     cli_error "scp needs to be installed and accessible - cannot continue."
-    return 1
+    exit 1
 elif [[ ! -x "$(command -v ssh)" ]]; then
     cli_error "ssh needs to be installed and accessible - cannot continue."
-    return 1
+    exit 1
 else
     cli_info "scp and ssh appear to be present - we can proceed."
 fi
@@ -66,7 +66,7 @@ scp ${1} > ${3}@${2}:~
 # check if everything went as planned.
 if [[ ${?} -ne 0 ]]; then
   cli_error "Error, non-zero value return while copying file to remote - cannot continue."
-  return 1
+  exit 1
 fi
 
 # do execute the commands to put it in the correct directory in the remove server

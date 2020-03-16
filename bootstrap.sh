@@ -28,7 +28,7 @@ fi
 # exit as this is not supported.
 if [[ ${sourced} = 1 ]]; then
     cli_error "Error: cannot run script as sourced - please run it normally."
-    return 1
+    exit 1
 fi
 
 ## Common variables

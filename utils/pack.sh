@@ -26,7 +26,7 @@ fi
 # exit as this is not supported.
 if [[ ${sourced} = 1 ]]; then
     cli_error "Error: cannot run script as sourced - please run it normally."
-    return 1
+    exit 1
 fi
 
 # get the dotfile directory path
@@ -34,20 +34,31 @@ fi
 #SCRIPT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # newer, this is simple and works on most shells - but is not able to be sourced.
 SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
-# get the important directory path
-IMP_DIR="${SCRIPT_DIR}/../shared/important/"
+if [[ ${#} -eq 1 ]]; then
+  cli_info "Parsed argument for output directory: ${1}"
+  IMP_DIR="${1}"
+else
+  # get the important directory path
+  IMP_DIR="${SCRIPT_DIR}/../shared/important/"
+fi
 # outfile name
 OUT_NAME="important"
+
+# check if the directory exists and is valid
+if [[ ! -d ${IMP_DIR} ]]; then
+  cli_error "Error, directory ${IMP_DIR} cannot be accessed or does not exist - cannot continue."
+  exit 1
+fi
 
 cli_info "Starting to pack important files at ${IMP_DIR}."
 
 # check if we have access to gpg and tar
 if [[ ! -x "$(command -v gpg)" ]]; then
     cli_error "gpg needs to be installed and accessible - cannot continue."
-    return 1
+    exit 1
 elif [[ ! -x "$(command -v tar)" ]]; then
     cli_error "tar needs to be installed and accessible - cannot continue."
-    return 1
+    exit 1
 else
     cli_info "gpg and tar appear to be present."
 fi
@@ -55,13 +66,13 @@ fi
 # now check if the critical bits exist
 if [[ ! -f ${IMP_DIR}/my_bash.sh ]]; then
     cli_error "Error: could not find bash config."
-    return 1
+    exit 1
 elif [[ ! -f ${IMP_DIR}/id_rsa ]]; then
     cli_error "Error: could not find ssh private key."
-    return 1
+    exit 1
 elif [[ ! -f ${IMP_DIR}/id_pub ]]; then
     cli_error "Error: could not find ssh public key."
-    return 1
+    exit 1
 fi
 
 if [[ ! -f ${IMP_DIR}/imp_config.sh ]]; then
