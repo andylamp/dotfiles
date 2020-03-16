@@ -65,7 +65,8 @@ Puts my public/private keys in place and sets the correct permissions in the `~/
 ## kitty
 
 Installs the `kitty` terminal emulator if not present and copies my configuration along with my (preferred) theme - `Afterglow`. 
-My `kitty` can be public and located in [`my_kitty.conf`][6] if someone wants to check it out.
+My `kitty` can be public and located in [`my_kitty.conf`][6] if someone wants to check it out. 
+**Note**: `kitty` is not installed in `MacOS`, as I am happy with vanilla terminal.
 
 ## bash
 
