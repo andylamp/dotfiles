@@ -21,17 +21,42 @@ It configures the following things:
  - `ssh` keys
  - [`kitty`][5] (terminal emulator) - along with my conf.
  - `bash` - along with my conf.
- - `ufw` rules
- - `git` - commit `user` and `email`
- - `rust` - installs `nightly`
- - `rvm`
+ - `ufw` rules.
+ - `git` - commit `user` and `email`.
+ - `rust` - installs `nightly`.
+ - `rvm` - installs `rvm` and also the latest stable `ruby` for the system.
  
 Some of these bits cannot be public and thus they reside in an encrypted archive which is fetched during execution.
-Optionally, if the files are already present then this can be left empty but if the required variables are not set, then the script will fail.
+Optionally, if the files are already present then this can be left empty but if the required variables are not set (as explained later on), then the script will fail.
 
 # Configuration
 
-The script needs to
+Before executing your *need* to set the parameters in [`config.sh`][13] - mainly the following
+
+ - `CFG_MINIMAL`: sets if we are going to install extra bits (currently: `rvm`, `rust`, `pipenv3`).
+ - `CFG_IMP_URL`: sets the url for the remote file that contains the private bits.
+ - `CFG_IMP_DIR`: sets where the "important" directory is (i.e. - where the extracted private bits are).
+ - `CFG_IMP_CONF`: sets where the optional configuration is.
+ 
+The parameters that are contained in the extracted (encrypted) file are explained below.
+
+ - `ssh` pub/private keys
+ - `bash` config
+ - optional `dotscript` configuration.
+ 
+This optional configuration has to contain the following parameters:
+
+ - `CFG_EMAIL`: the email to use.
+ - `CFG_GIT_USER`: the `git` `username`.
+ - `CFG_GIT_EMAIL`: the `git` mail which normally is set to: `${CFG_EMAIL}`.
+ - `CFG_KITTY_THEME`: my `kitty` terminal theme, normally set to `Afterglow`.
+ - `CFG_KITTY_CONF`: my `kitty` terminal configuration location, normally set to: `${DOT_DIR}/shared/my_kitty.conf`
+ - `CFG_BASH_CONF`: my `shell` (`bash`) configuration, normally set to: `${DOT_DIR}/shared/important/my_bash.sh`
+ - `CFG_SSH_PUB`: my `ssh` public key location, normally set to: `${DOT_DIR}/shared/important/id_pub`
+ - `CFG_SSH_PRI`: my `ssh` private key location, normally set to:  `${DOT_DIR}/shared/important/id_rsa`
+
+Where `${DOT_DIR}` is the current `dotscript` path, as defined in [`bootstrap.sh`][1]. 
+It has to be noted that if any of the above variables are *not* set - the script will fail.
 
 ## ssh 
 
@@ -98,3 +123,4 @@ These scripts are released under the terms and conditions of the MIT license.
 [11]: notes/unifi.md
 [12]: notes/ufw.md
 [13]: notes/xrdp.md
+[14]: config.sh
