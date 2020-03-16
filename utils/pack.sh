@@ -41,7 +41,7 @@ OUT_NAME="important"
 
 cli_info "Starting to pack important files at ${IMP_DIR}."
 
-# check if we have access to GPG
+# check if we have access to gpg and tar
 if [[ ! -x "$(command -v gpg)" ]]; then
     cli_error "gpg needs to be installed and accessible - cannot continue."
     exit 1

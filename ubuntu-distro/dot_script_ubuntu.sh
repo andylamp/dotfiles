@@ -64,6 +64,7 @@ sudo apt install -y \
   maven \
   kitty \
   openssl-server \
+  openssh-client \
   glances \
   htop \
   python3-pip
