@@ -18,10 +18,11 @@ Currently, the only fleshed-out `dotscript` is for [`Ubuntu`][2] but I plan to a
 
 It configures the following things:
 
- - `ssh` keys
+ - `ssh` pub/private keys.
  - [`kitty`][5] (terminal emulator) - along with my conf.
+ - `homebrew` - install a decent package manager (only used in `MacOS`).
  - `bash` - along with my conf.
- - `ufw` rules.
+ - `ufw` - basically copies (my) common used rules to the rule application directory.
  - `git` - commit `user` and `email`.
  - `rust` - installs `nightly`.
  - `rvm` - installs `rvm` and also the latest stable `ruby` for the system.
