@@ -6,7 +6,7 @@ ssh_config() {
   # my id pub/priv
   MY_SSH_DIR="${MY_HOME}.ssh"
   # check if we have empty parameters
-  if [[ -z ${CFG_SSH_PUB} ]] || [[ -z ${CFG_SSH_RSA} ]]; then
+  if [[ -z ${CFG_SSH_PUB} ]] || [[ -z ${CFG_SSH_PRI} ]]; then
     cli_error "Error: One the the supplied files does not exit, cannot continue."
     return 1
   fi
@@ -23,11 +23,11 @@ ssh_config() {
 
     # copy id pub
     cli_info "Copying candidate id_pub"
-    cp ${IMP_DIR}/id_pub ${MY_HOME}/.ssh/id_pub
+    cp  ${CFG_SSH_PUB} ${MY_HOME}/.ssh/id_pub
 
     # copy id rsa
     cli_info "Copying candidate id_rsa"
-    cp ${IMP_DIR}/id_rsa ${MY_HOME}/.ssh/id_rsa
+    cp ${CFG_SSH_PRI} ${MY_HOME}/.ssh/id_rsa
 
     # keep alive
     if [[ ! -f "${MY_HOME}/.ssh/config" ]]; then

@@ -254,7 +254,6 @@ check_params() {
     cli_error "Details are not OK, aborting..."
     exit 1
   fi
-  exit 1
 }
 
 # check if the path contains a variable
