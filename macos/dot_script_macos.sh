@@ -16,3 +16,9 @@ fi
 
 # source common scripts
 source ${DOT_DIR}/shared/common.sh
+
+# source brew install
+source ${DOT_DIR}/shared/homebrew_install.sh
+
+# now install the required packages
+brew install gnupg
