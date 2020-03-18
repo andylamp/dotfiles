@@ -47,7 +47,7 @@ sudo add-apt-repository universe
 sudo apt update
 
 # install (my) essential packages
-sudo apt install -y \
+sudo apt install -y\
   valgrind \
   graphviz \
   vim \
@@ -63,7 +63,7 @@ sudo apt install -y \
   tmux \
   maven \
   kitty \
-  openssl-server \
+  openssh-server \
   openssh-client \
   glances \
   htop \
