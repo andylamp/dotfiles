@@ -6,12 +6,19 @@ kitty_config() {
 
 	KITTY_CONF_DIR="${MY_HOME}.config/kitty"
 
+  # check if kitty is installed
+	if [[ -x "$(command -v kitty)" ]]; then
+		cli_error "Error: Kitty executable not found, maybe not installed?"
+		return 1
+	fi
+
 	# check if kitty was installed correctly
 	if [[ ! -d ${KITTY_CONF_DIR} ]]; then
-		cli_error "Error: Kitty configuration folder not found, maybe not installed?"
-		return 1
+		cli_warning "Kitty configuration folder not found, creating..."
+		# create kitty config directory for installation user
+		mkdir -p ${KITTY_CONF_DIR}
 	else
-		cli_info "Kitty Terminal appears to be installed correctly."
+		cli_info "Kitty Terminal configuration found."
 	fi
 
 	# now download the terminal themes
