@@ -11,12 +11,14 @@ ssh_config() {
     return 1
   fi
 
-  #echo " ** Links supplied seem valid URLs"
-  cli_info "\t -- Home directory to place .ssh: ${MY_HOME} (final would be: ${MY_SSH_DIR})."
-  cli_info "\t -- User is: ${MY_USER}."
+  # sanity check but displaying the info.
+  cli_info "\tHome directory to place .ssh: ${MY_HOME} (final would be: ${MY_SSH_DIR})."
+  cli_info "\tUser is: ${MY_USER}."
 
-  read -p $(cli_info "Do the details shown above appear OK to you? [y/n]: ") -n 1 -r; echo ""
-  ## Configure ssh?
+  # configure ssh
+  cli_warning_read "Do the details shown above appear OK to you? [y/n]: "
+  read -n 1 -r; echo ""
+  # check the prompt
   if [[ ${REPLY} =~ ^[yY]$ ]] || [[ -z ${REPLY} ]]; then
     echo " -- Creating .ssh folder (if needed)"
     mkdir -p "${MY_HOME}/.ssh"
