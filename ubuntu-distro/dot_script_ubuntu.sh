@@ -69,13 +69,23 @@ sudo apt install -y\
   htop \
   python3-pip
 
+# check if packages installed correctly.
+if [[ ${?} -ne 0 ]]; then
+  cli_error "Error, non-zero code encountered while installing essential packages - cannot continue."
+fi
+
 # install optional packages
 if [[ ${CFG_MINIMAL} = false ]]; then
-  sudo apt install -y \
+  sudo apt install -y\
     lm-sensors \
     doxygen \
     qbittorrent \
     python-bottle
+
+    # check if packages installed correctly.
+    if [[ ${?} -ne 0 ]]; then
+      cli_error "Error, non-zero code encountered while installing extra packages - cannot continue."
+    fi
 fi
 
 # Configure git
