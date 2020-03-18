@@ -19,5 +19,5 @@ fetch_my_projects() {
     cli_info "Fetch and Merge script seems present, executing..."
   fi
   # now trying to fetch and merge
-  bash ${FETCH_PATH}/fetch_and_merge.sh
+  sh ${FETCH_PATH}/fetch_and_merge.sh
 }

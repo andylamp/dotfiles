@@ -14,7 +14,10 @@ git_config() {
   cli_info "Git Details"
   cli_info "\t-- username: ${CFG_GIT_USER}"
   cli_info "\t-- email: ${CFG_GIT_EMAIL}"
-  read -p $(cli_info "Do the details shown above appear OK to you? [y/n]: ") -n 1 -r;
+
+  # sanity check
+  cli_warning_read "Do the details shown above appear OK to you? [y/n]: "
+  read -n 1 -r; echo ""
 
   # Configure git?
   if [[ ${REPLY} =~ ^[yY]$ ]] || [[ -z ${REPLY} ]]; then
