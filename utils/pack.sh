@@ -41,6 +41,7 @@ else
   # get the important directory path
   IMP_DIR="${SCRIPT_DIR}/../shared/important/"
 fi
+
 # outfile name
 OUT_NAME="important"
 

@@ -74,6 +74,7 @@ fetch_projects() {
 # run the bootstrap!
 bootstrap() {
   cli_info "Welcome to dotfile script!"
+  cli_info "dotfile directory is: ${DOT_DIR}."
   detect_root
   detect_os
   fetch_projects
