@@ -7,7 +7,7 @@ kitty_config() {
 	KITTY_CONF_DIR="${MY_HOME}.config/kitty"
 
   # check if kitty is installed
-	if [[ -x "$(command -v kitty)" ]]; then
+	if [[ ! -x "$(command -v kitty)" ]]; then
 		cli_error "Error: Kitty executable not found, maybe not installed?"
 		return 1
 	fi
