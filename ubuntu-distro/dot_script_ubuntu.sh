@@ -7,7 +7,7 @@
 cli_info "Executing Ubuntu distro dotfile."
 
 # perform an update, upgrade, auto-remove before install
-sudo apt update && sudo apt -y upgrade && sudo apt autoremove
+sudo apt update && sudo apt -y upgrade && sudo apt -y autoremove
 
 # check if something went wrong
 if [[ ${?} -ne 0 ]]; then
@@ -112,6 +112,6 @@ cli_info "Sourcing updated ${MY_HOME}.profile"
 source ${MY_HOME}.profile
 
 # finally, auto-remove unused packages
-sudo apt autoremove
+sudo apt -y autoremove
 
 cli_info "Execution of Ubuntu dotfile installation has been completed."

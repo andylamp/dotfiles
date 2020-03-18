@@ -19,7 +19,7 @@ prep_config() {
       cli_info "wget fetched file successfully \n\tFrom: ${CFG_IMP_URL}\n\tSaved at: ${CFG_IMP_DIR}/${IMP_NAME}\n"
       # now extract it
       cli_warning "Trying to extract contents -- you will be prompted for your password by gpg."
-      gpg -d ${CFG_IMP_DIR}/${IMP_NAME} | tar -xj -C ${DOT_DIR}/shared/test-dir
+      gpg -d ${CFG_IMP_DIR}/${IMP_NAME} | tar -xj -C ${CFG_IMP_DIR}
       # check if something went wrong
       if [[ ${?} -ne 0 ]]; then
         cli_error "Error, non-zero value encountered while decrypting private files (${?}) - cannot continue."
