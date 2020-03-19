@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-## (My) Dotfiles for Ubuntu based distros
+# (My) Dotfiles for Ubuntu based distros
 
-## Initialization
+# Initialization
 
 cli_info "Executing Ubuntu distro dotfile."
 
@@ -30,7 +30,7 @@ prep_config
 # rudimentary sanity check
 check_params
 
-## Register repos
+# Register repos
 
 # add sublime gpg key
 wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | \
@@ -41,7 +41,7 @@ sudo tee /etc/apt/sources.list.d/sublime-text.list
 # add universe for fira-code
 sudo add-apt-repository universe
 
-## Install (my) packages
+# Install (my) packages
 
 # perform an update of the repositories
 sudo apt update
@@ -82,10 +82,10 @@ if [[ ${CFG_MINIMAL} = false ]]; then
     qbittorrent \
     python-bottle
 
-    # check if packages installed correctly.
-    if [[ ${?} -ne 0 ]]; then
-      cli_error "Error, non-zero code encountered while installing extra packages - cannot continue."
-    fi
+  # check if packages installed correctly.
+  if [[ ${?} -ne 0 ]]; then
+    cli_error "Error, non-zero code encountered while installing extra packages - cannot continue."
+  fi
 fi
 
 # Configure git

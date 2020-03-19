@@ -4,10 +4,12 @@
 rvm_install() {
   cli_info "Installing rvm along with stable ruby."
 
+  # check if rvm is present.
   if [[ -d ${MY_HOME}.rvm ]]; then
     cli_info "rvm appears to be already installed, skipping."
     return 0
   fi
+
   # we need to install it
   gpg --keyserver hkp://pool.sks-keyservers.net \
       --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 \

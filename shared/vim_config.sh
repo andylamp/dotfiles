@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
+# configure vim.
 vim_config() {
   cli_info "Configuring vim."
+
   # rudimentary sanity check
   if [[ -z ${MY_HOME} ]]; then
     cli_error "Error: expected non empty string -- skipping vim config."
@@ -17,6 +19,7 @@ vim_config() {
     # clone the repository
     git clone --depth=1 https://github.com/andylamp/vimrc.git ${MY_HOME}.vim_runtime
   fi
+
   # (re)-install it.
   sh ${MY_HOME}.vim_runtime/install_awesome_vimrc.sh
 }
