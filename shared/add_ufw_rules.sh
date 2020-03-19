@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# add ufw firewall rules, if present.
 add_ufw_rules() {
   RULE_DIR=${DOT_DIR}/shared/ufw-rules
   UFW_APP_DIR="/etc/ufw/applications.d/"

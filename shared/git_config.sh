@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-
+# configure git
 git_config() {
   cli_info "Configuring git."
 
