@@ -109,13 +109,28 @@ Here I outline some of the utilities provided with the `dotfile` scripts in orde
 ## Pack files
 
 This helper script is used to pack the private bits into a single (encrypted) archive using `gpg` - this utility can be found [here][15].
-One can execute the pack script as is seen below:
+The script expects either the directory to be given as an input - please ensure it is a *absolute* path - like so:
+
+```bash
+./pack.sh /path/to/my/important/dir
+```
+
+or assumes that the important bits will be located in `${SCRIPT_DIR}/../shared/important`; where `${SCRIPT_DIR}` is the directory that the script is executed from.
+In which case it can be executed like so:
 
 ```bash
 ./pack.sh
 ```
 
-## Upload packed file
+## Upload packed file to remote
+
+The upload the remote script helps upload the packed archive in a distribution server that you have access and `sudo` rights.
+It does so by using `scp` to copy the folder and then `sudo` to move it into a remote location where a web-server (i.e.: `apache`, `nginx`) will serve it.
+You can run the [`upload_to_server.sh`][16] as is shown below.
+
+```bash
+./upload_to_server.sh file.gpg url user
+```
 
 # License
 
@@ -136,4 +151,4 @@ These scripts are released under the terms and conditions of the MIT license.
 [13]: notes/xrdp.md
 [14]: config.sh
 [15]: utils/pack.sh
-[15]: utils/upload_to_server.sh
+[16]: utils/upload_to_server.sh

@@ -38,6 +38,9 @@ fi
 # this is simple and works on most shells - but is not able to be sourced.
 DOT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 
+# notify what our detected dotfile directory is
+cli_info "dotfile directory is: ${DOT_DIR}."
+
 # source the basic configuration
 source ${DOT_DIR}/config.sh
 
@@ -73,8 +76,6 @@ fetch_projects() {
 
 # run the bootstrap!
 bootstrap() {
-  cli_info "Welcome to dotfile script!"
-  cli_info "dotfile directory is: ${DOT_DIR}."
   detect_root
   detect_os
   fetch_projects
