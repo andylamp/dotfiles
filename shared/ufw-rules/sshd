@@ -1,0 +1,4 @@
+[sshd]
+title=sshd service
+description=sshd service protocol ports (22)
+ports=22/tcp
