@@ -13,8 +13,8 @@ sudo ufw allow sshd
 To check that it has indeed been applied we can check using
 
 ```bash
-# replace sshd-port with the port that sshd listens to, normally 22.
-sudo ufw status verbose | grep <ssh-port>
+# replace ssh/sshd-port with the port that sshd listens to, normally 22.
+sudo ufw status verbose | grep <ssh/sshd-port>
 # or by using 22 (this is for my own copy-paste).
 sudo ufw status verbose | grep 22
 ```
