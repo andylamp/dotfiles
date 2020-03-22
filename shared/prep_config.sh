@@ -50,8 +50,6 @@ prep_config() {
     # ssh id pub/priv
     CFG_SSH_PUB="${CFG_IMP_DIR}/id_pub"
     CFG_SSH_PRI="${CFG_IMP_DIR}/id_rsa"
-
-    cli_info "This: ${CFG_SSH_PUB}"
   else
     cli_info "Detected extra configuration file, sourcing it."
     # source the file with the extra bits.

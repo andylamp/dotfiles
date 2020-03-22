@@ -1,0 +1,4 @@
+[ssh]
+title=ssh service
+description=ssh service protocol ports (22)
+ports=22/tcp
