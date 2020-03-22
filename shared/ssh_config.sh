@@ -39,6 +39,15 @@ ssh_config() {
       cli_info "ssh config exists, skipping keep alive!"
     fi
 
+    # add my public key to authorised keys (so I can connect).
+    if [[ ! -f "${MY_HOME}/.ssh/authorized_keys" ]]; then
+      cli_info "authorized_keys file does not exist, echoing public key."
+      cat ${MY_HOME}/.ssh/id_pub > ${MY_HOME}/.ssh/authorized_keys
+    else
+      cli_info "authorized_keys file exists, appending"
+      echo -en "\n$(cat ${MY_HOME}/.ssh/id_pub)" >> ${MY_HOME}/.ssh/authorized_keys
+    fi
+
     # fix permissions
     cli_info "Configuring permissions (.ssh folder 700, key files id_* 600)."
     chown -R ${MY_USER} ${MY_HOME}/.ssh
