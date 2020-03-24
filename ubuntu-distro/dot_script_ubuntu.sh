@@ -79,6 +79,7 @@ if [[ ${CFG_MINIMAL} = false ]]; then
   sudo apt install -y\
     lm-sensors \
     doxygen \
+    python3-sphinx \
     qbittorrent \
     python3-bottle
 
