@@ -1,6 +1,6 @@
 # Glances monitoring
 
-Glances is great task manager replacement tool (and much more) - it's my preferred way to get a summary of my system resources with ease.
+[Glances][1] is great `ps` replacement tool (and much more) - it's my preferred way to get a summary of my system resources with ease.
 Since I have only used this in `Unix` based machines I cannot comment how well it works on Windows.
 
 # Installing it
@@ -32,6 +32,8 @@ Another great add on is to add `bottle` which is used to display `glances` over 
 ```bash
 sudo apt install -y python3-bottle
 ```
+
+Further, ensure that you have `lm-sensors` and `hddtemp` packages installed in your system otherwise you will probably not be able to see any temperature reads for your `cpu`(s) and/or `hdd`(s)/`ssd`(s).
 
 # Launching
 
@@ -71,7 +73,7 @@ TBD
 
 # HDDs (and, some, SDDs) temperature monitoring
 
-To monitor the hard disk temperatures `glances` uses `hddtemp` utility (note: this one, not this as this one is a client).
+To monitor the hard disk temperatures `glances` uses `hddtemp` utility (note: [this][2] one, not this as [this][3] one is a client).
 In order to the temperatures to show `hddtemp` has to be running as a `daemon` in `localhost` - as such:
 
 ```bash
@@ -102,3 +104,7 @@ hddtempd() {
 
 Which can be used to start the daemon once the computer boots for all available block devices. 
 Please be aware that it does not do any error checking to see if the block device is supported by `hddtemp` itself - I assume it does!
+
+[1]: https://github.com/nicolargo/glances
+[2]: https://github.com/guzu/hddtemp
+[3]: https://pypi.org/project/hddtemp/
