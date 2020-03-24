@@ -103,7 +103,7 @@ These are the following (in alphabetical order):
  - [`unifi`][11]: Ubiquiti equipment management suite (for Ubiquiti switches, access points, cameras, and more).
  - [`ufw`][12]: uncomplicated firewall configuration notes (apply rules, to/from restrictions).
  - [`xrdp`][13]: notes on how to install and use `xrdp` for remote access using the `rdp` protocol.
- - `sshd`: notes on how to allow `sshd` on systems that use `ufw`.
+ - [`sshd`][17]: notes on how to allow `sshd` on systems that use `ufw`.
 
 # Utilities
 
@@ -155,3 +155,4 @@ These scripts are released under the terms and conditions of the MIT license.
 [14]: config.sh
 [15]: utils/pack.sh
 [16]: utils/upload_to_server.sh
+[17]: notes/sshd.md
