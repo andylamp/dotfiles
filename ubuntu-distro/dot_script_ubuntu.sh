@@ -80,7 +80,7 @@ if [[ ${CFG_MINIMAL} = false ]]; then
     lm-sensors \
     doxygen \
     qbittorrent \
-    python-bottle
+    python3-bottle
 
   # check if packages installed correctly.
   if [[ ${?} -ne 0 ]]; then

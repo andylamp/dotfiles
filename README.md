@@ -5,6 +5,8 @@ My day to day work mostly revolves `Debian` based distributions (mostly `Ubuntu`
 
 The change from `bash` from `ksh` in `MacOS` made things a bit patchy but I'll try to upload my `MacOS` `dotfile` once it is peachy again.
 
+Also, currently the `dotfile` script requires `git` to be already installed, but that should be fixed in future revisions.
+
 # Installing
 
 To install the `dotscript` the only thing you need to run is [`bootstrap.sh`][1] located in the top directory which initiates the entire process.
@@ -97,10 +99,11 @@ These are the following (in alphabetical order):
 
  - [`glances`][8]: configuration for a very good monitoring program.
  - [`gpg`][9]: notes on how to use `gpg` to encrypt/decrypt files - esp. multiple files or folders.
- - [`samba`][10]: share files to both `Unix` and `Windows`
- - [`unifi`][11]: Ubiquiti equipment management suite (for Ubiquiti switches, access points, cameras, and more)
- - [`ufw`][12]: uncomplicated firewall configuration notes (apply rules, to/from restrictions)
+ - [`samba`][10]: share files to both `Unix` and `Windows`.
+ - [`unifi`][11]: Ubiquiti equipment management suite (for Ubiquiti switches, access points, cameras, and more).
+ - [`ufw`][12]: uncomplicated firewall configuration notes (apply rules, to/from restrictions).
  - [`xrdp`][13]: notes on how to install and use `xrdp` for remote access using the `rdp` protocol.
+ - `sshd`: notes on how to allow `sshd` on systems that use `ufw`.
 
 # Utilities
 
