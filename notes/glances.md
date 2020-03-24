@@ -98,13 +98,12 @@ Running this will output the starting letters of each individual block device: `
 
 ```bash
 # gets the available block devices
-$ lsblk --nodeps -n -o name | grep "sd"                                                                                                      │
-sda                                                                                                                                                             │
-sdb                                                                                                                                                             │
-sdc                                                                                                                                                             │
-sdd                                                                                                                                                             │
-sde                                                                                                                                                             │
-sdf   
+$ lsblk --nodeps -n -o name | grep "sd"
+sda
+sdb
+sdc
+sdd
+sdf
 # now formats in in the correct structure for hddtemp
 $ sds=$(lsblk --nodeps -n -o name | grep "sd" | tr '\n' ',' | sed 's/sd//g;s/\(.*\).$/{\1}/')
 # if we echo it, we get:
