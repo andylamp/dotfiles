@@ -81,7 +81,41 @@ sudo hddtemp -d <disks>
 ```
 
 Note the `sudo` - it is unfortunately required; otherwise you would get an error or invalid measurements.
-One handy function that I use in my scripts is the following
+Also you need to ensure that the block devices are enumerated - which you can do as such:
+
+```bash
+lsblk --nodeps -n -o name
+```
+
+With this you would get all of the available block devices.
+However, we are interested in `sd*` devices and to filter them and get the available ones as a nice formatted string to use in `hddtemp` we can use the following command:
+
+```bash
+lsblk --nodeps -n -o name | grep "sd" | tr '\n' ',' | sed 's/sd//g;s/\(.*\).$/{\1}/'
+```
+
+Running this will output the starting letters of each individual block device: `{a,...,z}`
+
+```bash
+# gets the available block devices
+$ lsblk --nodeps -n -o name | grep "sd"                                                                                                      │
+sda                                                                                                                                                             │
+sdb                                                                                                                                                             │
+sdc                                                                                                                                                             │
+sdd                                                                                                                                                             │
+sde                                                                                                                                                             │
+sdf   
+# now formats in in the correct structure for hddtemp
+$ sds=$(lsblk --nodeps -n -o name | grep "sd" | tr '\n' ',' | sed 's/sd//g;s/\(.*\).$/{\1}/')
+# if we echo it, we get:
+echo ${sds}
+{a,b,c,d,e,f}
+# thus we can now put the
+sudo hddtemp -d /dev/sd${sds}
+```
+
+Now, putting it all together we can craft one nifty little function which can be used to start the daemon for us. 
+The full definition of that function is shown below:
 
 ```bash
 # hdd temperature utility as a daemon
@@ -89,21 +123,22 @@ hddtempd() {
   # find block devices
   sds=$(lsblk --nodeps -n -o name | grep "sd" | tr '\n' ',' | sed 's/sd//g;s/\(.*\).$/{\1}/')
   if [[ ${?} -ne 0 ]]; then
-    cli_error "Error, enumerating block devices failed - cannot continue."
-    exit 1
+    echo "Error, enumerating block devices failed - cannot continue."
+    return 1
   fi
   cli_info "Starting hddtemp as a dearmon for block devices: sd${sds}."
   sudo hddtemp -d /dev/sd${sds}
   if [[ ${?} -ne 0 ]]; then
-    cli_error "Error, non-zero code encountered when starting hddtemp daemon."
+    echo "Error, non-zero code encountered when starting hddtemp daemon."
+    return 1
   else
-    cli_info "hddtemp daemon start for devices: sd${sds}."
+    echo "hddtemp daemon start for devices: sd${sds}."
   fi
 }
 ```
 
-Which can be used to start the daemon once the computer boots for all available block devices. 
-Please be aware that it does not do any error checking to see if the block device is supported by `hddtemp` itself - I assume it does!
+Now we just have to run this every time the computer boots (as `sudo`) in order to be able to see the temperatures of hard drives when we use `glances`.
+Finally, please be aware that it does not do any error checking to see if the block device is supported by `hddtemp` itself - I assume it does!
 
 [1]: https://github.com/nicolargo/glances
 [2]: https://github.com/guzu/hddtemp
