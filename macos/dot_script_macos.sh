@@ -34,6 +34,8 @@ fi
 brew install\
   gnupg \
   glances \
+  ruby \
+  cocoapods \
   python3 \
   vim \
   curl \

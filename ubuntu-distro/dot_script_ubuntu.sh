@@ -59,6 +59,7 @@ sudo apt install -y\
   build-essential \
   python3 python3-dev \
   checkinstall \
+  cpu-checker \
   fonts-firacode \
   tmux \
   maven \
