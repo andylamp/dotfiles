@@ -115,7 +115,7 @@ ssh_move
 if [[ ${?} -ne 0 ]]; then
   cli_error "Error, non-zero code returned while moving remote file to correct location."
 else
-  cli_info "It appears that file moved successfully at remote location."
+  cli_info "It appears that file was moved successfully to remote location."
 fi
 
 # notify the user that we're done.
