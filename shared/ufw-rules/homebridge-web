@@ -1,0 +1,4 @@
+[homebridge-web]
+title=homebridge web
+description=Homebridge Web interface
+ports=8800/tcp
