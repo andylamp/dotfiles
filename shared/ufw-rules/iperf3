@@ -1,0 +1,4 @@
+[iperf3-server]
+title=iperf3 server
+description=iperf3 server port
+ports=5102/tcp

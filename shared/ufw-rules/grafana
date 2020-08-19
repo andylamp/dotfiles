@@ -1,0 +1,4 @@
+[grafana]
+title=Grafana
+description=Grafana
+ports=3000/tcp
