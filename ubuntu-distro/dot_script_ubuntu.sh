@@ -68,7 +68,8 @@ sudo apt install -y\
   openssh-client \
   glances \
   htop \
-  python3-pip
+  python3-pip \
+  jq
 
 # check if packages installed correctly.
 if [[ ${?} -ne 0 ]]; then

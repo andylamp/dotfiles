@@ -1,0 +1,4 @@
+[qBittorrent]
+title=qBittorrent web interface
+description=qBittorrent web interface port
+ports=18080/tcp
