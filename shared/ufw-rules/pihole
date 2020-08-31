@@ -1,0 +1,4 @@
+[pihole]
+title=pihole
+description=Pi Hole firewall rule
+ports=53/tcp|53/udp|19080/tcp|19443/tcp
