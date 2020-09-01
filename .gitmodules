@@ -1,0 +1,3 @@
+[submodule "utils/grafana-tp-link"]
+	path = utils/grafana-tp-link
+	url = https://github.com/andylamp/grafana-tp-link
