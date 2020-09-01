@@ -13,10 +13,12 @@ The steps to do this are the following:
  3. Install a Grafana dashboard which ingests and displays the required metrics.
  4. (Optionally) Configure `ufw` to allow access from the local network.
 
-**Note**: This became something a bit larger than a note and the project is located (as a `git` submodule) [here][5].
+**Note**: This became something a bit larger than a note and the project is located (as a `git` submodule) [here][5] 
+under the folder `grafana-tp-link`, which I cannot link as a relative link due to a Github 
+limitation :) - please check it out!
 
 [1]: https://grafana.com/
 [2]: https://prometheus.io/
 [3]: https://www.tp-link.com/gr/home-networking/smart-plug/hs110/
 [4]: https://github.com/fffonion/tplink-plug-exporter
-[5]: ../utils/grafana-tp-link
+[5]: ../utils
