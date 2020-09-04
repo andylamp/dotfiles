@@ -22,28 +22,38 @@ fi
 UFW_CONF=true
 # configure the local subnet
 IP_BASE="10.10.1"
+
 UFW_SUBNET="${IP_BASE}.0/24"
 # the rule name
 UFW_PIHOLE_RULENAME="pihole"
 
-PIHOLE_BASE="/usr/pihole"
-PIHOLE_CONF=${PIHOLE_BASE}/etc-pihole
-PIHOLE_DNSMASQ_CONF=${PIHOLE_BASE}/etc-dnsmasq.d
-PIHOLE_LOG=${PIHOLE_BASE}/pihole.log
+PI_HOLE_BASE="/usr/pihole"
+PI_HOLE_CONF=${PI_HOLE_BASE}/etc-pihole
+PI_HOLE_DNSMASQ_CONF=${PI_HOLE_BASE}/etc-dnsmasq.d
+PI_HOLE_RESOLV_CONF=${PI_HOLE_BASE}/etc-resolv.conf
+PI_HOLE_LOG=${PI_HOLE_BASE}/pihole.log
 
-PIHOLE_YAML="./pihole.yaml"
+# the dns ip array (doesn't have to be ordered!)
+declare -a DNS_IP_ARRAY=(
+  "127.0.0.1"
+  "1.1.1.1"
+)
+
+PI_HOLE_DOCKER_PROJ_NAME="pihole-docker"
+PI_HOLE_DOCKERFILE="./pihole.yaml"
+
+PI_HOLE_TZ="Europe/Athens"
+PI_HOLE_PW="astrongpassword"
 
 # create the volumes based on the user
 USER_UID=$(id -u)
 USER_NAME=$(whoami)
 
-docker-compose -f ./pi-hole.yaml up -d --build --force-recreate
-docker-compose -f ./pi-hole.yaml pull
-
+#### Create the required folders, if not already there.
 
 # create the folders while making the user owner the pihole directory
-if ! ret_val=$(sudo mkdir -p {${PIHOLE_CONF},${PIHOLE_DNSMASQ_CONF}} && \
-sudo chown -R "${USER_NAME}":"${USER_NAME}" ${PIHOLE_BASE});
+if ! ret_val=$(sudo mkdir -p {${PI_HOLE_CONF},${PI_HOLE_DNSMASQ_CONF}} && \
+sudo chown -R "${USER_NAME}":"${USER_NAME}" ${PI_HOLE_BASE});
 then
   cli_error "Could not create pi-hole directories and/or assign permissions - ret val: ${ret_val}."
   exit 1
@@ -51,6 +61,77 @@ else
   cli_info "Created required pi-hole directories and assigned permissions for user ${USER_NAME} (id: ${USER_UID})"
 fi
 
+##### Crete the pihole yaml file
+
+# nifty little function to print the plug IP's in a tidy way
+function print_dns_ip() {
+  if [[ ${#} -eq 0 ]]; then
+    echo -e "# IP of your DNS entries"
+  else
+    echo -e "The DNS IP's supplied are the following:"
+  fi
+  printf '      - %s\n' "${DNS_IP_ARRAY[@]}"
+}
+
+cli_info "Creating pi-hole services dockerfile..."
+
+echo -e "
+# Generated automatically from pi-hole script
+version: \"3.7\"
+
+# More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
+services:
+  pihole:
+    container_name: pi-hole
+    image: pihole/pihole:latest
+    ports:
+      # dns ports
+      - \"53:53/tcp\"
+      - \"53:53/udp\"
+      # ftl (dhcp) ports
+      #- \"67:67/udp\"
+      #- \"547:547/udp\"
+      # ports for http interface
+      - \"19080:80/tcp\"
+      - \"19443:443/tcp\"
+    environment:
+      TZ: ${PI_HOLE_TZ}
+      WEBPASSWORD: ${PI_HOLE_PW}
+    # Volumes store your data between container upgrades
+    volumes:
+      - \"${PI_HOLE_CONF}:/etc/pihole\"
+      - \"${PI_HOLE_DNSMASQ_CONF}:/etc/dnsmasq.d/\"
+      - \"${PI_HOLE_RESOLV_CONF}:/etc/resolv.conf\"
+      - \"${PI_HOLE_LOG}:/var/log/pihole.log\"
+    dns:
+    $(print_dns_ip)
+    # Recommended but not required (DHCP needs NET_ADMIN)
+    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
+" > ${PI_HOLE_DOCKERFILE}
+
+cli_info "Created pi-hole services dockerfile successfully..."
+
+##### Pull images
+
+if ! docker-compose -f ${PI_HOLE_DOCKERFILE} pull; then
+  cli_info "Pulled the required docker images successfully"
+else
+  cli_error "Failed to pull the required docker images - please ensure network connectivity"
+  exit 1
+fi
+
+#### Create the services
+
+# now execute the docker-compose using our newly created yaml
+if ! docker-compose -p ${PI_HOLE_DOCKER_PROJ_NAME} -f ./${PI_HOLE_DOCKERFILE} up -d --force-recreate; then
+  cli_error "Could not create pi-hole docker service, exiting."
+  exit 1
+else
+  cli_info "Installed pi-hole docker service successfully."
+fi
 
 ##### Create and register ufw rule for pi-hole
 
