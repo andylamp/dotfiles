@@ -15,8 +15,9 @@ add_ufw_rules() {
   if [[ -d ${RULE_DIR} ]]; then
     cli_info "ufw rule directory found at ${RULE_DIR} - enumerating..."
     # loop through the items in the ufw rules directory
-    for r in $(ls ${RULE_DIR})
+    for r in "${RULE_DIR}"/*
     do
+      [[ -e "${r}" ]] || break  # handle the case of empty directory
       # copy each ufw rule to the application.d directory
       cli_info "Copying ufw rule: ${r} - will ask if you want to override"
       if [[ ! -f ${RULE_DIR}/${r} ]]; then
