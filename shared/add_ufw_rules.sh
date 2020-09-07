@@ -20,8 +20,8 @@ add_ufw_rules() {
       # copy each ufw rule to the application.d directory
       cli_info "Copying ufw rule: ${r} - will ask if you want to override"
       if [[ ! -f ${RULE_DIR}/${r} ]]; then
-        sudo cp ${RULE_DIR}/${r} ${UFW_APP_DIR}
-        if [[ ${?} -ne 0 ]]; then
+
+        if ! sudo cp "${RULE_DIR}/${r}" ${UFW_APP_DIR}; then
           cli_warning "There was an error copying ufw rule: ${r} - skipping."
         fi
       else
@@ -29,8 +29,8 @@ add_ufw_rules() {
         read -n 1 -r; echo ""
           if [[ ${REPLY} =~ ^[yY]$ ]] || [[ -z ${REPLY} ]]; then
             cli_warning "\tOK, overriding ${r}..."
-            sudo cp ${RULE_DIR}/${r} ${UFW_APP_DIR}
-            if [[ ${?} -ne 0 ]]; then
+
+            if ! sudo cp "${RULE_DIR}/${r}" ${UFW_APP_DIR}; then
               cli_warning "There was an error copying ufw rule: ${r} - skipping."
             fi
           else

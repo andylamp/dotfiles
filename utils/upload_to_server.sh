@@ -71,13 +71,12 @@ fi
 cli_info "Adding stored ssh keys - you will be prompted to type the password for each."
 
 # add the ssh keys, first use eval -- see: https://unix.stackexchange.com/questions/351725
-eval $(ssh-agent -s)
-# now add the available keys, you will be asked for your password.
-ssh-add
+eval "$(ssh-agent -s)"
 
-# check if something went wrong
-if [[ ${?} -ne 0 ]]; then
+# now add the available keys, you will be asked for your password and check if something went wrong
+if ! ssh-add; then
   cli_error "Error, non-zero code encountered while adding the ssk keys - cannot continue."
+  exit 1
 else
   cli_info "ssh key(s) appear to be added correctly."
 fi
@@ -85,10 +84,9 @@ fi
 
 # now try to upload the file to the url supplied - assumes that private keys are present!
 cli_info "Uploading ${1} to ${2} using stored ssh keys"
-scp ${FILE_TO_UPLOAD} ${REMOTE_USER}@${REMOTE_URL}:~
 
 # check if everything went as planned.
-if [[ ${?} -ne 0 ]]; then
+if ! scp "${FILE_TO_UPLOAD}" "${REMOTE_USER}@${REMOTE_URL}:~"; then
   cli_error "Error, non-zero value return while copying file to remote - cannot continue."
   exit 1
 fi
@@ -104,15 +102,12 @@ function ssh_move {
   REMOTE_PATH="$(printf '%q' "${REMOTE_DEST_DIR}/${REMOTE_USER}")"
   REMOTE_OWN="$(printf '%q' "${REMOTE_SERVE_USER}:${REMOTE_SERVE_GROUP}")"
   # "sudo mv ~/${REMOTE_FILE} ${REMOTE_PATH} && sudo chown -R ${REMOTE_OWN} ${REMOTE_PATH}"
-  ssh -t ${REMOTE_USER}@${REMOTE_URL}\
+  ssh -t "${REMOTE_USER}@${REMOTE_URL}" \
   "sudo mv ~/\"${REMOTE_FILE}\" \"${REMOTE_PATH}\"; echo "Move OK" && sudo chown -R \"${REMOTE_OWN}\" \"${REMOTE_PATH}\"; echo "Permissions OK""
 }
 
-# call the function that is used to expand the variables
-ssh_move
-
-# check if everything went OK
-if [[ ${?} -ne 0 ]]; then
+# call the function that is used to expand the variables and check if everything went OK
+if ! ssh_move; then
   cli_error "Error, non-zero code returned while moving remote file to correct location."
 else
   cli_info "It appears that file was moved successfully to remote location."

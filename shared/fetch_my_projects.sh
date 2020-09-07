@@ -16,11 +16,11 @@ fetch_my_projects() {
   # check if my script is already available, if so invoke it.
   if [[ ! -d ${FETCH_PATH} ]]; then
     cli_info "Fetch and Merge script not present, cloning..."
-    git clone https://github.com/andylamp/mfetch_upstreams ${FETCH_PATH}
+    git clone https://github.com/andylamp/mfetch_upstreams "${FETCH_PATH}"
   else
     cli_info "Fetch and Merge script seems present, executing..."
   fi
 
   # now trying to fetch and merge
-  ${FETCH_PATH}/fetch_and_merge.sh
+  "${FETCH_PATH}"/fetch_and_merge.sh
 }

@@ -6,13 +6,14 @@ function homebrew_install {
   # check if brew already exists
   if [[ -x "$(command -v brew)" ]]; then
     cli_info "homebrew appears to be installed - updating and upgrading"
-    brew update && brew upgrade
-    if [[ ${?} -ne 0 ]]; then
-      cli_error "brew update failed"
-      exit 1
-    else
+
+    # try to update and/or upgrade
+    if brew update && brew upgrade; then
       cli_info "brew has been updated and upgraded."
       exit 0
+    else
+      cli_error "brew update failed"
+      exit 1
     fi
   fi
 

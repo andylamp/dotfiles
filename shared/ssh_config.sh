@@ -25,11 +25,11 @@ ssh_config() {
 
     # copy id pub
     cli_info "Copying candidate id_pub"
-    cp  ${CFG_SSH_PUB} ${MY_HOME}/.ssh/id_pub
+    cp  "${CFG_SSH_PUB}" "${MY_HOME}/.ssh/id_pub"
 
     # copy id rsa
     cli_info "Copying candidate id_rsa"
-    cp ${CFG_SSH_PRI} ${MY_HOME}/.ssh/id_rsa
+    cp "${CFG_SSH_PRI}" "${MY_HOME}/.ssh/id_rsa"
 
     # keep alive
     if [[ ! -f "${MY_HOME}/.ssh/config" ]]; then
@@ -42,18 +42,18 @@ ssh_config() {
     # add my public key to authorised keys (so I can connect).
     if [[ ! -f "${MY_HOME}/.ssh/authorized_keys" ]]; then
       cli_info "authorized_keys file does not exist, echoing public key."
-      cat ${MY_HOME}/.ssh/id_pub > ${MY_HOME}/.ssh/authorized_keys
+      cat "${MY_HOME}/.ssh/id_pub" > "${MY_HOME}/.ssh/authorized_keys"
     else
       cli_info "authorized_keys file exists, appending"
-      echo -en "\n$(cat ${MY_HOME}/.ssh/id_pub)" >> ${MY_HOME}/.ssh/authorized_keys
+      echo -en "\n$(cat "${MY_HOME}"/.ssh/id_pub)" >> "${MY_HOME}"/.ssh/authorized_keys
     fi
 
     # fix permissions
     cli_info "Configuring permissions (.ssh folder 700, key files id_* 600)."
-    chown -R ${MY_USER} ${MY_HOME}/.ssh
+    chown -R "${MY_USER}" "${MY_HOME}/.ssh"
     # access permissions for specific files
-    chmod -R 700 ${MY_SSH_DIR}
-    chmod 600 ${MY_SSH_DIR}/id_*
+    chmod -R 700 "${MY_SSH_DIR}"
+    chmod 600 "${MY_SSH_DIR}"/id_*
     cli_info "Finished ssh configuration successfully."
   else
     cli_info "Details not OK - skipping configuring SSH."

@@ -15,7 +15,7 @@ git_config() {
   cli_info "\t-- username: ${CFG_GIT_USER}"
   cli_info "\t-- email: ${CFG_GIT_EMAIL}"
   # check if we have GPG signature
-  if [[ ! -z ${CFG_GPG_SIG} ]]; then
+  if [[ -n ${CFG_GPG_SIG} ]]; then
     cli_info "\t-- GPG Sig: ${CFG_GPG_SIG}"
   fi
 
@@ -30,7 +30,7 @@ git_config() {
     git config --global user.email "${CFG_GIT_EMAIL}"
 
     # check if we also configure the signature
-    if [[ ! -z ${CFG_GPG_SIG} ]]; then
+    if [[ -n ${CFG_GPG_SIG} ]]; then
       cli_info "GPG signing key found, setting to ${CFG_GPG_SIG} (and to sign always with it)"
       git config --global user.signingkey ${CFG_GPG_SIG}
       git config --global commit.gpgsign true

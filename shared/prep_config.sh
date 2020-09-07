@@ -8,10 +8,10 @@ prep_config() {
 
   cli_info "Preparing configuration..."
   # check if the IMP_URL is set, if so try to download
-  if [[ ! -z ${CFG_IMP_URL} ]]; then
+  if [[ -n ${CFG_IMP_URL} ]]; then
     cli_info "Trying to fetch important bits from ${CFG_IMP_URL}..."
     # try to fetch the private bits
-    RET_STATUS=$(wget -q ${CFG_IMP_URL} -O ${CFG_IMP_DIR}/${IMP_NAME})
+    RET_STATUS=$(wget -q "${CFG_IMP_URL}" -O "${CFG_IMP_DIR}/${IMP_NAME}")
     if [[ ${RET_STATUS} -ne 0 ]]; then
       cli_error "wget returned a non-zero code while fetching private file at URL ${CFG_IMP_URL} - cannot continue"
       exit 1
@@ -19,9 +19,9 @@ prep_config() {
       cli_info "wget fetched file successfully \n\tFrom: ${CFG_IMP_URL}\n\tSaved at: ${CFG_IMP_DIR}/${IMP_NAME}\n"
       # now extract it
       cli_warning "Trying to extract contents -- you will be prompted for your password by gpg."
-      gpg -d ${CFG_IMP_DIR}/${IMP_NAME} | tar -xj -C ${CFG_IMP_DIR}
+
       # check if something went wrong
-      if [[ ${?} -ne 0 ]]; then
+      if ! gpg -d "${CFG_IMP_DIR}/${IMP_NAME}" | tar -xj -C "${CFG_IMP_DIR}"; then
         cli_error "Error, non-zero value encountered while decrypting private files (${?}) - cannot continue."
         exit 1
       fi
@@ -53,9 +53,10 @@ prep_config() {
   else
     cli_info "Detected extra configuration file, sourcing it."
     # source the file with the extra bits.
-    source ${CFG_IMP_CONF}
+
     # report if something went wrong.
-    if [[ ${?} -ne 0 ]]; then
+    # shellcheck source=/dev/null
+    if ! source "${CFG_IMP_CONF}"; then
         cli_error "Error, non-zero value encountered while sourcing private configuration - cannot continue."
         exit 1
     fi

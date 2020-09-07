@@ -5,9 +5,9 @@ cli_info "Sourcing common files..."
 
 # prepare configuration
 PREP_CONF_SH="prep_config.sh"
-source ${DOT_DIR}/shared/${PREP_CONF_SH}
 
-if [[ ${?} -ne 0 ]]; then
+# shellcheck source=/dev/null
+if ! source "${DOT_DIR}/shared/${PREP_CONF_SH}"; then
   cli_error "Error, non-zero value encountered while parsing ${PREP_CONF_SH} - cannot continue."
   exit 1
 else
@@ -16,9 +16,9 @@ fi
 
 # ufw rules
 UFW_RULE_SH="add_ufw_rules.sh"
-source ${DOT_DIR}/shared/${UFW_RULE_SH}
 
-if [[ ${?} -ne 0 ]]; then
+# shellcheck source=/dev/null
+if ! source "${DOT_DIR}/shared/${UFW_RULE_SH}"; then
   cli_error "Error, non-zero value encountered while parsing ${UFW_RULE_SH} - cannot continue."
   exit 1
 else
@@ -27,9 +27,9 @@ fi
 
 # url validators
 URL_VAL_SH="url_validator.sh"
-source ${DOT_DIR}/shared/${URL_VAL_SH}
 
-if [[ ${?} -ne 0 ]]; then
+# shellcheck source=/dev/null
+if ! source "${DOT_DIR}/shared/${URL_VAL_SH}"; then
   cli_error "Error, non-zero value encountered while parsing ${URL_VAL_SH} - cannot continue."
   exit 1
 else
@@ -38,9 +38,9 @@ fi
 
 # git
 GIT_CONF_SH="git_config.sh"
-source ${DOT_DIR}/shared/${GIT_CONF_SH}
 
-if [[ ${?} -ne 0 ]]; then
+# shellcheck source=/dev/null
+if ! source "${DOT_DIR}/shared/${GIT_CONF_SH}"; then
   cli_error "Error, non-zero value encountered while parsing ${GIT_CONF_SH} - cannot continue."
   exit 1
 else
@@ -49,9 +49,9 @@ fi
 
 # ssh config
 SSH_CONF_SH="ssh_config.sh"
-source ${DOT_DIR}/shared/${SSH_CONF_SH}
 
-if [[ ${?} -ne 0 ]]; then
+# shellcheck source=/dev/null
+if ! source "${DOT_DIR}/shared/${SSH_CONF_SH}"; then
   cli_error "Error, non-zero value encountered while parsing ${SSH_CONF_SH} - cannot continue."
   exit 1
 else
@@ -60,9 +60,9 @@ fi
 
 # vim config
 VIM_CONF_SH="vim_config.sh"
-source ${DOT_DIR}/shared/${VIM_CONF_SH}
 
-if [[ ${?} -ne 0 ]]; then
+# shellcheck source=/dev/null
+if ! source "${DOT_DIR}/shared/${VIM_CONF_SH}"; then
   cli_error "Error, non-zero value encountered while parsing ${VIM_CONF_SH} - cannot continue."
   exit 1
 else
@@ -71,9 +71,9 @@ fi
 
 # bash config
 BASH_CONF_SH="bash_config.sh"
-source ${DOT_DIR}/shared/${BASH_CONF_SH}
 
-if [[ ${?} -ne 0 ]]; then
+# shellcheck source=/dev/null
+if ! source "${DOT_DIR}/shared/${BASH_CONF_SH}"; then
   cli_error "Error, non-zero value encountered while parsing ${BASH_CONF_SH} - cannot continue."
   exit 1
 else
@@ -82,9 +82,9 @@ fi
 
 # kitty terminal config
 KITTY_CONF_SH="kitty_config.sh"
-source ${DOT_DIR}/shared/${KITTY_CONF_SH}
 
-if [[ ${?} -ne 0 ]]; then
+# shellcheck source=/dev/null
+if ! source "${DOT_DIR}/shared/${KITTY_CONF_SH}"; then
   cli_error "Error, non-zero value encountered while parsing ${KITTY_CONF_SH} - cannot continue."
   exit 1
 else
@@ -93,9 +93,9 @@ fi
 
 # rust install
 RUST_INSTALL_SH="rust_install.sh"
-source ${DOT_DIR}/shared/${RUST_INSTALL_SH}
 
-if [[ ${?} -ne 0 ]]; then
+# shellcheck source=/dev/null
+if ! source "${DOT_DIR}/shared/${RUST_INSTALL_SH}"; then
   cli_error "Error, non-zero value encountered while parsing ${RUST_INSTALL_SH} - cannot continue."
   exit 1
 else
@@ -104,9 +104,9 @@ fi
 
 # rvm install
 RVM_INSTALL_SH="rvm_install.sh"
-source ${DOT_DIR}/shared/${RVM_INSTALL_SH}
 
-if [[ ${?} -ne 0 ]]; then
+# shellcheck source=/dev/null
+if ! source "${DOT_DIR}/shared/${RVM_INSTALL_SH}"; then
   cli_error "Error, non-zero value encountered while parsing ${RVM_INSTALL_SH} - cannot continue."
   exit 1
 else
@@ -115,9 +115,9 @@ fi
 
 # pipenv3 config
 PIPENV3_CONF_SH="pipenv3_config.sh"
-source ${DOT_DIR}/shared/${PIPENV3_CONF_SH}
 
-if [[ ${?} -ne 0 ]]; then
+# shellcheck source=/dev/null
+if ! source "${DOT_DIR}/shared/${PIPENV3_CONF_SH}"; then
   cli_error "Error, non-zero value encountered while parsing ${PIPENV3_CONF_SH} - cannot continue."
   exit 1
 else
@@ -126,9 +126,9 @@ fi
 
 # fetch my projects
 FETCH_PROJ_SH="fetch_my_projects.sh"
-source ${DOT_DIR}/shared/${FETCH_PROJ_SH}
 
-if [[ ${?} -ne 0 ]]; then
+# shellcheck source=/dev/null
+if ! source "${DOT_DIR}/shared/${FETCH_PROJ_SH}"; then
   cli_error "Error, non-zero value encountered while parsing ${FETCH_PROJ_SH} - cannot continue."
   exit 1
 else
@@ -196,14 +196,15 @@ find_linux_distro() {
   cli_info "Found $OS, version: $VER."
 
   # launch the appropriate dotfile
-  if [[ ${OS} -eq "Ubuntu" ]]; then
+  if [[ "${OS}" == "Ubuntu" ]]; then
     cli_info "Configuring Ubuntu."
-    source ${DOT_DIR}/ubuntu-distro/dot_script_ubuntu.sh
+    # shellcheck source=/dev/null
+    source "${DOT_DIR}/ubuntu-distro/dot_script_ubuntu.sh"
     # ${DOT_DIR}/ubuntu-distro/dot_script_ubuntu.sh
-  elif [[ ${OS} -eq "Debian" ]]; then
+  elif [[ "${OS}" == "Debian" ]]; then
     cli_info "Configuring Debian."
     # source ${DOT_DIR}/debian-distro/dot_script_debian.sh
-    ${DOT_DIR}/debian-distro/dot_script_debian.sh
+    "${DOT_DIR}/debian-distro/dot_script_debian.sh"
   else
     cli_info "No dotfile present for ${OS}."
   fi
@@ -218,7 +219,8 @@ detect_os() {
   elif [[ "${OSTYPE}" == "dawrin" ]]; then
     cli_info "Detected MacOS."
     # run the macos dotfiles.
-    source ${DOT_DIR}/macos/dot_script_macos.sh
+    # shellcheck source=/dev/null
+    source "${DOT_DIR}/macos/dot_script_macos.sh"
   elif [[ "${OSTYPE}" == "cygwin" ]]; then
     # POSIX compatibility layer and Linux environment emulation for Windows
     cli_info "Detected win32/cygwin."

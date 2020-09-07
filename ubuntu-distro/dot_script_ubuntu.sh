@@ -7,19 +7,20 @@
 cli_info "Executing Ubuntu distro dotfile."
 
 # perform an update, upgrade, auto-remove before install
-sudo apt update && sudo apt -y upgrade && sudo apt -y autoremove
-
-# check if something went wrong
-if [[ ${?} -ne 0 ]]; then
+if sudo apt update && sudo apt -y upgrade && sudo apt -y autoremove; then
+  cli_info "Update and upgraded system packages successfully"
+else
   cli_error "Error, non-zero code encountered while updating - cannot continue."
   exit 1
 fi
 
 # add gpg since we are going to need it.
-sudo apt install -y gnupg2
+
 
 # check if something went wrong
-if [[ ${?} -ne 0 ]]; then
+if sudo apt install -y gnupg2; then
+  cli_info "Installed gpg successfully"
+else
   cli_error "Error, non-zero code encountered while installing gnupg - cannot continue."
   exit 1
 fi
@@ -32,22 +33,21 @@ check_params
 
 # Register repos
 
-# add sublime gpg key
-wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | \
-sudo apt-key add -
-# sublime repo
+if ! wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | \
+sudo apt-key add - && \
+# add sublime repo
 echo "deb https://download.sublimetext.com/ apt/dev/" | \
-sudo tee /etc/apt/sources.list.d/sublime-text.list
+sudo tee /etc/apt/sources.list.d/sublime-text.list && \
 # add universe for fira-code
-sudo add-apt-repository universe
+sudo add-apt-repository universe; then
+  cli_error "There while adding the custom repos - cannot continue"
+  exit 1
+fi
 
 # Install (my) packages
 
-# perform an update of the repositories
-sudo apt update
-
-# install (my) essential packages
-sudo apt install -y\
+# install (my) essential packages while checking if packages installed correctly.
+if ! sudo apt update && sudo apt install -y\
   valgrind \
   graphviz \
   vim \
@@ -69,24 +69,20 @@ sudo apt install -y\
   glances \
   htop \
   python3-pip \
-  jq
-
-# check if packages installed correctly.
-if [[ ${?} -ne 0 ]]; then
+  jq; then
   cli_error "Error, non-zero code encountered while installing essential packages - cannot continue."
 fi
 
 # install optional packages
 if [[ ${CFG_MINIMAL} = false ]]; then
-  sudo apt install -y\
+
+  # try to install packages.
+  if ! sudo apt install -y\
     lm-sensors \
     doxygen \
     python3-sphinx \
     qbittorrent \
-    python3-bottle
-
-  # check if packages installed correctly.
-  if [[ ${?} -ne 0 ]]; then
+    python3-bottle; then
     cli_error "Error, non-zero code encountered while installing extra packages - cannot continue."
   fi
 fi
@@ -122,7 +118,11 @@ fi
 
 # sourcing profile to update the current window
 cli_info "Sourcing updated ${MY_HOME}.profile"
-source ${MY_HOME}.profile
+
+# shellcheck source=/dev/null
+if ! source "${MY_HOME}.profile"; then
+  cli_error "There was an issue while sourcing updated ~/.profile - things might not work as expected..."
+fi
 
 # finally, auto-remove unused packages
 sudo apt -y autoremove

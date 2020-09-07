@@ -17,7 +17,8 @@ sourced=0
 if [[ -n "${ZSH_EVAL_CONTEXT}" ]]; then
   case ${ZSH_EVAL_CONTEXT} in *:file) sourced=1;; esac
 elif [[ -n "${KSH_VERSION}" ]]; then
-  [[ "$(cd $(dirname -- $0) && pwd -P)/$(basename -- $0)" != "$(cd $(dirname -- ${.sh.file}) && pwd -P)/$(basename -- ${.sh.file})" ]] && sourced=1
+  # shellcheck disable=SC2154
+  [[ "$(cd "$(dirname -- "$0")" && pwd -P)/$(basename -- $0)" != "$(cd "$(dirname -- "${.sh.file}")" && pwd -P)/$(basename -- "${.sh.file}")" ]] && sourced=1
 elif [[ -n "${BASH_VERSION}" ]]; then
   (return 0 2>/dev/null) && sourced=1
 else # All other shells: examine $0 for known shell binary filenames
@@ -35,7 +36,7 @@ fi
 # old version
 #SCRIPT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # newer, this is simple and works on most shells - but is not able to be sourced.
-SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+SCRIPT_DIR=$(cd -- "$(dirname -- "$0")" && pwd)
 if [[ ${#} -eq 1 ]]; then
   cli_info "Parsed argument for output directory: ${1}"
   IMP_DIR="${1}"
@@ -87,9 +88,7 @@ fi
 cli_info "Compressing and encrypting..."
 
 # pack them up with a given password
-tar --exclude='README.md' --exclude='*.gpg' -cjv -C ${IMP_DIR} . | gpg -co ${OUT_NAME}.gpg
-
-if [[ ${?} -ne 0 ]]; then
+if ! tar --exclude='README.md' --exclude='*.gpg' -cjv -C "${IMP_DIR}" . | gpg -co ${OUT_NAME}.gpg; then
     cli_error "Error: non-zero exit code while compressing and encrypting"
 else
     cli_info "Finished packing - output resides at ${SCRIPT_DIR}/${OUT_NAME}.gpg."
