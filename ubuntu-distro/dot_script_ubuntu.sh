@@ -116,6 +116,14 @@ else
   cli_info "Minimal flag is true - skipping rust, rvm, and pipenv installation."
 fi
 
+if [[ ${CFG_DOCKER_INSTALL} = true ]]; then
+  cli_info "Installing docker and docker-compose"
+  # shellcheck source=/dev/null
+  if ! source "${DOT_DIR}/ubuntu-distro/docker_ubuntu_install.sh"; then
+    cli_error "There was an error sourcing ubuntu docker installation function - skipping"
+  fi
+fi
+
 # sourcing profile to update the current window
 cli_info "Sourcing updated ${MY_HOME}.profile"
 

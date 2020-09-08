@@ -32,7 +32,7 @@ git_config() {
     # check if we also configure the signature
     if [[ -n ${CFG_GPG_SIG} ]]; then
       cli_info "GPG signing key found, setting to ${CFG_GPG_SIG} (and to sign always with it)"
-      git config --global user.signingkey ${CFG_GPG_SIG}
+      git config --global user.signingkey "${CFG_GPG_SIG}"
       git config --global commit.gpgsign true
     fi
   else
