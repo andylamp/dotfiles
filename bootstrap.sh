@@ -17,7 +17,8 @@ sourced=0
 if [[ -n "${ZSH_EVAL_CONTEXT}" ]]; then
   case ${ZSH_EVAL_CONTEXT} in *:file) sourced=1;; esac
 elif [[ -n "${KSH_VERSION}" ]]; then
-  [[ "$(cd "$(dirname -- "$0")" && pwd -P)/$(basename -- $0)" != "$(cd "$(dirname -- ${.sh.file})" && pwd -P)/$(basename -- "${.sh.file}")" ]] && sourced=1
+  # shellcheck disable=SC2154
+  [[ "$(cd "$(dirname -- "$0")" && pwd -P)/$(basename -- $0)" != "$(cd "$(dirname -- "${.sh.file}")" && pwd -P)/$(basename -- "${.sh.file}")" ]] && sourced=1
 elif [[ -n "${BASH_VERSION}" ]]; then
   (return 0 2>/dev/null) && sourced=1
 else # All other shells: examine $0 for known shell binary filenames
@@ -42,13 +43,17 @@ DOT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 cli_info "dotfile directory is: ${DOT_DIR}."
 
 # source the basic configuration
-source ${DOT_DIR}/config.sh
+# shellcheck source=/dev/null
+source "${DOT_DIR}/config.sh"
 
 # now source everything else
-source ${DOT_DIR}/shared/common.sh
+# shellcheck source=/dev/null
+source "${DOT_DIR}/shared/common.sh"
 
 # user directory
 MY_USER="$(whoami)"
+# shellcheck disable=SC2034
+# shellcheck disable=SC2088
 MY_HOME="$(expand_path "~/")"
 
 # detect if we are running as root
