@@ -71,7 +71,7 @@ fetch_projects() {
   cli_info_read "Do you want to fetch/update git projects as well? [y/n]: "
   read -n 1 -r; echo ""
   if [[ ${REPLY} =~ ^[yY]$ ]] || [[ -z ${REPLY} ]]; then
-    cli_info "\tOK, fetching!"
+    cli_warning "\tOK, fetching!"
     # fetch my projects
     fetch_my_projects
   else

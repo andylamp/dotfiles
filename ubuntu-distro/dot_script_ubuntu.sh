@@ -122,6 +122,9 @@ if [[ ${CFG_DOCKER_INSTALL} = true ]]; then
   if ! source "${DOT_DIR}/ubuntu-distro/docker_ubuntu_install.sh"; then
     cli_error "There was an error sourcing ubuntu docker installation function - skipping"
   fi
+
+  # run docker install
+  docker_ubuntu_install
 fi
 
 # sourcing profile to update the current window
