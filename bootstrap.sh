@@ -37,7 +37,7 @@ fi
 # find current directory and put it in a global variable for our script to use
 # DOT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # this is simple and works on most shells - but is not able to be sourced.
-DOT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+DOT_DIR=$(cd -- "$(dirname -- "$0")" && pwd)
 
 # notify what our detected dotfile directory is
 cli_info "dotfile directory is: ${DOT_DIR}."
