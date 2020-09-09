@@ -132,7 +132,7 @@ if ! source "${MY_HOME}.profile"; then
   cli_error "There was an issue while sourcing updated ~/.profile - things might not work as expected..."
 fi
 
-# finally, auto-remove unused packages
+# finally, perform one last auto-remove of any leftover unused packages
 sudo apt -y autoremove
 
 cli_info "Execution of Ubuntu dotfile installation has been completed."

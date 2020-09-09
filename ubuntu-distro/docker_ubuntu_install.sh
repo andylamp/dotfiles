@@ -57,7 +57,6 @@ docker_ubuntu_install() {
     exit 1
   fi
 
-
   # add the official docker repo
   if ! sudo add-apt-repository \
      "deb [arch=amd64] ${REPO_LINK}/${DIST_FLAVOR} \
@@ -77,6 +76,7 @@ docker_ubuntu_install() {
     cli_info "Install docker components successfully"
   fi
 
+  # check if we have to install docker-compose
   if [[ ${INSTALL_COMPOSE} = true ]]; then
       cli_info "Installing docker-compose as well!"
 
@@ -132,5 +132,4 @@ docker_ubuntu_install() {
   fi
 
   cli_info "Docker (ubuntu) installation finished!"
-
 }

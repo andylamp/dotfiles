@@ -12,11 +12,12 @@ git_config() {
 
   # check if the details are correct.
   cli_info "Git Details"
-  cli_info "\t-- username: ${CFG_GIT_USER}"
-  cli_info "\t-- email: ${CFG_GIT_EMAIL}"
+  cli_info "\tusername: ${CFG_GIT_USER}"
+  cli_info "\temail: ${CFG_GIT_EMAIL}"
+  cli_warning "GPG: ${CFG_GPG_SIG}"
   # check if we have GPG signature
   if [[ -n ${CFG_GPG_SIG} ]]; then
-    cli_info "\t-- GPG Sig: ${CFG_GPG_SIG}"
+    cli_info "\tGPG Sig: ${CFG_GPG_SIG}"
   fi
 
   # sanity check

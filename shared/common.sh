@@ -241,7 +241,13 @@ check_params() {
   cli_info "Initialisation details:"
   cli_info "  SSH Details:\n\tmy_id: ${CFG_SSH_PUB}\n\tmy_rsa: ${CFG_SSH_PRI}"
   cli_info "  User details:\n\tuser: ${MY_HOME}\n\thome: ${MY_HOME}\n\temail: ${CFG_EMAIL}"
-  cli_info "  Git details:\n\tusername: ${CFG_GIT_USER}\n\temail: ${CFG_GIT_EMAIL}"
+
+  if [[ -z ${CFG_GPG_SIG} ]]; then
+    cli_info "  Git details:\n\tusername: ${CFG_GIT_USER}\n\temail: ${CFG_GIT_EMAIL}\n\tGPG: Empty"
+  else
+    cli_info "  Git details:\n\tusername: ${CFG_GIT_USER}\n\temail: ${CFG_GIT_EMAIL}\n\tGPG: ${CFG_GPG_SIG}"
+  fi
+
   cli_info "  Kitty terminal parameters:\n\tConf file: ${CFG_KITTY_CONF}\n\tTheme: ${CFG_KITTY_THEME}"
   cli_info "  Bash config:\n\t${CFG_BASH_CONF}"
 

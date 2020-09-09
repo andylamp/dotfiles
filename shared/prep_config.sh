@@ -32,7 +32,7 @@ prep_config() {
 
   # check if we have an extra configuration file to use
   if [[ ! -f ${CFG_IMP_CONF} ]]; then
-    cli_info "No extra configuration detected, using defaults"
+    cli_warning "No extra configuration detected, using defaults"
     # my email
     CFG_EMAIL="andreas.grammenos@gmail.com"
 
@@ -51,7 +51,7 @@ prep_config() {
     CFG_SSH_PUB="${CFG_IMP_DIR}/id_pub"
     CFG_SSH_PRI="${CFG_IMP_DIR}/id_rsa"
   else
-    cli_info "Detected extra configuration file, sourcing it."
+    cli_warning "Detected extra configuration file, sourcing it."
     # source the file with the extra bits.
 
     # report if something went wrong.
