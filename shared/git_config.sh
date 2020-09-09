@@ -14,7 +14,6 @@ git_config() {
   cli_info "Git Details"
   cli_info "\tusername: ${CFG_GIT_USER}"
   cli_info "\temail: ${CFG_GIT_EMAIL}"
-  cli_warning "GPG: ${CFG_GPG_SIG}"
   # check if we have GPG signature
   if [[ -n ${CFG_GPG_SIG} ]]; then
     cli_info "\tGPG Sig: ${CFG_GPG_SIG}"
