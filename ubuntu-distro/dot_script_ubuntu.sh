@@ -79,6 +79,7 @@ if [[ ${CFG_MINIMAL} = false ]]; then
   # try to install packages.
   if ! sudo apt install -y\
     lm-sensors \
+    sysstat \
     doxygen \
     python3-sphinx \
     qbittorrent \
