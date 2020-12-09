@@ -183,6 +183,25 @@ testparm -s
 dpkg-query -W -f='${Package} ${Version} ${Source} ${Status}\n' | grep samba
 ```
 
+## Windows hosts debugging hints
+
+The following tips can be used when a Windows host has trouble connecting to the `CIFS` mount provided by `samba`
+
+### Drives disappear or cannot connect
+
+This can mean a lot of things, however the immediate thing that should happen is to check if the share works on other 
+machines or operating systems (e.g. `MacOS`).
+
+If this does *not* work, then disconnect/remove the drives by going over to `regedit`
+
+```
+\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MountPoints2
+```
+
+There you will find all the mounts that are mapped to be shown through Windows Explorer - delete the ones that are 
+from the problematic share and re-map them. As far as I am aware there no easier way to do this; thankfully, to apply 
+the changes no full machine is required - just restarting the Windows Explorer will do the trick.
+
 ## Final touches
 
 Please after every change in either configuration or users perform a `Samba` service restart using the below command:
