@@ -59,4 +59,6 @@ We can force forget cached passwords by reloading the gpg agent - this can be do
 echo RELOADAGENT | gpg-connect-agent
 ```
 
+# Managing and signing keys
+
 [1]: https://gnupg.org/

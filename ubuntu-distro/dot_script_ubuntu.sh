@@ -69,6 +69,8 @@ if ! sudo apt update && sudo apt install -y\
   glances \
   htop \
   python3-pip \
+  nvme-cli \
+  smartmontools \
   jq; then
   cli_error "Error, non-zero code encountered while installing essential packages - cannot continue."
 fi

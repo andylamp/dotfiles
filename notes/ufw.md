@@ -1,3 +1,7 @@
 # ufw notes
 
-TBD!
+# Status
+
+# Rule structure
+
+#
