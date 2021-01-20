@@ -133,7 +133,9 @@ Assuming we have the mount points as before we can easily share a whole drive by
     create mask = 755
 ```
 
-As previously, this says to `Samba` that the directory `/opt/public-mount` will be mounted as `public-mount` and will be browsable and editable by authenticated users while each folder/file created will have a (unix) permission mask of `755`.
+#### Configuring a user with password
+
+As mentioned previously, this says to `samba` that the directory `/opt/public-mount` will be mounted as `public-mount` and will be browsable and editable by authenticated users while each folder/file created will have a (unix) permission mask of `755`.
 Now, since `Samba` does not use unix passwords we need to create a unix password for each user that we want to provide access; this can be done using the following command.
 
 ```bash
