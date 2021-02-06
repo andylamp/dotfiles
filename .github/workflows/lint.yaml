@@ -1,5 +1,5 @@
 # a more complete example of the linters which includes testing.
-name: Shell Lint
+name: linter
 
 on: [ push, pull_request ]
 

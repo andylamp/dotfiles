@@ -1,4 +1,4 @@
-![linters](https://github.com/andylamp/dotfiles/workflows/Shell%20Lint/badge.svg)
+![linters](https://github.com/andylamp/dotfiles/workflows/linter/badge.svg)
 
 # (Somewhat) Portable dotfiles
 
