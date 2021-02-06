@@ -12,7 +12,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Installing dependencies...
       # Shell linting phase
+      - uses: ludeeus/action-shellcheck@master
       - name: Running shell check...
-        uses: ludeeus/action-shellcheck@master
