@@ -1,0 +1,45 @@
+#!/bin/bash
+
+## Install script - fetches the repository
+
+# pretty functions for log output
+function cli_info { echo -e " -- \033[1;32m$1\033[0m"; }
+function cli_warning { echo -e " ** \033[1;33m$1\033[0m"; }
+function cli_error { echo -e " !! \033[1;31m$1\033[0m"; }
+
+REPO_URI="https://github.com/andylamp/dotfiles"
+
+cli_info "Welcome to dotfile installation script!"
+
+# first, let's detect the package manager available (and if we support it)
+function install_git() {
+	if [[ -x "$(command -v apt)" ]]; then
+		sudo apt install -yy git
+	else
+		cli_error "currently only debian based distributions are supported."
+		return 1
+	fi
+}
+
+cli_info "First, we need to check if the bootstrap script is present"
+
+if [[ ! -f "./bootstrap" ]]; then
+	cli_warning "It seems that this is a new installation"
+	# now let us try to install git
+	if [[ ! -x "$(command -v git)" ]]; then
+		cli_warning "git seems to not be present, attempting to install"
+		if ! install_git; then
+			cli_error "failed to install git, cannot continue..."
+			exit 1
+		else
+			cli_info "git is present..."
+		fi
+	fi
+	cli_info "Trying to clone the repository to: $(pwd)"
+	git clone "${REPO_URI}"
+else
+	cli_info "bootstrap has been located - seems an existing installation; invoking"
+fi
+
+# finally, call bootstrap
+./bootstrap

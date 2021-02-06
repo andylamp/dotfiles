@@ -1,7 +1,7 @@
 # ufw notes
 
-# Status
+## Status
 
-# Rule structure
+## Rule structure
 
-#
+## Misc

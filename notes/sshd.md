@@ -1,7 +1,7 @@
 # sshd with ufw
 
-To allow `sshd` from `ufw` we need to open the service port, normally `22`.
-Now, assuming we have copied the `ufw` rule (one can be found [here][1]) for `sshd` in `/etc/ufw/applications.d/` we can enable it as such:
+To allow `sshd` from `ufw` we need to open the service port, normally `22`. Now, assuming we have copied the `ufw`
+rule (one can be found [here][1]) for `sshd` in `/etc/ufw/applications.d/` we can enable it as such:
 
 ```bash
 # allow sshd in ufw from specific domain (recommended)
@@ -10,7 +10,7 @@ sudo ufw allow from 192.168.178.0/24 to any app sshd
 sudo ufw allow sshd
 ```
 
-To check that it has indeed been applied we can check using
+To check that it has indeed been applied we can check using the following,
 
 ```bash
 # replace ssh/sshd-port with the port that sshd listens to, normally 22.

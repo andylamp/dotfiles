@@ -1,0 +1,18 @@
+# a more complete example of the linters which includes testing.
+name: Shell Lint
+
+on: [ push, pull_request ]
+
+# the defined jobs
+jobs:
+  # the job build configuration and steps
+  build:
+    # we use ubuntu latest for this, which normally is the most recent LTS version
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Installing dependencies...
+      # Shell linting phase
+      - name: Running shell check...
+        uses: ludeeus/action-shellcheck@master

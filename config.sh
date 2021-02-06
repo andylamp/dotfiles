@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2034
 
 # This is the basic script configuration - a bit explanation is needed and TBD.
 
 # if we want a minimal setup (git cred, ssh, aliases, terminal, etc)
 #
 # in case of non-minimal we will add fetch projects, pipenv, rust, rvm, and others...
+
 CFG_MINIMAL=false
 
 # enabled if we expect this to be run in a headless server (this does not do anything yet)
