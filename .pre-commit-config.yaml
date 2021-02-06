@@ -11,7 +11,7 @@ repos:
       - id: fasterer
       - id: forbid-binary
       - id: forbid-space-in-indent
-        exclude: ^*.md$
+        exclude: ^.*[.]md$
       - id: git-check  # Configure in .gitattributes
       - id: git-dirty  # Configure in .gitignore
       - id: markdownlint # Configure in .mdlrc
