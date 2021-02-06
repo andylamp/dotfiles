@@ -15,3 +15,5 @@ jobs:
       # Shell linting phase
       - uses: ludeeus/action-shellcheck@master
         name: Running shell check...
+        env:
+          SHELLCHECK_OPTS: -x
