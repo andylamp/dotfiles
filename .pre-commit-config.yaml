@@ -6,16 +6,11 @@ repos:
   - repo: https://github.com/jumanjihouse/pre-commit-hooks
     rev: 2.1.4  # or specific git tag
     hooks:
-      - id: bundler-audit
-      - id: check-mailmap
       - id: fasterer
       - id: forbid-binary
-      - id: forbid-space-in-indent
         exclude: ^.*[.](md|yaml)$
       - id: git-check  # Configure in .gitattributes
       - id: markdownlint # Configure in .mdlrc
-      - id: reek
-      - id: rubocop
       - id: script-must-have-extension
       - id: script-must-not-have-extension
       - id: shellcheck
