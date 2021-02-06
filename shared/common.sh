@@ -158,6 +158,7 @@ expand_path() {
 
 # find which linux distribution we have
 find_linux_distro() {
+	# shellcheck disable=SC1091
 	cli_warning "Detected Linux-based OS, trying to find its flavor."
 	if [[ -f /etc/os-release ]]; then
 		# freedesktop.org and systemd
