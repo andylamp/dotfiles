@@ -8,7 +8,6 @@ repos:
     hooks:
       - id: fasterer
       - id: forbid-binary
-        exclude: ^.*[.](md|yaml)$
       - id: git-check  # Configure in .gitattributes
       - id: markdownlint # Configure in .mdlrc
       - id: script-must-have-extension
