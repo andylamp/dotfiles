@@ -13,7 +13,6 @@ repos:
       - id: forbid-space-in-indent
         exclude: ^.*[.](md|yaml)$
       - id: git-check  # Configure in .gitattributes
-      - id: git-dirty  # Configure in .gitignore
       - id: markdownlint # Configure in .mdlrc
       - id: reek
       - id: rubocop
