@@ -18,24 +18,24 @@ copy_ufw_rules() {
 		for r in "${RULE_DIR}"/*; do
 			[[ -e "${r}" ]] || break # handle the case of empty directory
 			# copy each ufw rule to the application.d directory
-			cli_info "Copying ufw rule: ${r} - will ask if you want to override"
-			if [[ ! -f ${RULE_DIR}/${r} ]]; then
-
-				if ! sudo cp "${RULE_DIR}/${r}" ${UFW_APP_DIR}; then
+			RULE_NAME=$(basename "${r}")
+			cli_info "Copying ufw rule: ${RULE_NAME} - will ask if you want to override"
+			if [[ ! -f ${r} ]]; then
+				if ! sudo cp "${r}" ${UFW_APP_DIR}; then
 					cli_warning "There was an error copying ufw rule: ${r} - skipping."
 				fi
 			else
-				cli_warning_read "Rule ${r} already exists, do you want to override it?"
+				cli_warning_read "Rule ${RULE_NAME} already exists, do you want to override it?"
 				read -n 1 -r
 				echo ""
 				if [[ ${REPLY} =~ ^[yY]$ ]] || [[ -z ${REPLY} ]]; then
 					cli_warning "\tOK, overriding ${r}..."
 
-					if ! sudo cp "${RULE_DIR}/${r}" ${UFW_APP_DIR}; then
-						cli_warning "There was an error copying ufw rule: ${r} - skipping."
+					if ! sudo cp "${r}" ${UFW_APP_DIR}; then
+						cli_warning "There was an error copying ufw rule: ${RULE_NAME} - skipping."
 					fi
 				else
-					cli_warning "\tOK, skipping ${r}..."
+					cli_warning "\tOK, skipping ${RULE_NAME} ufw rule..."
 				fi
 			fi
 		done
