@@ -20,7 +20,7 @@ copy_ufw_rules() {
 			# copy each ufw rule to the application.d directory
 			RULE_NAME=$(basename "${r}")
 			cli_info "Copying ufw rule: ${RULE_NAME} - will ask if you want to override"
-			if [[ ! -f ${r} ]]; then
+			if [[ ! -f ${UFW_APP_DIR}/${RULE_NAME} ]]; then
 				if ! sudo cp "${r}" ${UFW_APP_DIR}; then
 					cli_warning "There was an error copying ufw rule: ${r} - skipping."
 				fi
