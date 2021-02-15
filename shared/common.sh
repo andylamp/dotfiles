@@ -15,14 +15,14 @@ else
 fi
 
 # ufw rules
-UFW_RULE_SH="add_ufw_rules.sh"
+UFW_RULE_UTILS_SH="ufw_rule_utils.sh"
 
 # shellcheck source=/dev/null
-if ! source "${DOT_DIR}/shared/${UFW_RULE_SH}"; then
-	cli_error "Error, non-zero value encountered while parsing ${UFW_RULE_SH} - cannot continue."
+if ! source "${DOT_DIR}/shared/${UFW_RULE_UTILS_SH}"; then
+	cli_error "Error, non-zero value encountered while parsing ${UFW_RULE_UTILS_SH} - cannot continue."
 	exit 1
 else
-	cli_info "\tParsed ${UFW_RULE_SH} OK"
+	cli_info "\tParsed ${UFW_RULE_UTILS_SH} OK"
 fi
 
 # url validators

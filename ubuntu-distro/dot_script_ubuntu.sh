@@ -87,6 +87,9 @@ if [[ ${CFG_MINIMAL} = false ]]; then
 	fi
 fi
 
+# copy ufw rules
+copy_ufw_rules
+
 # Configure git
 git_config
 

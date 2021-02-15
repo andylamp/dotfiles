@@ -55,6 +55,14 @@ ssh_config() {
 		# access permissions for specific files
 		chmod -R 700 "${MY_SSH_DIR}"
 		chmod 600 "${MY_SSH_DIR}"/id_*
+
+		# if enabled - allow ufw
+		if [[ "${CFG_OPEN_SSHD}" = true ]]; then
+			if ! add_ufw_rule "/etc/ufw/applications.d/sshd"; then
+				cli_error "Could not add ufw rule for sshd... skipping its configuration."
+			fi
+		fi
+
 		cli_info "Finished ssh configuration successfully."
 	else
 		cli_info "Details not OK - skipping configuring SSH."

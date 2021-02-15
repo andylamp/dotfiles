@@ -19,6 +19,9 @@ CFG_DOCKER_INSTALL=true
 # you already have the files.
 CFG_IMP_URL=""
 
+# check if we allow sshd login
+CFG_OPEN_SSHD=true
+
 # directory that contains non-public bits
 CFG_IMP_DIR="${DOT_DIR}/shared/important"
 
