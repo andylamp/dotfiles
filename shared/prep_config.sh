@@ -18,10 +18,16 @@ prep_config() {
 		else
 			cli_info "wget fetched file successfully \n\tFrom: ${CFG_IMP_URL}\n\tSaved at: ${CFG_IMP_DIR}/${IMP_NAME}\n"
 			# now extract it
-			cli_warning "Trying to extract contents -- you will be prompted for your password by gpg."
+			cli_warning "Trying to extract contents -- you will be prompted for your password now."
+			# read the actual password from the user.
+			echo "Password: "
+			if ! read_password GPG_PASSWORD; then
+				cli_error "There was an error while getting the password..."
+				exit 1
+			fi
 
 			# check if something went wrong
-			if ! gpg -d "${CFG_IMP_DIR}/${IMP_NAME}" | tar -xj -C "${CFG_IMP_DIR}"; then
+			if ! gpg --pinentry-mode loopback --passphrase "${GPG_PASSWORD}" -d "${CFG_IMP_DIR}/${IMP_NAME}" | tar -xj -C "${CFG_IMP_DIR}"; then
 				cli_error "Error, non-zero value encountered while decrypting private files (${?}) - cannot continue."
 				exit 1
 			fi

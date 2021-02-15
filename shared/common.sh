@@ -156,6 +156,31 @@ expand_path() {
 	esac
 }
 
+# read a password (without echo) from a tty terminal in a POSIX-y way (from SO post)
+read_password() {
+	# ensure we have only one argument
+	if [[ "${#}" -ne 1 ]]; then
+		cli_error "read password expects exactly one argument but ${#} provided instead"
+	fi
+
+	# first thing to do is to disable echo in the stty
+	stty -echo
+
+	# setup a trap as a fail-safe to restore echo in case the script terminates abruptly.
+	trap 'stty echo' EXIT
+
+	# now read the actually secret and store it to the argument provided
+	read -r "$@"
+
+	# re-enable echo and disable the previously registered trap
+	stty echo
+	trap - EXIT
+
+	# this is mostly for formatting - ensure a new line is printed
+	# before exit, so any new i/o is started in a new line.
+	echo
+}
+
 # find which linux distribution we have
 find_linux_distro() {
 	# shellcheck disable=SC1091
