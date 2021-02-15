@@ -71,6 +71,7 @@ if ! sudo apt update && sudo apt install -y valgrind \
 	smartmontools \
 	jq; then
 	cli_error "Error, non-zero code encountered while installing essential packages - cannot continue."
+	exit 1
 fi
 
 # install optional packages
