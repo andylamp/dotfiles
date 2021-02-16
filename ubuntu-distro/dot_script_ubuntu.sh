@@ -17,10 +17,18 @@ fi
 # add gpg since we are going to need it.
 
 # check if something went wrong
-if sudo apt install -y gnupg2; then
+if sudo apt install -yy gnupg2; then
 	cli_info "Installed gpg successfully"
 else
 	cli_error "Error, non-zero code encountered while installing gnupg - cannot continue."
+	exit 1
+fi
+
+# ensure that apt can work with https sources
+if sudo apt install -yy apt-transport-https; then
+	cli_info "Installed apt transport https successfully"
+else
+	cli_error "Error, non-zero code encountered while installing apt transport https - cannot continue."
 	exit 1
 fi
 
@@ -32,14 +40,25 @@ check_params
 
 # Register repos
 
-if ! wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg |
-	sudo apt-key add - &&
-	# add sublime repo
-	echo "deb https://download.sublimetext.com/ apt/dev/" |
-	sudo tee /etc/apt/sources.list.d/sublime-text.list &&
-	# add universe for fira-code
-	sudo add-apt-repository universe; then
-	cli_error "There while adding the custom repos - cannot continue"
+# register sublime
+function add_sublime_repo() {
+	if ! wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -; then
+		cli_error "Error importing the gpg key for sublime - cannot continue..."
+		return 1
+	fi
+
+	if ! echo "deb https://download.sublimetext.com/ apt/dev/" | sudo tee /etc/apt/sources.list.d/sublime-text.list; then
+		cli_error "Error adding the sublime text apt repository to lists - cannot continue..."
+	fi
+}
+
+if ! add_sublime_repo; then
+	exit 1
+fi
+
+# add universe for fira-code
+if ! sudo add-apt-repository universe; then
+	cli_error "There while adding the universe repository - cannot continue"
 	exit 1
 fi
 
@@ -64,7 +83,6 @@ BASE_PACKAGE_LIST=(
 	"vim"
 	"curl"
 	"git"
-	"apt-transport-https"
 	"sublime-text"
 	"openjdk-11-jdk"
 	"openjdk-11-doc"
