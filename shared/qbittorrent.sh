@@ -36,7 +36,7 @@ function add_qbittorrent_nox() {
 
 	# add the systemd service
 	if [[ -f ${CFG_QBITTORRENT_SYSTEMD_SERVICE} ]]; then
-		cli_info "qbittorrent service seems to be present - skipping"
+		cli_info "qbittorrent service seems to be present at ${CFG_QBITTORRENT_SYSTEMD_SERVICE} - skipping"
 	fi
 
 	if echo -e "

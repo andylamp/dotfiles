@@ -116,7 +116,7 @@ EXT_PACKAGE_LIST=(
 
 # install (my) essential packages while checking if packages installed correctly.
 
-cli_info "Installing my essential package list!"
+cli_info "Installing my essential package list! (might be a few minutes...)"
 for package in "${BASE_PACKAGE_LIST[@]}"; do
 	if ! pkg_install "${package}"; then
 		cli_error "Error, non-zero code encountered while installing essential packages - cannot continue."
@@ -126,7 +126,7 @@ done
 
 # install optional packages
 if [[ ${CFG_MINIMAL} = false ]]; then
-	cli_info "Installing extended package list!"
+	cli_info "Installing extended package list! (might be a couple of minutes...)"
 	for package in "${EXT_PACKAGE_LIST[@]}"; do
 		pkg_install "${package}"
 	done
