@@ -39,14 +39,9 @@ docker_ubuntu_install() {
 	fi
 
 	# update the apt index
-	if ! sudo apt-get update &&
+	if ! sudo apt-get -qq update &&
 		# install the required packages
-		sudo apt-get install -y \
-			apt-transport-https \
-			ca-certificates \
-			curl \
-			gnupg-agent \
-			software-properties-common; then
+		sudo apt-get -qq install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common; then
 		cli_error "Could not perform the required package removal and updates - cannot continue"
 		exit 1
 	fi
@@ -72,7 +67,7 @@ docker_ubuntu_install() {
 	fi
 
 	# now installing docker
-	if ! sudo apt-get update && sudo apt-get install -y docker-ce docker-ce-cli containerd.io; then
+	if ! sudo apt-get -qq update && sudo apt-get -qq install -y docker-ce docker-ce-cli containerd.io; then
 		cli_error "Could not update and install the required packages - cannot continue"
 		exit 1
 	else

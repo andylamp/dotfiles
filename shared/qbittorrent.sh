@@ -18,7 +18,7 @@ function add_qbittorrent_nox() {
 	fi
 
 	# try to install them
-	if ! sudo apt install -yy "${QBITTORRENT_PACKAGES}"; then
+	if ! sudo apt-get -qq install -yy "${QBITTORRENT_PACKAGES}"; then
 		cli_error "Error, non-zero code returned while installing qbitorrent - cannot continue."
 		return 1
 	fi
@@ -39,7 +39,7 @@ function add_qbittorrent_nox() {
 		cli_info "qbittorrent service seems to be present - skipping"
 	fi
 
-	if echo - e "
+	if echo -e "
 [Unit]
 Description=qBittorrent Command Line Client
 After=network.target
