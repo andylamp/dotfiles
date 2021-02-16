@@ -70,7 +70,7 @@ fi
 
 # helper function for installing packages
 function pkg_install() {
-	if ! sudo apt install -yy "${1}"; then
+	if ! sudo apt-get -qq install -yy "${1}"; then
 		cli_error "Error, non-zero code encountered while installing package: ${package} - cannot continue."
 		return 1
 	fi
