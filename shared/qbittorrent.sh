@@ -73,14 +73,6 @@ WantedBy=multi-user.target
 		return 1
 	fi
 
-	# add the service
-	if ! sudo systemctl start qbittorrent-nox; then
-		cli_error "There was an error starting the qbittorrent-nox service..."
-		return 1
-	else
-		cli_info "qbittorrent-nox service has been installed - you can check its status by using: systemctl status qbittorrent-nox"
-	fi
-
 	cli_info "adding (system) user for qbittorrent-nox"
 	# add the user for nox
 	if ! sudo adduser --system --group "${CFG_QBITTORRENT_NOX_USER}"; then
@@ -88,9 +80,19 @@ WantedBy=multi-user.target
 		return 1
 	fi
 
+	# add the current user to the group for convenience
+	cli_info "adding ${MY_USER} to ${CFG_QBITTORRENT_NOX_USER} for convenience"
 	if ! sudo adduser "${MY_USER}" "${CFG_QBITTORRENT_NOX_USER}"; then
 		cli_error "Failed to add ${MY_USER} to ${CFG_QBITTORRENT_NOX_USER} group - things might not work as expected..."
 		return 1
+	fi
+
+	# finally, add the service
+	if ! sudo systemctl start qbittorrent-nox; then
+		cli_error "There was an error starting the qbittorrent-nox service..."
+		return 1
+	else
+		cli_info "qbittorrent-nox service has been installed - you can check its status by using: systemctl status qbittorrent-nox"
 	fi
 
 	cli_warning "Please restart your machine for qbittorrent-nox daemon changes to take effect!"
