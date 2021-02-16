@@ -26,7 +26,7 @@ copy_ufw_rules() {
 				fi
 			else
 				# check if global override is enabled
-				if [[ "${CFG_UFW_GLOBAL_ASK_OVERRIDE}" = false ]]; then
+				if [[ ${CFG_UFW_GLOBAL_ASK_OVERRIDE} = false ]]; then
 					cli_warning "Rule ask to override is disabled - skipping rule ${RULE_NAME}!"
 					continue
 				fi
