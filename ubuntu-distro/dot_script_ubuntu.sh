@@ -111,7 +111,6 @@ EXT_PACKAGE_LIST=(
 	"sysstat"
 	"doxygen"
 	"python3-sphinx"
-	"qbittorrent"
 	"python3-bottle"
 )
 
@@ -150,6 +149,9 @@ ssh_config
 
 # kitty terminal config
 kitty_config
+
+# Configure qbittorrent
+add_qbittorrent_nox
 
 if [[ ${CFG_MINIMAL} = false ]]; then
 	cli_info "Minimal flag is false - installing rust, rvm, and pipenv."

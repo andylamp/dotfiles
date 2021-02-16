@@ -25,6 +25,17 @@ else
 	cli_info "\tParsed ${UFW_RULE_UTILS_SH} OK"
 fi
 
+# qbittorrent installation script
+QBITTORRENT_SH="qbittorrent.sh"
+
+# shellcheck source=/dev/null
+if ! source "${DOT_DIR}/shared/${QBITTORRENT_SH}"; then
+	cli_error "Error, non-zero value encountered while parsing ${QBITTORRENT_SH} - cannot continue."
+	exit 1
+else
+	cli_info "\tParsed ${QBITTORRENT_SH} OK"
+fi
+
 # url validators
 URL_VAL_SH="url_validator.sh"
 

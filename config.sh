@@ -22,6 +22,19 @@ CFG_IMP_URL=""
 # check if we allow sshd login
 CFG_OPEN_SSHD=true
 
+# check if we install nox for qbittorrent
+CFG_QBITTORRENT_INSTALL=false
+# check if we install the headless version only (nox)
+CFG_QBITTORRENT_NOX_ONLY=true
+# check if we have a systemd daemon enabled
+CFG_QBITTORRENT_NOX_SYSTEMD=true
+# the username of qbittorrent that the daemon should run
+CFG_QBITTORRENT_NOX_USER=qbittorrent-nox
+# the systemd nox service file
+CFG_QBITTORRENT_SYSTEMD_SERVICE="/etc/systemd/system/qbittorrent-nox.service"
+# the port to use for qbittorrent
+CFG_QBITTORRENT_NOX_PORT=18080
+
 # directory that contains non-public bits
 CFG_IMP_DIR="${DOT_DIR}/shared/important"
 
