@@ -7,7 +7,7 @@
 cli_info "Executing Ubuntu distro dotfile."
 
 # perform an update, upgrade, auto-remove before install
-if sudo apt update && sudo apt -y upgrade && sudo apt -y autoremove; then
+if sudo apt -qq update && sudo apt -qq -y upgrade && sudo apt -qq -y autoremove; then
 	cli_info "Update and upgraded system packages successfully"
 else
 	cli_error "Error, non-zero code encountered while updating - cannot continue."
@@ -17,7 +17,7 @@ fi
 # add gpg since we are going to need it.
 
 # check if something went wrong
-if sudo apt install -yy gnupg2; then
+if sudo apt -qq install -yy gnupg2; then
 	cli_info "Installed gpg successfully"
 else
 	cli_error "Error, non-zero code encountered while installing gnupg - cannot continue."
@@ -25,7 +25,7 @@ else
 fi
 
 # ensure that apt can work with https sources
-if sudo apt install -yy apt-transport-https; then
+if sudo apt -qq install -yy apt-transport-https; then
 	cli_info "Installed apt transport https successfully"
 else
 	cli_error "Error, non-zero code encountered while installing apt transport https - cannot continue."
@@ -63,7 +63,7 @@ if ! sudo add-apt-repository universe; then
 fi
 
 # Install (my) packages, but first try to refresh deb repository
-if ! sudo apt update; then
+if ! sudo apt -qq update; then
 	cli_error "Error, non-zero code encountered while updating apt local repository - cannot continue."
 	exit 1
 fi
@@ -187,6 +187,6 @@ if ! source "${MY_HOME}.profile"; then
 fi
 
 # finally, perform one last auto-remove of any leftover unused packages
-sudo apt -y autoremove
+sudo apt -qq -y autoremove
 
 cli_info "Execution of Ubuntu dotfile installation has been completed."
