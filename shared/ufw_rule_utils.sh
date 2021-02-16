@@ -25,7 +25,7 @@ copy_ufw_rules() {
 					cli_warning "There was an error copying ufw rule: ${r} - skipping."
 				fi
 			else
-				cli_warning_read "Rule ${RULE_NAME} already exists, do you want to override it?"
+				cli_warning_read "Rule ${RULE_NAME} already exists, do you want to override it? [y/n]: "
 				read -n 1 -r
 				echo ""
 				if [[ ${REPLY} =~ ^[yY]$ ]] || [[ -z ${REPLY} ]]; then

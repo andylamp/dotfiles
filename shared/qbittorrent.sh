@@ -5,7 +5,7 @@ function add_qbittorrent_nox() {
 	# the service location
 
 	# add the repository
-	if ! sudo add-apt-repository ppa:qbitorrent-team/qbitorrent-stable; then
+	if ! sudo add-apt-repository ppa:qbittorrent-team/qbittorrent-stable; then
 		cli_error "Could not add the qbittorrent repository - cannot continue"
 		return 1
 	fi
