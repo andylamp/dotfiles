@@ -5,7 +5,7 @@ function add_qbittorrent_nox_deb() {
 	QBITTORRENT_PPA="ppa:qbittorrent-team/qbittorrent-stable"
 
 	APT_SOURCE="/etc/apt/sources.list"
-	APT_SOURCE_D="${APT_SOURCE}.d/*"
+	APT_SOURCE_D="${APT_SOURCE}.d/"
 	# the service location
 
 	# add the repository
@@ -73,22 +73,27 @@ WantedBy=multi-user.target
 		return 1
 	fi
 
-	cli_info "adding (system) user for qbittorrent-nox"
-	# add the user for nox
-	if ! sudo adduser --system --group "${CFG_QBITTORRENT_NOX_USER}"; then
-		cli_error "Failed to add system user: ${CFG_QBITTORRENT_NOX_USER} for daemon - cannot continue..."
-		return 1
+	# try to add the user and group
+	if ! grep -q "${CFG_QBITTORRENT_NOX_USER}" "/etc/passwd"; then
+		cli_info "User seems to not exist - adding (system) user for qbittorrent-nox"
+		# add the user for nox
+		if ! sudo adduser --system --group "${CFG_QBITTORRENT_NOX_USER}"; then
+			cli_error "Failed to add system user: ${CFG_QBITTORRENT_NOX_USER} for daemon - cannot continue..."
+			return 1
+		fi
+
+		# add the current user to the group for convenience
+		cli_info "adding ${MY_USER} to ${CFG_QBITTORRENT_NOX_USER} for convenience"
+		if ! sudo adduser "${MY_USER}" "${CFG_QBITTORRENT_NOX_USER}"; then
+			cli_error "Failed to add ${MY_USER} to ${CFG_QBITTORRENT_NOX_USER} group - things might not work as expected..."
+			return 1
+		fi
+	else
+		cli_warning "User ${CFG_QBITTORRENT_NOX_USER} seems to exist - skipping adding..."
 	fi
 
-	# add the current user to the group for convenience
-	cli_info "adding ${MY_USER} to ${CFG_QBITTORRENT_NOX_USER} for convenience"
-	if ! sudo adduser "${MY_USER}" "${CFG_QBITTORRENT_NOX_USER}"; then
-		cli_error "Failed to add ${MY_USER} to ${CFG_QBITTORRENT_NOX_USER} group - things might not work as expected..."
-		return 1
-	fi
-
-	# finally, add the service
-	if ! sudo systemctl start qbittorrent-nox; then
+	# finally, reload the configuration and try to start the service
+	if ! sudo systemctl daemon-reload && sudo systemctl start qbittorrent-nox; then
 		cli_error "There was an error starting the qbittorrent-nox service..."
 		return 1
 	else
