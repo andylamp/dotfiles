@@ -9,7 +9,7 @@ function add_qbittorrent_nox_deb() {
 	# the service location
 
 	# add the repository
-	if ! grep -q "^deb .*${QBITTORRENT_PPA}" "${APT_SOURCE}" "${APT_SOURCE_D}"; then
+	if ! grep -Rq "qbittorrent-team/qbittorrent-stable" "${APT_SOURCE_D}"; then
 		cli_warning "qbittorrent repo seems to be missing - adding."
 
 		# check if we had an error
@@ -24,8 +24,8 @@ function add_qbittorrent_nox_deb() {
 	fi
 
 	# check if we install nox version as well
-	if [[ ${CFG_INSTALL_NOX} = true ]]; then
-		QBITTORRENT_PACKAGES="qbittorrent-nox qbitorrent"
+	if [[ ${CFG_QBITTORRENT_NOX_ONLY} = true ]]; then
+		QBITTORRENT_PACKAGES="qbittorrent-nox"
 	else
 		QBITTORRENT_PACKAGES="qbittorrent"
 	fi
@@ -36,11 +36,11 @@ function add_qbittorrent_nox_deb() {
 		return 1
 	fi
 
-	if [[ ${CFG_INSTALL_NOX} = false ]]; then
+	if [[ ${CFG_QBITTORRENT_NOX_ONLY} = false ]]; then
 		cli_info "qbittorrent installed successfully (nox was not selected)"
 		return 0
-	elif [[ ${CFG_INSTALL_NOX} = true && ${CFG_INSTALL_NOX_SYSTEMD} = false ]]; then
-		cli_info "qbitorrent and nox was successfully installed but systemd service install is disabled - skipping..."
+	elif [[ ${CFG_QBITTORRENT_NOX_ONLY} = true && ${CFG_INSTALL_NOX_SYSTEMD} = false ]]; then
+		cli_info "qbitorrent-nox was successfully installed but systemd service install is disabled - skipping..."
 		return 0
 	fi
 
