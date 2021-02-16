@@ -1,13 +1,26 @@
 #!/usr/bin/env bash
 
-function add_qbittorrent_nox() {
+function add_qbittorrent_nox_deb() {
 
+	QBITTORRENT_PPA="ppa:qbittorrent-team/qbittorrent-stable"
+
+	APT_SOURCE="/etc/apt/sources.list"
+	APT_SOURCE_D="${APT_SOURCE}.d/*"
 	# the service location
 
 	# add the repository
-	if ! sudo add-apt-repository ppa:qbittorrent-team/qbittorrent-stable; then
-		cli_error "Could not add the qbittorrent repository - cannot continue"
-		return 1
+	if ! grep -q "^deb .*${QBITTORRENT_PPA}" "${APT_SOURCE}" "${APT_SOURCE_D}"; then
+		cli_warning "qbittorrent repo seems to be missing - adding."
+
+		# check if we had an error
+		if ! sudo add-apt-repository -y ${QBITTORRENT_PPA}; then
+			cli_error "Could not add qbittorrent repository - cannot continue."
+			return 1
+		else
+			cli_info "added qbitorrent repository successfully."
+		fi
+	else
+		cli_info "qbitorrent repository seems to exist - not adding."
 	fi
 
 	# check if we install nox version as well
@@ -39,7 +52,7 @@ function add_qbittorrent_nox() {
 		cli_info "qbittorrent service seems to be present at ${CFG_QBITTORRENT_SYSTEMD_SERVICE} - skipping"
 	fi
 
-	if echo -e "
+	if ! echo -e "
 [Unit]
 Description=qBittorrent Command Line Client
 After=network.target

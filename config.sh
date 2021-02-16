@@ -35,6 +35,9 @@ CFG_QBITTORRENT_SYSTEMD_SERVICE="/etc/systemd/system/qbittorrent-nox.service"
 # the port to use for qbittorrent
 CFG_QBITTORRENT_NOX_PORT=18080
 
+# ufw rules ask if override
+CFG_UFW_GLOBAL_ASK_OVERRIDE=false
+
 # directory that contains non-public bits
 CFG_IMP_DIR="${DOT_DIR}/shared/important"
 

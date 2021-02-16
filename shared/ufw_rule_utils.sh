@@ -25,6 +25,13 @@ copy_ufw_rules() {
 					cli_warning "There was an error copying ufw rule: ${r} - skipping."
 				fi
 			else
+				# check if global override is enabled
+				if [[ "${CFG_UFW_GLOBAL_ASK_OVERRIDE}" = true ]]; then
+					cli_warning "Rule ask to override is disabled - skipping rule ${RULE_NAME}!"
+					continue
+				fi
+
+				# we can override, handle this case.
 				cli_warning_read "Rule ${RULE_NAME} already exists, do you want to override it? [y/n]: "
 				read -n 1 -r
 				echo ""

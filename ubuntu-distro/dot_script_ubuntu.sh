@@ -151,7 +151,7 @@ ssh_config
 kitty_config
 
 # Configure qbittorrent
-add_qbittorrent_nox
+add_qbittorrent_nox_deb
 
 if [[ ${CFG_MINIMAL} = false ]]; then
 	cli_info "Minimal flag is false - installing rust, rvm, and pipenv."
