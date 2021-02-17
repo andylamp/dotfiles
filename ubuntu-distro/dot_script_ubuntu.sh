@@ -54,7 +54,7 @@ function add_sublime_repo() {
 			cli_error "Error adding the sublime text apt repository to lists - cannot continue..."
 		fi
 	else
-		cli_info "sublime repository appears to be present - skipping"
+		cli_warning "sublime repository appears to be present - skipping..."
 	fi
 }
 
