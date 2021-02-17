@@ -1,0 +1,4 @@
+[qbittorrent]
+title=qbittorrent web interface
+description=qBittorrent web interface port
+ports=18081/tcp

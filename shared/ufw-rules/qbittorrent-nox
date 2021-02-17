@@ -1,0 +1,4 @@
+[qbittorrent-nox]
+title=qbittorrent-nox web interface
+description=qbittorrent-nox web interface port
+ports=18080/tcp
