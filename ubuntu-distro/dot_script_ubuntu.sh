@@ -42,13 +42,19 @@ check_params
 
 # register sublime
 function add_sublime_repo() {
-	if ! wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -; then
-		cli_error "Error importing the gpg key for sublime - cannot continue..."
-		return 1
-	fi
+	SUBLIME_PPA="deb https://download.sublimetext.com/ apt/dev/"
+	APT_SOURCES_D="/etc/apt/sources.list.d"
+	if ! grep -Rq "${SUBLIME_PPA}" "${APT_SOURCES_D}"; then
+		if ! wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -; then
+			cli_error "Error importing the gpg key for sublime - cannot continue..."
+			return 1
+		fi
 
-	if ! echo "deb https://download.sublimetext.com/ apt/dev/" | sudo tee /etc/apt/sources.list.d/sublime-text.list; then
-		cli_error "Error adding the sublime text apt repository to lists - cannot continue..."
+		if ! echo "${SUBLIME_PPA}" | sudo tee "${APT_SOURCES_D}/sublime-text.list"; then
+			cli_error "Error adding the sublime text apt repository to lists - cannot continue..."
+		fi
+	else
+		cli_info "sublime repository appears to be present - skipping"
 	fi
 }
 
