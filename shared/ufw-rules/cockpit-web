@@ -1,0 +1,4 @@
+[cockpit-web]
+title=cockpit server management web interface
+description=cockpit server management web interface port
+ports=9090/tcp
