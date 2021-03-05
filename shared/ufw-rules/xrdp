@@ -1,0 +1,4 @@
+[xrdp]
+title=xrdp (Remote Desktop) - RDP service
+description=xrdp (Remote Desktop) - RDP service
+ports=3389/tcp
