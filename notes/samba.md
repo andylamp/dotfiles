@@ -140,6 +140,11 @@ have the mount points as before we can easily share a whole drive by editing `sm
     create mask = 755
 ```
 
+### ZFS and Samba
+
+From my experience, let samba handle SMB and `zfs` to handle the storage; just treat the `zfs` pool as another mounted
+path and use samba to load it.
+
 #### Configuring a user with password
 
 As mentioned previously, this says to `samba` that the directory `/opt/public-mount` will be mounted as `public-mount`

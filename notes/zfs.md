@@ -1,7 +1,8 @@
 # ZFS notes
 
-This note describes how to create a [zfs][1] pool with some minor tweaks that I did with mine.
-It is meant to be a reference mostly to me, rather than anyone else - so do not treat it as a comprehensive manual.
+This note describes how to create a [zfs][1] pool with some minor tweaks that I did with mine. Why `zfs`? For start,
+see [here][5]. It is meant to be a reference mostly to me, rather than anyone else - so do not treat it as a
+comprehensive manual.
 
 ## Installing zfs
 
@@ -53,7 +54,10 @@ Disk /dev/sdh: 12,75 TiB, 14000519643136 bytes, 27344764928 sectors
 Now to create the pool, we need to invoke the `zpool` command; briefly its syntax for the pool creation is:
 
 ```shell
+# default command to create the pool
 sudo zpool create <pool_name> <raid_type> /dev/sda ... /dev/sdn
+# this is to specific a mount point for the pool instead of the /<pool_name>
+sudo zpool create -m <mount_point> <pool_name> <raid_type> /dev/sda ... /dev/sdn
 ```
 
 Now in order to create the `zpool` using the drives above, we can do so with the following command:
@@ -113,7 +117,7 @@ zfs set <parameter>=<value> <pool>/<subpool>
 - `acltype=posixacl`, default `acltype=off`: this is to support ACL permissions for files, I only want to use `poxix`
   compliant options, where possible.
 - `compression=lz4`, default `compression=off`: this is to enable compression, if your CPU is decent it should pose no
-  performance penalty.
+  performance penalty. I **highly** suggest that you turn this on, if you have the horsepower.
 - `atime=off`, default `?`: This tags each file whenever it is read; it's useless for me, and a moot performance
   penalty, so I always turn if off.
 - `relatime=off`, default `?`: Similar to the previous flag, this is an optimised version of `atime`; again, I always
@@ -136,3 +140,5 @@ sudo zfs set relatime=off gavatha
 [3]: https://www.svennd.be/create-zfs-raidz2-pool/
 
 [4]: https://wintelguy.com/zfs-calc.pl
+
+[5]: https://serverfault.com/questions/1017443/how-beneficial-are-self-healing-filesystems-for-general-usage?noredirect=1&lq=1
