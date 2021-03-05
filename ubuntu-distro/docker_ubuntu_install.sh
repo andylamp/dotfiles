@@ -67,8 +67,13 @@ docker_ubuntu_install() {
 	fi
 
 	# now installing docker
-	if ! sudo apt-get -qq update && sudo apt-get -qq install -y docker-ce docker-ce-cli containerd.io; then
-		cli_error "Could not update and install the required packages - cannot continue"
+	if ! sudo apt-get -qq update; then
+		cli_error "Could not update repositories - cannot continue"
+		exit 1
+	fi
+
+	if ! sudo apt-get -qq install -y docker-ce docker-ce-cli containerd.io; then
+		cli_error "Could not install the required packages - cannot continue"
 		exit 1
 	else
 		cli_info "Install docker components successfully"
