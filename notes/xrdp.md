@@ -89,6 +89,20 @@ unset DBUS_SESSION_BUS_ADDRESS
 unset XDG_RUNTIME_DIR
 ```
 
+## UFW configuration
+
+In order to allow connections with `ufw` enabled we need to create an application rule as such:
+
+```bash
+[xrdp]
+title=xrdp (Remote Desktop) - RDP service
+description=xrdp (Remote Desktop) - RDP service
+ports=3389/tcp
+```
+
+Normally, these are located in `/etc/ufw/applications.d/` and the filename must match the name in brackets at the start
+of the file. In this case we would create a file named `xrdp` as that's what is contained in the brackets.
+
 Without these, I could not get a working gnome environment running using `xrdp` and `Xorg`.
 
 ## Resuming session(s)
