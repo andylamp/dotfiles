@@ -174,7 +174,7 @@ Then we need to enable this from `ufw` by using:
 # this allows all ports from any ip and network
 sudo ufw allow sambda4
 # this allows all ports from any ip in my local network range (192.168.178.xxx)
-sudo ufw allow from 192.168.178.0/24 to any app samba4
+sudo ufw allow from 10.10.1.0/24 to any app samba4
 ```
 
 ## Debugging hints

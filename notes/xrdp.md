@@ -103,6 +103,13 @@ ports=3389/tcp
 Normally, these are located in `/etc/ufw/applications.d/` and the filename must match the name in brackets at the start
 of the file. In this case we would create a file named `xrdp` as that's what is contained in the brackets.
 
+```shell
+# allow xrdp in ufw from specific domain (recommended)
+sudo ufw allow from 10.10.1.0/24 to any app xrdp
+# allow xrdp in ufw from any
+sudo ufw allow xrdp
+```
+
 Without these, I could not get a working gnome environment running using `xrdp` and `Xorg`.
 
 ## Resuming session(s)

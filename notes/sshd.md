@@ -5,7 +5,7 @@ rule (one can be found [here][1]) for `sshd` in `/etc/ufw/applications.d/` we ca
 
 ```bash
 # allow sshd in ufw from specific domain (recommended)
-sudo ufw allow from 192.168.178.0/24 to any app sshd
+sudo ufw allow from 10.10.1.0/24 to any app sshd
 # allow sshd in ufw from any
 sudo ufw allow sshd
 ```
