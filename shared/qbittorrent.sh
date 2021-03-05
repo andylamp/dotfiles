@@ -6,6 +6,7 @@ function add_qbittorrent_nox_deb() {
 
 	APT_SOURCE="/etc/apt/sources.list"
 	APT_SOURCE_D="${APT_SOURCE}.d/"
+	NOX_TARGET="/tmp/qbit-nox-temp.cfg"
 	# the service location
 
 	# add the repository
@@ -68,8 +69,13 @@ Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
-" | sudo tee "${CFG_QBITTORRENT_SYSTEMD_SERVICE}"; then
-		cli_error "Error, failed to output the systemd service for qbittorrent-nox - cannot continue..."
+" >${NOX_TARGET}; then
+		cli_error "Could not create the temporary configuration file at: ${NOX_TARGET}"
+		return 1
+	fi
+
+	if ! sudo mv "${NOX_TARGET}" "${CFG_QBITTORRENT_SYSTEMD_SERVICE}"; then
+		cli_error "Error, failed to copy the systemd service config for qbittorrent-nox - cannot continue..."
 		return 1
 	fi
 
