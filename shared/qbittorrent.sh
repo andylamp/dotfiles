@@ -77,6 +77,9 @@ WantedBy=multi-user.target
 	if ! sudo mv "${NOX_TARGET}" "${CFG_QBITTORRENT_SYSTEMD_SERVICE}"; then
 		cli_error "Error, failed to copy the systemd service config for qbittorrent-nox - cannot continue..."
 		return 1
+	else
+		# remove the temporary file
+		rm "${NOX_TARGET}"
 	fi
 
 	# try to add the user and group
