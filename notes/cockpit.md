@@ -68,6 +68,26 @@ sudo systemctl start cockpit.socket
 sudo systemctl status cockpit.socket
 ```
 
+## `pmstat`
+
+If your distribution (and your hardware) allows it, please install `pmstat`, which is normally done by installing
+[pcp][3] package.
+
+```shell
+# install it
+sudo apt install -yy pcp
+```
+
+Now check that it has been installed correctly:
+
+```shell
+andylamp@nas-home:~$ whereis pmstat
+pmstat: /usr/bin/pmstat /usr/share/man/man1/pmstat.1.gz
+```
+
+**Note**: this is important to do if you want to allow storage of historical performance data over time, otherwise
+they get refreshed everytime you log-in. To be honest, I found that to be overly annoying.
+
 ## Config
 
 Configuration documentation that cockpit project provides is very good; however, I immediately found a need to change
@@ -88,3 +108,5 @@ IdleTimeout=640
 [1]: https://cockpit-project.org/
 
 [2]: https://cockpit-project.org/guide/latest/cockpit.conf.5.html
+
+[3]: https://pcp.io/
