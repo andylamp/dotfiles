@@ -38,7 +38,7 @@ We can test that the rule is applied correct by using:
 ```shell
 # replace <cockpit-web-port> with the port that cockpit-web listens to, normally 9090.
 sudo ufw status verbose | grep <cockpit-web-port>
-# or by using 22 (this is for my own copy-paste).
+# or by using 9090 (this is for my own copy-paste).
 sudo ufw status verbose | grep 9090
 ```
 
@@ -91,7 +91,8 @@ they get refreshed everytime you log-in. To be honest, I found that to be overly
 ## Config
 
 Configuration documentation that cockpit project provides is very good; however, I immediately found a need to change
-the session timeout period so here is how to do that.
+the session timeout period so here is how to do that. Normally cockpit configuration resides
+at: `/etc/cockpit/cockpit.conf`, but this might differ in your distribution so check the manual!
 
 ```shell
 # open settings
