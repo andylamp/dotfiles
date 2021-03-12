@@ -11,6 +11,46 @@ To install this in a debian based system all you need to do is to run the follow
 sudo apt-get -yy install cockpit
 ```
 
+## Changing the default port
+
+By default `cockpit` listens on port `9090`, however that ended up clashing with [prometheus][4]; hence the change.
+To do so, we need to first create a directory for the `cockpit-socket.d` service; normally, since this is an optional
+configuration, the directory will not exist and thus will need to be created. This can be achieved as follows:
+
+```shell
+# create the directory
+sudo mkdir /etc/systemd/system/cockpit.socket.d
+```
+
+Then, we can use the following extract to change the default port:
+
+```shell
+[Socket]
+ListenStream=
+ListenStream=7070
+```
+
+**Note**: the empty `ListenStream` _is_ intentional as it enables multiple `ListenStream` directives to be used within
+a single socket unit. The third line actually overrides `9090` to be `7070`. However, as previously mentioned you can
+make `cockpit` listen to multiple ports as such:
+
+```shell
+[Socket]
+ListenStream=
+ListenStream=443
+ListenStream=7070
+```
+
+This allows `cockpit` to listen to both `443` (normal SSL port) as well as `7070`. For the changes to take effect, we
+need to reload `systemd` to parse the reflected changes and restart the service. These tasks can be done as follows:
+
+```shell
+# reload systemctl daemon to parse updated configuration.
+sudo systemctl daemon-reload
+# now restart the cockpit.socket service.
+sudo systemctl restart cockpit.socket
+```
+
 ## UFW config
 
 You will need to configure `ufw` in order to allow `cockpit` to be accessible over the network.
@@ -18,28 +58,28 @@ To do so, we need to first create an `ufw` rule that is normally placed in `/etc
 The full definition of the rule follows:
 
 ```shell
-[cockpit-web]
+[cockpit-web-custom]
 title=cockpit server management web interface
 description=cockpit server management web interface port
-ports=9090/tcp
+ports=7070/tcp
 ```
 
 Then, after creating the rule and copying it to the appropriate directory - we need to enable it as such:
 
 ```shell
-# allow cockpit-web in ufw from specific domain (recommended)
-sudo ufw allow from 10.10.1.0/24 to any app cockpit-web
-# allow cockpit-web in ufw from any
-sudo ufw allow cockpit-web
+# allow cockpit-web-custom in ufw from specific domain (recommended)
+sudo ufw allow from 10.10.1.0/24 to any app cockpit-web-custom
+# allow cockpit-web-custom in ufw from any
+sudo ufw allow cockpit-web-custom
 ```
 
 We can test that the rule is applied correct by using:
 
 ```shell
-# replace <cockpit-web-port> with the port that cockpit-web listens to, normally 9090.
-sudo ufw status verbose | grep <cockpit-web-port>
+# replace <cockpit-web-custom-port> with the port that cockpit-web-custom listens to, in our case 7070.
+sudo ufw status verbose | grep <cockpit-web-custom-port>
 # or by using 9090 (this is for my own copy-paste).
-sudo ufw status verbose | grep 9090
+sudo ufw status verbose | grep 7070
 ```
 
 ## Cockpit service & start on boot
@@ -111,3 +151,5 @@ IdleTimeout=640
 [2]: https://cockpit-project.org/guide/latest/cockpit.conf.5.html
 
 [3]: https://pcp.io/
+
+[4]: https://prometheus.io/docs/introduction/first_steps/

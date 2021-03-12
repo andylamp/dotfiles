@@ -106,8 +106,8 @@ sudo ufw allow iperf3-server
 Test that it was correctly applied we can use the following commands:
 
 ```shell
-# replace <iperf3-port> with the port that iperf3-server listens to, normally 5201.
-sudo ufw status verbose | grep <cockpit-web-port>
+# replace <iperf3-server-port> with the port that iperf3-server listens to, normally 5201.
+sudo ufw status verbose | grep <iperf3-server-post>
 # or by using 5201 (this is for my own copy-paste).
 sudo ufw status verbose | grep 5201
 ```
