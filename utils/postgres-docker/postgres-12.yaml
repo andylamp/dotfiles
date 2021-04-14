@@ -1,0 +1,19 @@
+version: "3.1"
+
+services:
+  # get the postgres image and make it a service
+  db:
+    image: postgres:12
+    restart: always
+    environment:
+      # you should probably change this
+      POSTGRES_PASSWORD: mysecretcombination
+    ports:
+    - 5432:5432
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+    # to host port -> from docker port
+    - 18080:8080
