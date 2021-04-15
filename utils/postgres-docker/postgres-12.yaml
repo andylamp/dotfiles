@@ -11,9 +11,10 @@ services:
     ports:
     - 5432:5432
 
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-    # to host port -> from docker port
-    - 18080:8080
+# Optionally, uncomment to enable adminer
+#  adminer:
+#    image: adminer
+#    restart: always
+#    ports:
+#    # to host port -> from docker port
+#    - 18080:8080
