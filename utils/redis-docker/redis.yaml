@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+  redis:
+    image: docker.io/bitnami/redis:6.2
+    restart: always
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+    ports:
+      - "6379:6379"
+    # note, this is a non-root container, please run the following on the local volume directory prior to launching:
+    #
+    # (sudo) chown -R 1001:1001 /opt/redis_data
+    #
+    # failure to do this, will result in the container not being able to boot and constantly restart.
+    volumes:
+      - "/opt/redis_data:/bitnami/redis/data"
