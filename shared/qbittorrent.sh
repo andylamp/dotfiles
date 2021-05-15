@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 
 function add_qbittorrent_nox_deb() {
+	# conditional installation based on the configuration flag
+	if [[ ${CFG_QBITTORRENT_INSTALL} = true ]]; then
+		cli_info "Installation of qbittorrent is enabled - proceeding..."
+	else
+		cli_warning "Installation of qbittorrent is disabled - skipping..."
+		return 0
+	fi
 
 	QBITTORRENT_PPA="ppa:qbittorrent-team/qbittorrent-stable"
 

@@ -72,7 +72,7 @@ docker_ubuntu_install() {
 		exit 1
 	fi
 
-	if ! sudo apt-get -qq install -y docker-ce docker-ce-cli containerd.io; then
+	if ! sudo apt-get -qq install -y docker-ce docker-ce-cli docker-ce-rootless-extras containerd.io; then
 		cli_error "Could not install the required packages - cannot continue"
 		exit 1
 	else
