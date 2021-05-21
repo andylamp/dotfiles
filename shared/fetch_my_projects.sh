@@ -22,5 +22,5 @@ fetch_my_projects() {
 	fi
 
 	# now trying to fetch and merge
-	"${FETCH_PATH}"/fetch_and_merge.sh
+	"${FETCH_PATH}"/fetch_and_merge
 }
