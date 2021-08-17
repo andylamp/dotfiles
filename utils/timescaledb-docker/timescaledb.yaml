@@ -3,18 +3,10 @@ version: "3.2"
 services:
   # get the postgres image and make it a service
   db:
-    image: postgres:12
+    image: timescale/timescaledb:latest-pg12
     restart: always
     environment:
       # you should probably change this
       POSTGRES_PASSWORD: mysecretcombination
     ports:
     - "5432:5432"
-
-# Optionally, uncomment to enable adminer
-#  adminer:
-#    image: adminer
-#    restart: always
-#    ports:
-#    # to host port -> from docker port
-#    - 18080:8080
