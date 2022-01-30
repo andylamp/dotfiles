@@ -1,0 +1,108 @@
+#!/bin/bash
+#
+# This is a script that installs the Redis Insight AppImage as a "desktop" application in ubuntu distributions.
+#
+#
+# Author: Andreas Grammenos (ag926@cl.cam.ac.uk)
+#
+
+# pretty functions for log output
+function cli_info { echo -e "\033[1;32m -- $1\033[0m"; }
+function cli_info_read { echo -e -n "\e[1;32m -- $1\e[0m"; }
+function cli_warning { echo -e "\033[1;33m ** $1\033[0m"; }
+function cli_warning_read { echo -e -n "\e[1;33m ** $1\e[0m"; }
+function cli_error { echo -e "\033[1;31m !! $1\033[0m"; }
+
+# beautiful and tidy way to expand tilde (~) by C. Duffy.
+expand_path() {
+	case $1 in
+	~[+-]*)
+		local content content_q
+		printf -v content_q '%q' "${1:2}"
+		eval "content=${1:0:2}${content_q}"
+		printf '%s\n' "$content"
+		;;
+	~*)
+		local content content_q
+		printf -v content_q '%q' "${1:1}"
+		eval "content=~${content_q}"
+		printf '%s\n' "$content"
+		;;
+	*)
+		printf '%s\n' "${1}"
+		;;
+	esac
+}
+
+APP_VALID_EXT="AppImage"
+REDIS_LOGO="./redis-logo.svg"
+
+# make a check
+if [[ ${#} -ne 1 ]]; then
+	cli_error "This script requires exactly one argument - please supply the .${APP_VALID_EXT} file"
+	exit 1
+fi
+
+# assign it to a variable
+APP_IMAGE_FILE="${1}"
+APP_IMAGE_EXT="${1##*\.}"
+
+# the user path expanded
+# shellcheck disable=SC2088,SC2034
+MY_HOME="$(expand_path "~/")"
+
+APP_NAME="redis-insight"
+APP_STORAGE_PATH="${MY_HOME}.local/share/${APP_NAME}"
+DESKTOP_ENTRY_PATH="${MY_HOME}.local/share/applications/"
+
+APP_BIN_PATH="${APP_STORAGE_PATH}/${APP_NAME}.${APP_VALID_EXT}"
+APP_SVG_PATH="${APP_STORAGE_PATH}/${APP_NAME}.svg"
+APP_DESK_PATH="${DESKTOP_ENTRY_PATH}/${APP_NAME}.desktop"
+
+# check if the file exists
+if [[ -f ${APP_IMAGE_FILE} ]]; then
+	cli_info "Using: ${APP_IMAGE_FILE} (with discovered extension: ${APP_IMAGE_EXT})"
+	if [[ "${APP_IMAGE_EXT}" != "${APP_VALID_EXT}" ]]; then
+		cli_error "The discovered image does have ${APP_VALID_EXT} extension, please ensure file is correct"
+		exit 1
+	fi
+	cli_info "Copying file ${APP_IMAGE_FILE} to ${APP_STORAGE_PATH} and registering with desktop"
+else
+	cli_error "File ${APP_IMAGE_FILE} does not seem to be valid... cannot continue"
+	exit 1
+fi
+
+# create the path
+if ! mkdir -p "${APP_STORAGE_PATH}"; then
+	cli_error "Failed to create ${APP_STORAGE_PATH}, ensure you have proper permissions!"
+	exit 1
+fi
+
+if ! cp "${APP_IMAGE_FILE}" "${APP_BIN_PATH}"; then
+	cli_error "Failed to copy ${APP_IMAGE_FILE} to ${APP_BIN_PATH}... ensure you have proper permissions"
+	exit 1
+fi
+
+cli_info "Copied binary ${APP_IMAGE_FILE} to ${APP_BIN_PATH}"
+
+# copy the logo in order to be fancy
+if [[ -f "${REDIS_LOGO}" ]]; then
+	cli_info "Discovered svg logo, copying as well."
+	if ! cp "${REDIS_LOGO}" "${APP_SVG_PATH}"; then
+		cli_error "Failed copy ${REDIS_LOGO} to ${APP_SVG_PATH}, cannot continue"
+		exit 1
+	fi
+fi
+
+# finally, create the gnome desktop entry
+if ! echo -e "[Desktop Entry]
+Name=Redis Insight
+Icon=${APP_SVG_PATH}
+Exec=${APP_BIN_PATH}
+StartupNotify=false
+Terminal=false
+Type=Application
+Comment=Redis Insight executable" >"${APP_DESK_PATH}"; then
+	cli_error "Failed to create the .desktop entry to ${APP_DESK_PATH}"
+	exit 1
+fi
