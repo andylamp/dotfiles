@@ -109,6 +109,7 @@ BASE_PACKAGE_LIST=(
 	"nvme-cli"
 	"smartmontools"
 	"jq"
+	"zsh"
 )
 
 # my extended package list

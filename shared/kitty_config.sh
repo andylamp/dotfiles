@@ -7,7 +7,7 @@ kitty_config() {
 	KITTY_CONF_DIR="${MY_HOME}.config/kitty"
 
 	# check if kitty is installed
-	if [[ ! -x "$(command -v kitty)" ]]; then
+	if [[ -n $(type -P "kitty") ]]; then
 		cli_error "Error: Kitty executable not found, maybe not installed?"
 		return 1
 	fi
@@ -52,8 +52,20 @@ kitty_config() {
 	fi
 
 	# set the permissions
-	cp "${CFG_KITTY_CONF}" "${KITTY_CONF_DIR}/my_kitty.conf"
-	# set the permissions & ownership
-	chown -R "${MY_USER}" "${KITTY_CONF_DIR}"
-	chmod 664 "${KITTY_CONF_DIR}/kitty.conf" "${KITTY_CONF_DIR}/my_kitty.conf"
+	if ! cp "${CFG_KITTY_CONF}" "${KITTY_CONF_DIR}/my_kitty.conf"; then
+		cli_error "Failed to copy kitty config to ${KITTY_CONF_DIR}"
+		return 1
+	fi
+
+	# set the ownership
+	if ! chown -R "${MY_USER}" "${KITTY_CONF_DIR}"; then
+		cli_error "Failed to set ownership for the kitty config directory at: ${KITTY_CONF_DIR}"
+		return 1
+	fi
+
+	# set permissions
+	if ! chmod 664 "${KITTY_CONF_DIR}/kitty.conf" "${KITTY_CONF_DIR}/my_kitty.conf"; then
+		cli_error "Failed to set correct permissions for kitty configs at directory: ${KITTY_CONF_DIR}"
+		return 1
+	fi
 }
