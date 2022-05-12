@@ -3,7 +3,7 @@ version: "3.2"
 services:
   # get the postgres image and make it a service
   db:
-    image: postgres:12
+    image: postgres:13
     restart: always
     environment:
       # you should probably change this
