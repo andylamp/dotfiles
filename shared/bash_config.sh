@@ -37,6 +37,25 @@ bash_config() {
 		} >>"${HOME}/.profile"
 	fi
 
+	#	# check if my personalisation bits are there
+	#	echo -en "${TAG_CONTENT}" >./${TAG_HELPER}
+	#	if grep -xq "${MY_TAG_START}" "${HOME}/.bashrc"; then
+	#		cli_warning "My TAG has been detected in bashrc - not injecting but updating."
+	#		# use sed and a helper tag buffer to do this
+	#		sed -i "/${MY_TAG_START}/,/${MY_TAG_END}/{ /${MY_TAG_START}/{p; r ./${TAG_HELPER}
+	#    }; /${MY_TAG_END}/p; d }" "${HOME}/.bashrc"
+	#		# now remove the tag helper
+	#		rm ./${TAG_HELPER}
+	#	else
+	#		# part for injecting the configuration source bits
+	#		cli_info "My TAG has not been detected in bashrc - injecting."
+	#		{
+	#			echo "${MY_TAG_START}"
+	#			echo -e "${TAG_CONTENT}"
+	#			echo "${MY_TAG_END}"
+	#		} >>"${HOME}/.bashrc"
+	#	fi
+
 	# trying to copy my configuration
 	if [[ -f ${CFG_BASH_CONF} ]]; then
 		cli_info "Copying configuration (only if newer)."

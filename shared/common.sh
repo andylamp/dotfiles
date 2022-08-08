@@ -91,6 +91,39 @@ else
 	cli_info "\tParsed ${BASH_CONF_SH} OK"
 fi
 
+# zsh config
+ZSH_CONF_SH="zsh_config.sh"
+
+# shellcheck source=/dev/null
+if ! source "${DOT_DIR}/shared/${ZSH_CONF_SH}"; then
+	cli_error "Error, non-zero value encountered while parsing ${ZSH_CONF_SH} - cannot continue."
+	exit 1
+else
+	cli_info "\tParsed ${ZSH_CONF_SH} OK"
+fi
+
+# terraform config
+TERRAFORM_CONF_SH="terraform_config.sh"
+
+# shellcheck source=/dev/null
+if ! source "${DOT_DIR}/shared/${TERRAFORM_CONF_SH}"; then
+	cli_error "Error, non-zero value encountered while parsing ${TERRAFORM_CONF_SH} - cannot continue."
+	exit 1
+else
+	cli_info "\tParsed ${TERRAFORM_CONF_SH} OK"
+fi
+
+# tmux config
+TMUX_CONF_SH="tmux_config.sh"
+
+# shellcheck source=/dev/null
+if ! source "${DOT_DIR}/shared/${TMUX_CONF_SH}"; then
+	cli_error "Error, non-zero value encountered while parsing ${TMUX_CONF_SH} - cannot continue."
+	exit 1
+else
+	cli_info "\tParsed ${TMUX_CONF_SH} OK"
+fi
+
 # kitty terminal config
 KITTY_CONF_SH="kitty_config.sh"
 

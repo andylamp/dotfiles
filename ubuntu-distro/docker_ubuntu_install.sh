@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # function that installs docker and docker compose in ubuntu distributions
 docker_ubuntu_install() {
@@ -48,7 +48,8 @@ docker_ubuntu_install() {
 
 	# fetch and install the docker GPG key
 	cli_info "Fetching the docker key"
-	if curl -fsSL ${REPO_LINK}/${DIST_FLAVOR}/gpg | sudo apt-key add -; then
+
+	if curl -fsSL ${REPO_LINK}/${DIST_FLAVOR}/gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/docker.gpg; then
 		cli_info "Fetched docker key and installed it successfully"
 	else
 		cli_error "Could not retrieve and install the docker apt-key - cannot continue"

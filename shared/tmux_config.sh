@@ -8,7 +8,7 @@ tmux_config() {
 	TMUX_CONF="${MY_HOME}.tmux.conf"
 
 	# check if tmux is installed
-	if [[ -n $(type -P "tmux") ]]; then
+	if [[ -z $(type -P "tmux") ]]; then
 		cli_error "Error: tmux executable not found, maybe not installed?"
 		return 1
 	fi
@@ -25,9 +25,12 @@ tmux_config() {
 	# now download tpm
 	if [[ ! -d "${TMUX_CONF_DIR}/tpm" ]]; then
 		cli_info "Downloading tmux tpm to ${TMUX_CONF_DIR}."
-		git clone https://github.com/tmux-plugins/tpm "${TMUX_CONF_DIR}/tpm"
+		if ! git clone https://github.com/tmux-plugins/tpm "${TMUX_CONF_DIR}/tpm"; then
+			cli_error "Failed to clone tmux tpm successfully - ensure you have git installed!"
+			return 1
+		fi
 	else
-		cli_warning "tpm directory already exist not downloading again."
+		cli_warning "tpm directory already exists not downloading again."
 	fi
 
 	# copy my tmux conf
