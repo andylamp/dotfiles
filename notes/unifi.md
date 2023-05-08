@@ -84,7 +84,7 @@ That's it! You should be good to go! Enjoy your Ubiquiti AP's!
 After you've configured all related information you might *still() not be able to discovery *any* equipment - this is
 due to the `dockerised` image as the host IP is not the same as the `docker` internal one. This is the case that even if
 the ports are bound correctly and everything looks right - the `inform` URL will be wrong as it would use an internal
-(to `docker`) IP of the controller that would not be known *outside* of the `docker`. To alleviate this, you'd need to
+(to `docker`) IP of the controller that would not be known *outside* the `docker`. To alleviate this, you'd need to
 configure the `inform` address of the controller which can be changed from `Settings` -> `Controller Settings`
 -> `Advanced Configuration` -> `Controller Hostname/IP`. You should set that to the either a resolvable name of
 your `docker` host or its *local* network IP address.
